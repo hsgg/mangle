@@ -3,7 +3,9 @@ c © A J S Hamilton 2001
 c-----------------------------------------------------------------------
       logical function gptin(rp,cm,np,rpi)
       integer np
-      real*10 rp(3,np),cm(np),rpi(3)
+      integer dp
+      parameter (dp = 16)
+      real(dp) rp(3,np),cm(np),rpi(3)
 c
 c        intrinsics
       intrinsic abs
@@ -11,7 +13,7 @@ c        externals
       integer gzeroar
 c        local (automatic) variables
       integer j
-      real*10 cmij,cmj
+      real(dp) cmij,cmj
 c *
 c * Determine whether unit direction rpi lies within region bounded by
 c *    1 - r.rp(j) <= cm(j)  (if cm(j).ge.0)
@@ -31,15 +33,15 @@ c        check for point outside because one circle is null
 c        check each boundary
       do 140 j=1,np
 c        null boundary means no constraint
-        if (cm(j).ge.2._10) goto 140
+        if (cm(j).ge.2._dp) goto 140
         cmj=abs(cm(j))
 c        1-cos of angle between point and rp(j) direction
         cmij=((rpi(1)-rp(1,j))**2+(rpi(2)-rp(2,j))**2
-     *    +(rpi(3)-rp(3,j))**2)/2._10
+     *    +(rpi(3)-rp(3,j))**2)/2._dp
 c        check if point is outside rp(j) boundary
-        if (cm(j).ge.0._10) then
+        if (cm(j).ge.0._dp) then
           if (cmij.gt.cmj) goto 410
-        elseif (cm(j).lt.0._10) then
+        elseif (cm(j).lt.0._dp) then
           if (cmij.le.cmj) goto 410
         endif
   140 continue

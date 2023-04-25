@@ -1,13 +1,15 @@
 c-----------------------------------------------------------------------
 c © A J S Hamilton 2001
 c-----------------------------------------------------------------------
-      real*10 function twodf230k(ra,dec)
-      real*10 ra,dec
+      real(16) function twodf230k(ra,dec)
+      integer dp
+      parameter (dp = 16)
+      real(dp) ra,dec
 c
 c        parameters
       include 'pi.par'
-      real*10 RADIAN
-      parameter (RADIAN=180._10/PI)
+      real(dp) RADIAN
+      parameter (RADIAN=180._dp/PI)
 c        data variables
 C     logical init
 C     real magcut
@@ -42,11 +44,11 @@ c the 2dFGRS mask software by Peder Norberg and Shaun Cole
 
 c compl = -1. means the position is outside the main 2dF boundary
       if (compl.eq.-1.) then
-        twodf230k=0._10
+        twodf230k=0._dp
 
 c compl = -2. means the position is inside a drill hole
       elseif (compl.eq.-2.) then
-        twodf230k=0._10
+        twodf230k=0._dp
 
 c discard fields with limiting magnitude brighter than magcut
 C COMMENT THIS OUT IF YOU DON'T WANT IT
@@ -56,7 +58,7 @@ C         write (*,'(" WARNING from twodf230k: USING HARD-WIRED MAGNITUDE CU
 C    *T OF ",f5.2)') magcut
 C         init=.false.
 C       endif
-C       twodf230k=0._10
+C       twodf230k=0._dp
 
 c standard
       else
@@ -70,7 +72,7 @@ c       twodf230k=maglim
       endif
 
 c completeness: round to 8 decimal places
-      twodf230k=dble(nint(twodf230k*1.e8_10))/1.e8_10
+      twodf230k=dble(nint(twodf230k*1.e8_dp))/1.e8_dp
 
 c     print *,ra,dec,compl,maglim,twodf230k
 c

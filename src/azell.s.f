@@ -2,17 +2,18 @@ c-----------------------------------------------------------------------
 c © A J S Hamilton 2001
 c-----------------------------------------------------------------------
       subroutine azell(rag,decg,l2p,raz,elp,azp,azg,elg,l2z)
-      real*10 rag,decg,l2p,raz,elp,azp,azg,elg,l2z
+      integer dp
+      parameter (dp = 16)
+      real(dp) rag,decg,l2p,raz,elp,azp,azg,elg,l2z
 c
 c        parameters
-      real*10 CIRCLE,PI,RADIAN
-      parameter (CIRCLE = 360._10,
-     *           PI = 3.1415926535897932384626_10,
-     *           RADIAN = 180._10/PI)
+      include 'radian.par'
+      real(dp) CIRCLE
+      parameter (CIRCLE = 360._dp)
 c        local (automatic) variables
       integer iz
-      real*10 cazm,cdecg,celg,celp,cl2m,cra
-      real*10 sazm,sdecg,selg,selp,sl2m,sra
+      real(dp) cazm,cdecg,celg,celp,cl2m,cra
+      real(dp) sazm,sdecg,selg,selp,sl2m,sra
 c *
 c * Given transformations g <-> p between and z <-> p between spherical
 c * frames, determine transformation g <-> z
@@ -39,19 +40,19 @@ c        sines and cosines of input angles
       cra=cos((rag-raz)/RADIAN)
 c        sine and cosine of elevation of NGP
       selg=cdecg*celp*cra+sdecg*selp
-      if (selg.gt.1._10) then
-        selg=1._10
-      elseif (selg.lt.-1._10) then
-        selg=-1._10
+      if (selg.gt.1._dp) then
+        selg=1._dp
+      elseif (selg.lt.-1._dp) then
+        selg=-1._dp
       endif
-      celg=sqrt(1._10-selg*selg)
+      celg=sqrt(1._dp-selg*selg)
 c        elevation of NGP in deg
       elg=asin(selg)*RADIAN
 c        at NGP el +- 90 deg, set NGP az & zenith long consistently
-      if (celg.eq.0._10) then
+      if (celg.eq.0._dp) then
         azg=azp
-        l2z=l2p+CIRCLE/2._10
-      elseif (celg.ne.0._10) then
+        l2z=l2p+CIRCLE/2._dp
+      elseif (celg.ne.0._dp) then
 c        sine and cosine of azimuth of NGP relative to NCP azimuth
         sazm=-cdecg*sra/celg
         cazm=(sdecg*celp-cdecg*selp*cra)/celg
@@ -65,10 +66,10 @@ c        longitude of zenith in deg
       endif
 c        ensure azimuthal angles are in interval [0,360)
       iz=azg/CIRCLE
-      if (azg.lt.0._10) iz=iz-1
+      if (azg.lt.0._dp) iz=iz-1
       azg=azg-iz*CIRCLE
       iz=l2z/CIRCLE
-      if (l2z.lt.0._10) iz=iz-1
+      if (l2z.lt.0._dp) iz=iz-1
       l2z=l2z-iz*CIRCLE
       return
       end

@@ -3,23 +3,25 @@ c © A J S Hamilton 2001
 c-----------------------------------------------------------------------
       subroutine fframe(framei,azi,eli,framef,azf,elf)
       integer framei,framef
-      real*10 azi,eli,azf,elf
+      integer dp
+      parameter (dp = 16)
+      real(dp) azi,eli,azf,elf
 c
 c        parameters
-      real*10 BEPOCH,JEPOCH
-      parameter (BEPOCH=1950._10,JEPOCH=2000._10)
+      real(dp) BEPOCH,JEPOCH
+      parameter (BEPOCH=1950._dp,JEPOCH=2000._dp)
       include 'frames.par'
       include 'radian.par'
 c        externals
-      real*10 felp,SLA_epj2d
+      real(dp) felp,SLA_epj2d
 c        data variables
       logical init
 c        saved local variables
-      real*10 azg,elg,elp,l2z
+      real(dp) azg,elg,elp,l2z
       save azg,elg,elp,l2z
 c        local (automatic) variables
       integer iaz
-      real*10 date,dd,dec2k,dr,ra2k
+      real(dp) date,dd,dec2k,dr,ra2k
 c *
 c * Transform azimuth (phi) and elevation (90-theta) in degrees
 c * from one frame to another frame.
@@ -176,9 +178,9 @@ c         elf=elf*RADIAN
       endif
 c--------put azf in interval [0,360)
 
-      iaz=azf/360._10
-      if (azf.lt.0._10) iaz=iaz-1
-      azf=azf-iaz*360._10
+      iaz=azf/360._dp
+      if (azf.lt.0._dp) iaz=iaz-1
+      azf=azf-iaz*360._dp
 
       return
       end

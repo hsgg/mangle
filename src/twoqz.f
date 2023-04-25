@@ -1,8 +1,10 @@
 c-----------------------------------------------------------------------
 c © A J S Hamilton 2001
 c-----------------------------------------------------------------------
-      real*10 function twoqz(ra,dec,verbose)
-      real*10 ra,dec
+      real(16) function twoqz(ra,dec,verbose)
+      integer dp
+      parameter (dp = 16)
+      real(dp) ra,dec
       integer verbose
 c
 c        parameters
@@ -248,16 +250,16 @@ c        successful read
         init=.false.
       endif
 c--------the routine
-      twoqz=0._10
+      twoqz=0._dp
       do ihem=1,NHEM
-        decmn=decmin(ihem)-decstep(ihem)*.5_10
+        decmn=decmin(ihem)-decstep(ihem)*.5_dp
         decmx=decmn+decstep(ihem)*ndec(ihem)
         if (dec.ge.decmn.and.dec.le.decmx) then
-          ramn=ramin(ihem)-rastep(ihem)*.5_10
+          ramn=ramin(ihem)-rastep(ihem)*.5_dp
           ramx=ramn+rastep(ihem)*nra(ihem)
-          ira=(ra-ramn)/360._10
-          r=ra-ira*360._10
-          if (r.lt.ramn) r=r+360._10
+          ira=(ra-ramn)/360._dp
+          r=ra-ira*360._dp
+          if (r.lt.ramn) r=r+360._dp
           if (verbose.ge.3) then
             print *,'ra, ramin, ramax =',r,ramn,ramx
             print *,'dec, decmin, decmax =',dec,decmn,decmx
@@ -272,7 +274,7 @@ c--------the routine
             endif
             twoqz=array(ira,idec,ihem)
 c        round to 6 sig fig
-            twoqz=dble(nint(twoqz*1.e6_10))/1.e6_10
+            twoqz=dble(nint(twoqz*1.e6_dp))/1.e6_dp
             goto 200
           endif
         endif

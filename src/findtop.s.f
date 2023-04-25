@@ -3,7 +3,7 @@ c © A J S Hamilton 2001
 c-----------------------------------------------------------------------
       subroutine findtop(a,na,iord,nb)
       integer na,nb,iord(nb)
-      real*10 a(na)
+      real(16) a(na)
 c
 c        local (automatic) variables
       integer i,ia,ib,it,n,ja
@@ -23,7 +23,7 @@ c
 c-----------------------------------------------------------------------
       subroutine findbot(a,na,iord,nb)
       integer na,nb,iord(nb)
-      real*10 a(na)
+      real(16) a(na)
 c
 c        local (automatic) variables
       integer i,ia,ib,it,n,ja
@@ -43,7 +43,7 @@ c
 c-----------------------------------------------------------------------
       subroutine findtpa(a,na,iord,nb)
       integer na,nb,iord(nb)
-      real*10 a(na)
+      real(16) a(na)
 c
 c        intrinsics
       intrinsic abs
@@ -66,7 +66,7 @@ c
 c-----------------------------------------------------------------------
       subroutine findbta(a,na,iord,nb)
       integer na,nb,iord(nb)
-      real*10 a(na)
+      real(16) a(na)
 c
 c        intrinsics
       intrinsic abs

@@ -33,18 +33,7 @@ else
     BYTES=$3
 fi
 
-if [ "$ARCH" = "x86_64" ] || [ "$ARCH" = "ia64" ] || [ "$ARCH" = "amd64" ] ; then
-    MFLAG="-m64"
-elif [ "$OS" = "Darwin" ] ; then
-    mac_64bit_compatible=`ioreg -l -p IODeviceTree | grep firmware-abi | awk '/64/{print "y"}'`
-    if [ "$mac_64bit_compatible" = "y" ] ; then
-	MFLAG="-m64"
-    else
-	MFLAG='-m32'
-    fi
-else
-    MFLAG='-m32'
-fi
+MFLAG=""
 
 #Warnings
 if [ "$ARCH" = "ppc" ]; then
