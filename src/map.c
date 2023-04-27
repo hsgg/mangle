@@ -19,9 +19,9 @@ const char *optstr = "dqw:l:g:x:u:p:";
 /* local functions */
 void	usage(void);
 #ifdef	GCC
-int	map(char *, char *, format *, int lmax, harmonic w[NW], long double, long double);
+int	map(char *, char *, format *, int lmax, harmonic w[NW], _Float128, _Float128);
 #else
-int	map(char *, char *, format *, int lmax, harmonic w[/*NW*/], long double, long double);
+int	map(char *, char *, format *, int lmax, harmonic w[/*NW*/], _Float128, _Float128);
 #endif
 
 /*------------------------------------------------------------------------------
@@ -107,7 +107,7 @@ void usage(void)
   Return value: number of items written,
 		or -1 if error occurred.
 */
-int map(char *in_filename, char *out_filename, format *fmt, int lmax, harmonic w[/*NW*/], long double lsmooth, long double esmooth)
+int map(char *in_filename, char *out_filename, format *fmt, int lmax, harmonic w[/*NW*/], _Float128 lsmooth, _Float128 esmooth)
 {
 /* precision of map values written to file */
 #define PRECISION	8
@@ -124,7 +124,7 @@ int map(char *in_filename, char *out_filename, format *fmt, int lmax, harmonic w
     char *word, *next;
     char az_str[AZEL_STR_LEN], el_str[AZEL_STR_LEN];
     int ird, len, mmax, nmap, width;
-    long double rho;
+    _Float128 rho;
     azel v;
     char *out_fn;
     FILE *outfile;

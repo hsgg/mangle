@@ -45,17 +45,17 @@
   Return value: 0 if ok (even if no inside point was found);
 		-1 if failed to allocate memory.
 */
-int vmid(polygon *poly, long double mtol, int nv, int nve, vec ve[/*nv * nve*/], int ipv[/*nv*/], int ev[/*nv*/], int *nvm, vec **vm_p)
+int vmid(polygon *poly, _Float128 mtol, int nv, int nve, vec ve[/*nv * nve*/], int ipv[/*nv*/], int ev[/*nv*/], int *nvm, vec **vm_p)
 {
     const int do_vcirc = 1;
     static int nvmmax = 0;
     static vec *vm = 0x0;
 
     int i, ier, iev, ip, iv, ivl, ivm, ivu, neva, nev0, nva, scm;
-    long double angle, cm, cmbest, s, tol;
+    _Float128 angle, cm, cmbest, s, tol;
     vec  rp, vc, vi;
     int *ipva, *gpa, *eva;
-    long double *cmvmin, *cmvmax, *cmpmin, *cmpmax;
+    _Float128 *cmvmin, *cmvmax, *cmpmin, *cmpmax;
     vec *vmin, *vmax;
 
     /* make sure nve is even and >= 2 */
@@ -219,7 +219,7 @@ int vmidc(polygon *poly, int nv, int nve, vec ve[/*nv * nve*/], int ipv[/*nv*/],
     static vec *vm = 0x0;
 
     int i, iev, ip, iv, ivl, ivm, ivu;
-    long double s;
+    _Float128 s;
 
     /* number of midpoints */
     for (ivm = 0; ev[ivm] != nv; ivm++);

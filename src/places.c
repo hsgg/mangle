@@ -7,7 +7,7 @@
 /*------------------------------------------------------------------------------
   Round x to n decimal places.
 */
-long double places(long double x, int n)
+_Float128 places(_Float128 x, int n)
 {
     int i;
 

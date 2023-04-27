@@ -5,8 +5,8 @@
 #define VERTICES_H
 
 typedef struct {		/* azel structure */
-    long double az;			/* azimuth */
-    long double el;			/* elevation */
+    _Float128 az;			/* azimuth */
+    _Float128 el;			/* elevation */
 } azel;
 
 typedef struct {		/* vertices structure */

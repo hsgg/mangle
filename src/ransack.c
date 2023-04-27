@@ -19,10 +19,10 @@ polygon *poly_global[NPOLYSMAX];
 void	usage(void);
 #ifdef	GCC
 int	ransack(char *, format *, int, int npolysmax, polygon *[npolysmax]);
-int	lasso_poly(polygon **, int npolys, polygon *[npolys], long double, int *);
+int	lasso_poly(polygon **, int npolys, polygon *[npolys], _Float128, int *);
 #else
 int	ransack(char *, format *, int, int npolysmax, polygon *[/*npolysmax*/]);
-int	lasso_poly(polygon **, int npolys, polygon *[/*npolys*/], long double, int *);
+int	lasso_poly(polygon **, int npolys, polygon *[/*npolys*/], _Float128, int *);
 #endif
 
 /*------------------------------------------------------------------------------
@@ -141,8 +141,8 @@ int ransack(char *out_filename, format *fmt, int npoly, int npolysmax, polygon *
     int dnp, dnwl, i, idwidth, ier, in, inull, ip, ipmin, ipoly, iprune, irandom, lassoed, np, nwl, tries, verb, width, k;
     long long idmin,idmax;
     int *dlasso=0x0, *lasso=0x0;
-    long double area, cmmin, cmi, phi, rpoly, si, tol, w, wcum, x, y, z;
-    long double *wpoly;
+    _Float128 area, cmmin, cmi, phi, rpoly, si, tol, w, wcum, x, y, z;
+    _Float128 *wpoly;
     vec rp, xi, yi;
     azel v;
     char *out_fn;
@@ -287,9 +287,9 @@ int ransack(char *out_filename, format *fmt, int npoly, int npolysmax, polygon *
 
     /* allocate memory for wpoly array */
     nwl = npoly;
-    wpoly = (long double *) malloc(sizeof(long double) * nwl);
+    wpoly = (_Float128 *) malloc(sizeof(_Float128) * nwl);
     if (!wpoly) {
-        fprintf(stderr, "ransack: failed to allocate memory for %d long doubles\n", nwl);
+        fprintf(stderr, "ransack: failed to allocate memory for %d _Float128s\n", nwl);
         goto error;
     }
     if (!lassoed) {
@@ -316,8 +316,8 @@ int ransack(char *out_filename, format *fmt, int npoly, int npolysmax, polygon *
 	if (poly[ipoly]->id < idmin) idmin = poly[ipoly]->id;
 	if (poly[ipoly]->id > idmax) idmax = poly[ipoly]->id;
     }
-    idmin = ((idmin < 0)? floorl(log10l((long double)-idmin)) + 2 : 1);
-    idmax = ((idmax > 0)? floorl(log10l((long double)idmax)) + 1 : 1);
+    idmin = ((idmin < 0)? floorl(log10l((_Float128)-idmin)) + 2 : 1);
+    idmax = ((idmax > 0)? floorl(log10l((_Float128)idmax)) + 1 : 1);
     idwidth = ((idmin > idmax)? idmin : idmax);
 
     /* write header */
@@ -415,9 +415,9 @@ int ransack(char *out_filename, format *fmt, int npoly, int npolysmax, polygon *
 			/* enlarge memory for wpoly, lasso, and dlasso arrays */
 			if (np + dnp > nwl) {
 			    dnwl = dnp + 1024;
-			    wpoly = (long double *) realloc(wpoly, sizeof(long double) * (nwl + dnwl));
+			    wpoly = (_Float128 *) realloc(wpoly, sizeof(_Float128) * (nwl + dnwl));
 			    if (!wpoly) {
-				fprintf(stderr, "ransack: failed to reallocate memory for %d long doubles\n", nwl + dnwl);
+				fprintf(stderr, "ransack: failed to reallocate memory for %d _Float128s\n", nwl + dnwl);
 				goto error;
 			    }
 			    lasso = (int *) realloc(lasso, sizeof(int) * (nwl + dnwl));
@@ -553,7 +553,7 @@ int ransack(char *out_filename, format *fmt, int npoly, int npolysmax, polygon *
 		 0 ok;
 		 1 if *poly was only partially partioned.
 */
-int lasso_poly(polygon **poly, int npolys, polygon *polys[/*npolys*/], long double mtol, int *np)
+int lasso_poly(polygon **poly, int npolys, polygon *polys[/*npolys*/], _Float128 mtol, int *np)
 {
 /* part_poly should lasso all one-boundary polygons */
 #define ALL_ONEBOUNDARY		2
@@ -564,7 +564,7 @@ int lasso_poly(polygon **poly, int npolys, polygon *polys[/*npolys*/], long doub
 /* partition_poly should never overwrite original polygons */
 #define	OVERWRITE_ORIGINAL	0
     int ier, ip, ipmin;
-    long double cmmin, cmmino, cmmint;
+    _Float128 cmmin, cmmino, cmmint;
 
     /* area/(2 pi) of smallest cap of polygon */
     cmminf(*poly, &ipmin, &cmmino);

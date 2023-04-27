@@ -6,7 +6,7 @@
 #include "manglefn.h"
 
 /* initial angular tolerance within which to merge multiple intersections */
-extern long double mtol;
+extern _Float128 mtol;
 
 /*------------------------------------------------------------------------------
   Convert vertices structure to polygon.
@@ -82,9 +82,9 @@ void edge_to_poly(vertices *vert, int nve, int *ev, polygon *poly)
   Output: poly = pointer to polygon structure
   Polygon poly should contain enough room for the 4 caps of the rectangle
 */
-void rect_to_poly(long double angle[4], polygon *poly){
+void rect_to_poly(_Float128 angle[4], polygon *poly){
 #define ROUND		1.e-5
-  long double daz;
+  _Float128 daz;
   int i;
   int ip =0;
   /*
@@ -185,7 +185,7 @@ void azel_to_rp(azel *v, vec rp)
   Determine rp, cm for great circle passing through two az-el vertices.
   The great circle goes right-handedly from v0 to v1.
 */
-void azel_to_gc(azel *v0, azel *v1, vec rp, long double *cm)
+void azel_to_gc(azel *v0, azel *v1, vec rp, _Float128 *cm)
 {
     azel *v;
     int iv;
@@ -209,10 +209,10 @@ void azel_to_gc(azel *v0, azel *v1, vec rp, long double *cm)
   (for example, a mask-maker may specify a triangle with 4 vertices,
   with 2 vertices being coincident).
 */
-void rp_to_gc(vec rp0, vec rp1, vec rp, long double *cm)
+void rp_to_gc(vec rp0, vec rp1, vec rp, _Float128 *cm)
 {
     int i;
-    long double rpa;
+    _Float128 rpa;
 
     /* cofactors */
     rp[0] = rp0[1]*rp1[2] - rp1[1]*rp0[2];
@@ -237,7 +237,7 @@ void rp_to_gc(vec rp0, vec rp1, vec rp, long double *cm)
   Determine rp, cm for circle passing through three az-el points.
   The circle goes right-handedly from v0 to v1 to v2.
 */
-void edge_to_rpcm(azel *v0, azel *v1, azel *v2, vec rp, long double *cm)
+void edge_to_rpcm(azel *v0, azel *v1, azel *v2, vec rp, _Float128 *cm)
 {
     azel *v=0x0;
     int iv;
@@ -263,11 +263,11 @@ void edge_to_rpcm(azel *v0, azel *v1, azel *v2, vec rp, long double *cm)
   If two of the unit vectors coincide, join with a great circle.
   If three of the unit vectors coincide, suppress the boundary.
 */
-void rp_to_rpcm(vec rp0, vec rp1, vec rp2, vec rp, long double *cm)
+void rp_to_rpcm(vec rp0, vec rp1, vec rp2, vec rp, _Float128 *cm)
 {
     int coincide, i, j;
-    long double det, rpa;
-    long double *rpi, *rpj;
+    _Float128 det, rpa;
+    _Float128 *rpi, *rpj;
     rpi=0x0;
     rpj=0x0;
 
@@ -352,9 +352,9 @@ void rp_to_rpcm(vec rp0, vec rp1, vec rp2, vec rp, long double *cm)
    Input: angle = (azimuth, elevation, radius) in radians.
   Output: rp, cm as used by garea, gspher et al.
 */
-void circ_to_rpcm(long double angle[3], vec rp, long double *cm)
+void circ_to_rpcm(_Float128 angle[3], vec rp, _Float128 *cm)
 {
-    long double s;
+    _Float128 s;
 
     /* Cartesian coordinates of azimuth, elevation */
     rp[0] = cosl(angle[1]) * cosl(angle[0]);
@@ -372,9 +372,9 @@ void circ_to_rpcm(long double angle[3], vec rp, long double *cm)
    Input: rp, cm as used by garea, gspher et al.
   Output: angle = (azimuth, elevation, radius) in radians.
 */
-void rpcm_to_circ(vec rp, long double *cm, long double angle[3])
+void rpcm_to_circ(vec rp, _Float128 *cm, _Float128 angle[3])
 {
-    long double s;
+    _Float128 s;
 
     angle[0] = atan2l(rp[1], rp[0]);
     angle[1] = atan2l(rp[2], sqrtl(rp[0] * rp[0] + rp[1] * rp[1]));
@@ -392,7 +392,7 @@ void rpcm_to_circ(vec rp, long double *cm, long double angle[3])
 	    = 1 for maximum elevation.
   Output: rp, cm as used by garea, gspher et al.
 */
-void az_to_rpcm(long double az, int m, vec rp, long double *cm)
+void az_to_rpcm(_Float128 az, int m, vec rp, _Float128 *cm)
 {
     /* axis along equator */
     rp[0] = - sinl(az);
@@ -412,7 +412,7 @@ void az_to_rpcm(long double az, int m, vec rp, long double *cm)
 	    = 1 for maximum elevation.
   Output: rp, cm as used by garea, gspher et al.
 */
-void el_to_rpcm(long double el, int m, vec rp, long double *cm)
+void el_to_rpcm(_Float128 el, int m, vec rp, _Float128 *cm)
 {
     /* north pole */
     rp[0] = 0.;
@@ -427,9 +427,9 @@ void el_to_rpcm(long double el, int m, vec rp, long double *cm)
 /*------------------------------------------------------------------------------
    theta_ij = angle in radians between two unit vectors.
 */
-long double thij(vec rpi, vec rpj)
+_Float128 thij(vec rpi, vec rpj)
 {
-    long double cm, th;
+    _Float128 cm, th;
 
     cm = cmij(rpi, rpj);
     th = 2. * asinl(cm / 2.);
@@ -440,9 +440,9 @@ long double thij(vec rpi, vec rpj)
 /*------------------------------------------------------------------------------
    1-cosl(theta_ij) = 2 sin^2(theta_ij/2) between two unit vectors.
 */
-long double cmij(vec rpi, vec rpj)
+_Float128 cmij(vec rpi, vec rpj)
 {
-    long double cm, dx, dy, dz;
+    _Float128 cm, dx, dy, dz;
 
     dx = rpi[0] - rpj[0];
     dy = rpi[1] - rpj[1];
@@ -465,10 +465,10 @@ long double cmij(vec rpi, vec rpj)
 		1 if polygon is a rectangle,
 		2 if polygon is a rectangle with superfluous boundaries.
 */
-int poly_to_rect(polygon *poly, long double *azmin, long double *azmax, long double *elmin, long double *elmax)
+int poly_to_rect(polygon *poly, _Float128 *azmin, _Float128 *azmax, _Float128 *elmin, _Float128 *elmax)
 {
     int iaz, ielmin, ielmax, ip;
-    long double az, el;
+    _Float128 az, el;
 
     *azmin = -TWOPI;
     *azmax = TWOPI;
@@ -560,8 +560,8 @@ int antivert(vertices *vert, polygon *poly)
     const int do_vcirc = 0, nve = 1, per = 0;
     int anti, ier, iv, nev, nev0, nv;
     int *ipv, *gp, *ev;
-    long double cm, cmmax, cmmin, tol;
-    long double *angle;
+    _Float128 cm, cmmax, cmmin, tol;
+    _Float128 *angle;
     vec rp;
     vec *ve;
 

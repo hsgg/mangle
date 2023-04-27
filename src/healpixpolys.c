@@ -24,7 +24,7 @@ polygon *get_healpix_poly(int nside, int hpix)
   int nv, nvmax, i, pix_n, pix_e, pix_s, pix_w, ev[1];
   vertices *vert;
   polygon *pixel, *pixelbetter;
-  long double verts_vec[12], verts_vec_n[12], verts_vec_e[12], verts_vec_s[12], verts_vec_w[12], dist_n, dist_w, dist_s, dist_e;
+  _Float128 verts_vec[12], verts_vec_n[12], verts_vec_e[12], verts_vec_s[12], verts_vec_w[12], dist_n, dist_w, dist_s, dist_e;
   vec center, center_n, center_e, center_s, center_w, vertices_vec[4], vertices_vec_n[4], vertices_vec_e[4], vertices_vec_s[4], vertices_vec_w[4];
   azel *vertices_azel[8], vertices[8];
 
@@ -159,7 +159,7 @@ polygon *get_healpix_poly(int nside, int hpix)
   dist_s = cmrpirpj(center, vertices_vec[2]);
   dist_e = cmrpirpj(center, vertices_vec[1]);
   //fprintf(stderr, "dist_n=%Lf, dist_w=%Lf, dist_s=%Lf, dist_e=%Lf\n", dist_n, dist_w, dist_s, dist_e);
-  //fprintf(stderr, "sizeof(long double) = %zu\n", sizeof(long double));
+  //fprintf(stderr, "sizeof(_Float128) = %zu\n", sizeof(_Float128));
 
   if(dist_n>=dist_w && dist_n>=dist_s && dist_n>=dist_e){
     pixelbetter->cm[4] = dist_n+0.000001;
@@ -199,7 +199,7 @@ polygon *get_healpix_poly(int nside, int hpix)
 int get_nside(int nweights)
 {
   int res, nside;
-  long double res_d;
+  _Float128 res_d;
 
   if (nweights == 1) {
      nside = 0;
@@ -207,7 +207,7 @@ int get_nside(int nweights)
   }
 
   else {
-    res_d = (long double)(logl(((long double)nweights)/3.0)/logl(4.0));
+    res_d = (_Float128)(logl(((_Float128)nweights)/3.0)/logl(4.0));
 
     /* res_d is often slightly under the correct res, so we add 0.1 to make it correct upon truncation */
     res = (int)(res_d+0.1);
@@ -229,7 +229,7 @@ int get_nside(int nweights)
 	          pixel vertices in the order N,E,S,W
 */
 
-void healpix_verts(int nside, int pix, vec center, long double verts[12])
+void healpix_verts(int nside, int pix, vec center, _Float128 verts[12])
 {
   pix2vec_nest__(&nside, &pix, &(center[0]), &(center[1]), &(center[2]), &(verts[0]), &(verts[1]), &(verts[2]), &(verts[3]), &(verts[4]), &(verts[5]), &(verts[6]), &(verts[7]), &(verts[8]), &(verts[9]), &(verts[10]), &(verts[11]));
 }
@@ -243,9 +243,9 @@ void healpix_verts(int nside, int pix, vec center, long double verts[12])
   Return value: 1- cosl(th(ij))
 */
 
-long double cmrpirpj(vec rpi, vec rpj)
+_Float128 cmrpirpj(vec rpi, vec rpj)
 {
-  long double cmij;
+  _Float128 cmij;
   
   cmij = (powl((rpi[0]-rpj[0]),2)+powl((rpi[1]-rpj[1]),2)+powl((rpi[2]-rpj[2]),2))/2.;
   return(cmij);

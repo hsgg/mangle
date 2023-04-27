@@ -28,10 +28,10 @@
 	     sum_lm w_lm Y_lm exp[- [l(l+1) / lsmooth(lsmooth+1)]^(esmooth/2) ]
 			  if lsmooth > 0. and general esmooth.
 */
-long double wrho(long double az, long double el, int lmax, int mmax, harmonic w[/*NW*/], long double lsmooth, long double esmooth)
+_Float128 wrho(_Float128 az, _Float128 el, int lmax, int mmax, harmonic w[/*NW*/], _Float128 lsmooth, _Float128 esmooth)
 {
     int im, nw;
-    long double wrho;
+    _Float128 wrho;
 
     im = IM;
     nw = NW;

@@ -27,7 +27,7 @@ typedef struct {
     char newid;		/* whether to use old or new id number */
     long long idstart;          /* new id number to use for first polygon in file*/
     int pixel;          /* pixel that current polygon is in */ 
-    long double weight;	/* weight of current polygon */
+    _Float128 weight;	/* weight of current polygon */
     char inunitp;	/* angular units of input polygon data */
     char outunitp;	/* angular units of output polygon data */
     int inframe;	/* angular frame of input az, el data */
@@ -36,10 +36,10 @@ typedef struct {
     char outunit;	/* angular units of output az, el data */
     int outprecision;	/* digits after decimal point in output angles */
     char outphase;	/* '-' or '+' to make output azimuth in interval (-pi, pi] or [0, 2 pi) */
-    long double azn;		/* azimuth of new pole wrt original frame */
-    long double eln;		/* elevation of new pole wrt original frame
+    _Float128 azn;		/* azimuth of new pole wrt original frame */
+    _Float128 eln;		/* elevation of new pole wrt original frame
 			 = elevation of original pole wrt new frame */
-    long double azp;		/* azimuth of original pole wrt new frame */
+    _Float128 azp;		/* azimuth of original pole wrt new frame */
     char trunit;	/* angular units of transformation angles */
     int nweights;       /* the total number of weights/polygons, for use with healpix_weight input files and rasterize */ 
     char dmethod;         /* for distributed polygon output file, define id to use for splitting into separate files */

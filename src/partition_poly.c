@@ -48,15 +48,15 @@
 		   whose union equals the input *poly,
 		   though some parts are disconnected.
 */
-int partition_poly(polygon **poly, int npolys, polygon *polys[/*npolys*/], long double mtol, int all_oneboundary, int adjust_lasso, int force_split, int overwrite_original, int *npoly)
+int partition_poly(polygon **poly, int npolys, polygon *polys[/*npolys*/], _Float128 mtol, int all_oneboundary, int adjust_lasso, int force_split, int overwrite_original, int *npoly)
 {
     const int do_vcirc = 1;
     const int per = 0;
     const int nve = 2;
     int dnp, dnpoly, ier, iev, igp, ip, ipoly, jpoly, kpoly, nev, nev0, ngp, np, nret, nv, verb;
-    long double area, areag, atol, tol;
+    _Float128 area, areag, atol, tol;
     int *ipv, *gp_tmp, *ev;
-    long double *angle;
+    _Float128 *angle;
     vec *ve;
     /* work arrays */
     int *gp = 0x0, *gpg = 0x0;
@@ -365,7 +365,7 @@ int partition_poly(polygon **poly, int npolys, polygon *polys[/*npolys*/], long 
 		 0 if gpoly was successfully partitioned;
 		 1 if gpoly was not fully partitioned.
 */
-int partition_gpoly(polygon *gpoly, int npolys, polygon *polys[/*npolys*/], long double mtol, int all_oneboundary, int adjust_lasso, int force_split, int *npoly)
+int partition_gpoly(polygon *gpoly, int npolys, polygon *polys[/*npolys*/], _Float128 mtol, int all_oneboundary, int adjust_lasso, int force_split, int *npoly)
 {
 /* bail out if number of forcibly split polygons to partition exceeds this maximum */
 #define	NFORCEMAX	200
@@ -567,7 +567,7 @@ int partition_gpoly(polygon *gpoly, int npolys, polygon *polys[/*npolys*/], long
 		 1 if poly was split forcibly when no boundary could be lassoed;
 		   can only occur if force_split = 1.
 */
-int part_poly(polygon *poly, int npolys, polygon *polys[/*npolys*/], long double mtol, int all_oneboundary, int adjust_lasso, int force_split, int *npoly, int *npoly_try)
+int part_poly(polygon *poly, int npolys, polygon *polys[/*npolys*/], _Float128 mtol, int all_oneboundary, int adjust_lasso, int force_split, int *npoly, int *npoly_try)
 {
 /* number of extra caps to allocate to polygon, to allow for expansion */
 #define DNP		4
@@ -578,12 +578,12 @@ int part_poly(polygon *poly, int npolys, polygon *polys[/*npolys*/], long double
     const int itmax = 30;
     int dnp, found, i, ier, iev, ip, it, iv, ivm, ivmax_that, ivmax_this, ivmin_that, ivmin_this, nev, nev0, np, nret, nv, nvm;
     int *ipv, *gp, *ev;
-    long double *angle;
+    _Float128 *angle;
     vec *ve, *vm;
-    long double *cmvmin, *cmvmax, *cmpmin, *cmpmax;
+    _Float128 *cmvmin, *cmvmax, *cmpmin, *cmpmax;
     vec *vmax, *vmin;
-    long double cmbest, cme, cmforce, dth, dthbest, dthforce, dthm, dthp, s, th, thm, tol;
-    long double cmpmax_all, cmpmin_all, cmvmax_that, cmvmax_this, cmvmin_that, cmvmin_this, thmax_that, thmax_this, thmin_that, thmin_this;
+    _Float128 cmbest, cme, cmforce, dth, dthbest, dthforce, dthm, dthp, s, th, thm, tol;
+    _Float128 cmpmax_all, cmpmin_all, cmvmax_that, cmvmax_this, cmvmin_that, cmvmin_this, thmax_that, thmax_this, thmin_that, thmin_this;
     vec v, vmbest, vmforce;
 
     /* initialize return value to normal */

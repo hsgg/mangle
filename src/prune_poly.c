@@ -28,10 +28,10 @@
 		2 if nothing changed, and polygon is null;
 		3 if polygon was changed to null polygon.
 */
-int prune_poly(polygon *poly, long double mtol)
+int prune_poly(polygon *poly, _Float128 mtol)
 {
     int i, ier, ip, iret, jp, verb;
-    long double area, area_tot, cm, tol;
+    _Float128 area, area_tot, cm, tol;
 
     /* first cut */
     iret = trim_poly(poly);

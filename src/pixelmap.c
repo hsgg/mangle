@@ -140,9 +140,9 @@ int pixelmap(int *npoly, polygon *poly[/**npoly*/])
   int *total;
   int *parent_pixels;
   int begin, end, p,max_pixel,min_pixel, ier, verb,res1,res2;
-  long double tol,area, tot_area;
-  long double *av_weight;
-  long double *av_weight0;
+  _Float128 tol,area, tot_area;
+  _Float128 *av_weight;
+  _Float128 *av_weight0;
 
   poly_sort(*npoly,poly,'p');
   min_pixel = poly[0]->pixel; 
@@ -193,7 +193,7 @@ int pixelmap(int *npoly, polygon *poly[/**npoly*/])
     kstart=pixel_start(res_max,scheme);
     kend=pixel_start(res_max+1,scheme)-1;
   }
-  av_weight0= (long double *) malloc(sizeof(long double) * (kend-kstart+1) );
+  av_weight0= (_Float128 *) malloc(sizeof(_Float128) * (kend-kstart+1) );
   if (!av_weight0) {
     fprintf(stderr, "pixelmap: failed to allocate memory for %d integers\n", kend-kstart+1 );
     return(-1);

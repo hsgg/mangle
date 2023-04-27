@@ -4,9 +4,9 @@
 #include <stdlib.h>
 
 /*------------------------------------------------------------------------------
-  Random long double in interval [0., 1.)
+  Random _Float128 in interval [0., 1.)
 */
-long double drandom(void)
+_Float128 drandom(void)
 {
-    return((long double)random() / ((long double)RAND_MAX + 1.));
+    return((_Float128)random() / ((_Float128)RAND_MAX + 1.));
 }

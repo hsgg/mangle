@@ -16,19 +16,19 @@
 		 this is only used to decide the format, not to rescale the
 		 angle, which remains unchanged;
                  the 'h' unit signifies hms(RA) and dms(Dec);
-		 otherwise angle is written to str as a long double.
+		 otherwise angle is written to str as a _Float128.
 	  precision = number of digits after decimal point in output angles.
   Output: str = pointer to string containing the angle.
 	  str_len = length of string.
 */
-void wrangle(long double angle, char unit, int precision, size_t str_len, char str[/*str_len*/])
+void wrangle(_Float128 angle, char unit, int precision, size_t str_len, char str[/*str_len*/])
 {
 /* default number of significant digits */
 #define DIGITS		15
     char sign;
     int hour, min;
     int width;
-    long double a, sec;
+    _Float128 a, sec;
 
     if (unit == 'h') {
 	sign = (angle < 0.)? '-' : ' ';

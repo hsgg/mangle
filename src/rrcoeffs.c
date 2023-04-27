@@ -18,9 +18,9 @@ polygon *polys_global[NPOLYSMAX];
 /* local functions */
 void	usage(void);
 #ifdef	GCC
-int	rrcoeffs(int npoly, polygon *[npoly], long double *, long double [2], long double[2]);
+int	rrcoeffs(int npoly, polygon *[npoly], _Float128 *, _Float128 [2], _Float128[2]);
 #else
-int	rrcoeffs(int npoly, polygon *[/*npoly*/], long double *, long double [2], long double[2]);
+int	rrcoeffs(int npoly, polygon *[/*npoly*/], _Float128 *, _Float128 [2], _Float128[2]);
 #endif
 
 /*------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ int	rrcoeffs(int npoly, polygon *[/*npoly*/], long double *, long double [2], lo
 int main(int argc, char *argv[])
 {
     int ifile, nfiles, npoly, npolys, nws,i;
-    long double area, bound[2], vert[2];
+    _Float128 area, bound[2], vert[2];
     polygon **polys;
     polys=polys_global;
 
@@ -123,10 +123,10 @@ void usage(void)
   Return value: number of polygons for which area, bound, and vert were computed.
 		    or -1 if error occurred.
 */
-int rrcoeffs(int npoly, polygon *poly[/*npoly*/], long double *area, long double bound[2], long double vert[2])
+int rrcoeffs(int npoly, polygon *poly[/*npoly*/], _Float128 *area, _Float128 bound[2], _Float128 vert[2])
 {
     int ier, ip, ipoly, jp, jpoly, ndone, ner, np;
-    long double darea, dbound[2], dvert[2], toli, tolj, ww;
+    _Float128 darea, dbound[2], dvert[2], toli, tolj, ww;
     harmonic dw[1];
     polygon *polyij = 0x0;
 

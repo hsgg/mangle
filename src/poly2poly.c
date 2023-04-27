@@ -18,9 +18,9 @@ polygon *polys_global[NPOLYSMAX];
 /* local functions */
 void	usage(void);
 #ifdef	GCC
-int	intersect_poly(int npoly1, polygon *[npoly1], int npoly2, polygon *[npoly2], long double);
+int	intersect_poly(int npoly1, polygon *[npoly1], int npoly2, polygon *[npoly2], _Float128);
 #else
-int	intersect_poly(int npoly1, polygon *[/*npoly1*/], int npoly2, polygon *[/*npoly2*/], long double);
+int	intersect_poly(int npoly1, polygon *[/*npoly1*/], int npoly2, polygon *[/*npoly2*/], _Float128);
 #endif
 
 /*------------------------------------------------------------------------------
@@ -191,7 +191,7 @@ void usage(void)
 
   This subroutine implements the -n option of poly2poly.
 */
-int intersect_poly(int npoly1, polygon *poly1[/*npoly1*/], int npoly2, polygon *poly2[/*npoly2*/], long double mtol)
+int intersect_poly(int npoly1, polygon *poly1[/*npoly1*/], int npoly2, polygon *poly2[/*npoly2*/], _Float128 mtol)
 {
     int ier, inull, iprune, i, j, k, np;
 

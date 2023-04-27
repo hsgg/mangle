@@ -27,12 +27,12 @@
 		1 = poly2 fully encloses poly1;
 		2 = poly2 splits poly1 into two.
 */
-int split_poly(polygon **poly1, polygon *poly2, polygon **poly3, long double mtol)
+int split_poly(polygon **poly1, polygon *poly2, polygon **poly3, _Float128 mtol)
 {
     static polygon *poly = 0x0, *poly4 = 0x0;
 
     int ier, ip, iprune, np, np1, verb;
-    long double area, area_tot, cm, tol,area1,area3,area4;
+    _Float128 area, area_tot, cm, tol,area1,area3,area4;
 
     /* poly2 is whole sphere, therefore contains poly1 */
     if (poly2->np == 0){
@@ -189,7 +189,7 @@ int split_poly(polygon **poly1, polygon *poly2, polygon **poly3, long double mto
   Return value: npoly = number of disjoint polygons, excluding poly1,
 			or -1 if error occurred in split_poly().
 */
-int fragment_poly(polygon **poly1, polygon *poly2, int discard, int npolys, polygon *polys[/*npolys*/], long double mtol, char bmethod)
+int fragment_poly(polygon **poly1, polygon *poly2, int discard, int npolys, polygon *polys[/*npolys*/], _Float128 mtol, char bmethod)
 {
     int npoly, nsplit;
     polygon **poly;

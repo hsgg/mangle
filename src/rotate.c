@@ -100,7 +100,7 @@ int rotate(char *in_filename, char *out_filename, format *fmt)
     char *word, *next;
     char az_str[AZEL_STR_LEN], el_str[AZEL_STR_LEN];
     int ird, len, np;
-    long double circle;
+    _Float128 circle;
     azel vi, vf;
     char *out_fn;
     FILE *outfile;

@@ -47,11 +47,11 @@
 		1 if fatal degenerate intersection of boundaries;
 		-1 if failed to allocate memory.
 */
-int gvlims(polygon *poly, int vcirc, long double *tol, vec vi, int *nv, vec **vmin_p, vec **vmax_p, long double **cmvmin_p, long double **cmvmax_p, long double **cmpmin_p, long double **cmpmax_p, int **ipv_p, int **gp_p, int *nev, int *nev0, int **ev_p)
+int gvlims(polygon *poly, int vcirc, _Float128 *tol, vec vi, int *nv, vec **vmin_p, vec **vmax_p, _Float128 **cmvmin_p, _Float128 **cmvmax_p, _Float128 **cmpmin_p, _Float128 **cmpmax_p, int **ipv_p, int **gp_p, int *nev, int *nev0, int **ev_p)
 {
     static int nvmax = 0, npmax = 0;
     static int *ipv = 0x0, *gp = 0x0, *ev = 0x0;
-    static long double *cmvmin = 0x0, *cmvmax = 0x0, *cmpmin = 0x0, *cmpmax = 0x0;
+    static _Float128 *cmvmin = 0x0, *cmvmax = 0x0, *cmpmin = 0x0, *cmpmax = 0x0;
     static vec *vmin = 0x0, *vmax = 0x0;
 
     int ier;
@@ -86,14 +86,14 @@ int gvlims(polygon *poly, int vcirc, long double *tol, vec vi, int *nv, vec **vm
 		fprintf(stderr, "gvlims: failed to allocate memory for %d vecs\n", *nv + DNV);
 		return(-1);
 	    }
-	    cmvmin = (long double *) malloc(sizeof(long double) * (*nv + DNV));
+	    cmvmin = (_Float128 *) malloc(sizeof(_Float128) * (*nv + DNV));
 	    if (!cmvmin) {
-		fprintf(stderr, "gvlims: failed to allocate memory for %d long doubles\n", *nv + DNV);
+		fprintf(stderr, "gvlims: failed to allocate memory for %d _Float128s\n", *nv + DNV);
 		return(-1);
 	    }
-	    cmvmax = (long double *) malloc(sizeof(long double) * (*nv + DNV));
+	    cmvmax = (_Float128 *) malloc(sizeof(_Float128) * (*nv + DNV));
 	    if (!cmvmax) {
-		fprintf(stderr, "gvlims: failed to allocate memory for %d long doubles\n", *nv + DNV);
+		fprintf(stderr, "gvlims: failed to allocate memory for %d _Float128s\n", *nv + DNV);
 		return(-1);
 	    }
 	    ipv = (int *) malloc(sizeof(int) * (*nv + DNV));
@@ -112,14 +112,14 @@ int gvlims(polygon *poly, int vcirc, long double *tol, vec vi, int *nv, vec **vm
 	    if (cmpmin) free(cmpmin);
 	    if (cmpmax) free(cmpmax);
 	    if (gp) free(gp);
-	    cmpmin = (long double *) malloc(sizeof(long double) * (poly->np + DNV));
+	    cmpmin = (_Float128 *) malloc(sizeof(_Float128) * (poly->np + DNV));
 	    if (!cmpmin) {
-		fprintf(stderr, "gvlims: failed to allocate memory for %d long doubles\n", poly->np + DNV); 
+		fprintf(stderr, "gvlims: failed to allocate memory for %d _Float128s\n", poly->np + DNV); 
 		return(-1); 
 	    }
-	    cmpmax = (long double *) malloc(sizeof(long double) * (poly->np + DNV));
+	    cmpmax = (_Float128 *) malloc(sizeof(_Float128) * (poly->np + DNV));
 	    if (!cmpmax) {
-		fprintf(stderr, "gvlims: failed to allocate memory for %d long doubles\n", poly->np + DNV); 
+		fprintf(stderr, "gvlims: failed to allocate memory for %d _Float128s\n", poly->np + DNV); 
 		return(-1); 
 	    }
 	    gp = (int *) malloc(sizeof(int) * (poly->np + DNV));
@@ -180,12 +180,12 @@ int gvlims(polygon *poly, int vcirc, long double *tol, vec vi, int *nv, vec **vm
 		 1 if fatal degenerate intersection of boundaries;
 		-1 if failed to allocate memory.
 */
-int gvlim(polygon *poly, int vcirc, long double *tol, vec vi, int nvmax, int *nv, vec vmin[/*nvmax*/], vec vmax[/*nvmax*/], long double cmvmin[/*nvmax*/], long double cmvmax[/*nvmax*/], long double cmpmin[/*poly->np*/], long double cmpmax[/*poly->np*/], int ipv[/*nvmax*/], int gp[/*poly->np*/], int *nev, int *nev0, int ev[/*nvmax*/])
+int gvlim(polygon *poly, int vcirc, _Float128 *tol, vec vi, int nvmax, int *nv, vec vmin[/*nvmax*/], vec vmax[/*nvmax*/], _Float128 cmvmin[/*nvmax*/], _Float128 cmvmax[/*nvmax*/], _Float128 cmpmin[/*poly->np*/], _Float128 cmpmax[/*poly->np*/], int ipv[/*nvmax*/], int gp[/*poly->np*/], int *nev, int *nev0, int ev[/*nvmax*/])
 {
     logical ldegen;
     /* work arrays */
     int *iord, *iwk;
-    long double *phi, *wk;
+    _Float128 *phi, *wk;
 
     /* allocate memory for work arrays */
     iord = (int *) malloc(sizeof(int) * poly->np * 2);
@@ -193,9 +193,9 @@ int gvlim(polygon *poly, int vcirc, long double *tol, vec vi, int nvmax, int *nv
 	fprintf(stderr, "gvlim: failed to allocate memory for %d ints\n", poly->np * 2);
 	return(-1);
     }
-    phi = (long double *) malloc(sizeof(long double) * poly->np * 2);
+    phi = (_Float128 *) malloc(sizeof(_Float128) * poly->np * 2);
     if (!phi) {
-	fprintf(stderr, "gvlim: failed to allocate memory for %d long doubles\n", poly->np * 2);
+	fprintf(stderr, "gvlim: failed to allocate memory for %d _Float128s\n", poly->np * 2);
 	return(-1);
     }
     iwk = (int *) malloc(sizeof(int) * nvmax * 4);
@@ -203,9 +203,9 @@ int gvlim(polygon *poly, int vcirc, long double *tol, vec vi, int nvmax, int *nv
 	fprintf(stderr, "gvlim: failed to allocate memory for %d ints\n", nvmax * 4);
 	return(-1);
     }
-    wk = (long double *) malloc(sizeof(long double) * nvmax);
+    wk = (_Float128 *) malloc(sizeof(_Float128) * nvmax);
     if (!wk) {
-	fprintf(stderr, "gvlim: failed to allocate memory for %d long doubles\n", nvmax);
+	fprintf(stderr, "gvlim: failed to allocate memory for %d _Float128s\n", nvmax);
 	return(-1);
     }
 

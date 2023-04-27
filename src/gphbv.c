@@ -19,12 +19,12 @@
   Return value:  0 if ok;
 		-1 if could not allocate temporary memory.
 */
-int gphbv(polygon *poly, int np, int bnd, long double *tol, long double bound[2], long double vert[2])
+int gphbv(polygon *poly, int np, int bnd, _Float128 *tol, _Float128 bound[2], _Float128 vert[2])
 {
     int i;
     /* work arrays */
     int *iord;
-    long double *phi;
+    _Float128 *phi;
 
     /* allocate memory for work arrays */
     iord = (int *) malloc(sizeof(int) * poly->np * 2);
@@ -32,9 +32,9 @@ int gphbv(polygon *poly, int np, int bnd, long double *tol, long double bound[2]
 	fprintf(stderr, "gphbv: failed to allocate memory for %d ints\n", poly->np * 2);
 	return(-1);
     }
-    phi = (long double *) malloc(sizeof(long double) * poly->np * 2);
+    phi = (_Float128 *) malloc(sizeof(_Float128) * poly->np * 2);
     if (!phi) {
-	fprintf(stderr, "gphbv: failed to allocate memory for %d long doubles\n", poly->np * 2);
+	fprintf(stderr, "gphbv: failed to allocate memory for %d _Float128s\n", poly->np * 2);
 	return(-1);
     }
 

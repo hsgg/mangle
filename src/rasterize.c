@@ -23,9 +23,9 @@ long long raster_ids[NPOLYSMAX];
 /* local functions */
 void     usage(void);
 #ifdef  GCC
-int     rasterize(int nhealpix_poly, int npoly, polygon *[npoly], int npolys, polygon *[npolys], int nweights, long long rastid_min, long double [nweights], long long raster_ids[npolys]);
+int     rasterize(int nhealpix_poly, int npoly, polygon *[npoly], int npolys, polygon *[npolys], int nweights, long long rastid_min, _Float128 [nweights], long long raster_ids[npolys]);
 #else
-int     rasterize(int nhealpix_poly, int npoly, polygon *[/*npoly*/], int npolys, polygon *[/*npolys*/], int nweights, long long rastid_min, long double [/*nweights*/], long long raster_ids[/*npolys*/]);
+int     rasterize(int nhealpix_poly, int npoly, polygon *[/*npoly*/], int npolys, polygon *[/*npolys*/], int nweights, long long rastid_min, _Float128 [/*nweights*/], long long raster_ids[/*npolys*/]);
 #endif
 
 /*--------------------------------------------------------------------
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 {
   int ifile, nfiles, npoly, npolys, nhealpix_poly, nhealpix_polys, j, k, nweights, nweight,npolyw;
   long long rastid_min, rastid_max;
-  long double *weights;
+  _Float128 *weights;
   char *filename;
   char subfilename[1000];
   int nchars;
@@ -166,9 +166,9 @@ int main(int argc, char *argv[])
   }
 
   /* allocate memory for weights array */
-  weights = (long double *) malloc(sizeof(long double) * (nweights));
+  weights = (_Float128 *) malloc(sizeof(_Float128) * (nweights));
   if (!weights) {
-     fprintf(stderr, "rasterize: failed to allocate memory for %d long doubles\n", nweights);
+     fprintf(stderr, "rasterize: failed to allocate memory for %d _Float128s\n", nweights);
      exit(1);
   }
 
@@ -266,13 +266,13 @@ void usage(void)
                 or -1 if error occurred.
 */
 
-int rasterize(int nhealpix_poly, int npoly, polygon *poly[/*npoly*/], int npolys, polygon *polys[/*npolys*/], int nweights, long long rastid_min, long double weights[/*nweights*/],long long raster_ids[/*npolys*/])
+int rasterize(int nhealpix_poly, int npoly, polygon *poly[/*npoly*/], int npolys, polygon *polys[/*npolys*/], int nweights, long long rastid_min, _Float128 weights[/*nweights*/],long long raster_ids[/*npolys*/])
 {
 #define WARNMAX                 0
 
   int min_pixel, max_pixel, ier, ier_h, ier_i, i, j,k, ipix, ipoly, begin_r, end_r, begin_m, end_m, verb, np, iprune,n,selfsnap,nadj;
   int *start_r, *start_m, *total_r, *total_m;
-  long double *areas, area_h, area_i, tol;
+  _Float128 *areas, area_h, area_i, tol;
   polygon *rasterizer_and_poly[2];
   char snapped_polys[2];
   static polygon *polyint = 0x0;
@@ -285,9 +285,9 @@ int rasterize(int nhealpix_poly, int npoly, polygon *poly[/*npoly*/], int npolys
   }
   
   /* allocate memory for rasterizer areas array */
-  areas = (long double *) malloc(sizeof(long double) * (nweights));
+  areas = (_Float128 *) malloc(sizeof(_Float128) * (nweights));
   if (!areas) {
-    fprintf(stderr, "rasterize: failed to allocate memory for %d long doubles\n", nweights);
+    fprintf(stderr, "rasterize: failed to allocate memory for %d _Float128s\n", nweights);
     exit(1);
   }
   

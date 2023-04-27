@@ -19,7 +19,7 @@
   Return value: number of disjoint connected polygons,
 		or -1 if error occurred.
 */
-int balkanize(int npoly, polygon *poly[/*npoly*/], int npolys, polygon *polys[/*npolys*/], long double mtol, format *fmt, long double axtol, long double btol, long double thtol, long double ytol)
+int balkanize(int npoly, polygon *poly[/*npoly*/], int npolys, polygon *polys[/*npolys*/], _Float128 mtol, format *fmt, _Float128 axtol, _Float128 btol, _Float128 thtol, _Float128 ytol)
 {
 /* part_poly should lasso one-boundary polygons only if they have too many caps */
 #define ALL_ONEBOUNDARY		1
@@ -35,7 +35,7 @@ int balkanize(int npoly, polygon *poly[/*npoly*/], int npolys, polygon *polys[/*
     int *start;
     int *total;
     int begin, end, p, max_pixel;
-    long double tol;
+    _Float128 tol;
 
     poly_sort(npoly, poly, 'p');
 

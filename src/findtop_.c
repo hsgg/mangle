@@ -6,7 +6,7 @@
 /*------------------------------------------------------------------------------
   c interface to fortran subroutines in findtop.s.f
 */
-void findtop(long double a[], int na, int iord[], int nb)
+void findtop(_Float128 a[], int na, int iord[], int nb)
 {
     int i;
 
@@ -15,7 +15,7 @@ void findtop(long double a[], int na, int iord[], int nb)
     for (i = 0; i < nb; i++) iord[i]--;
 }
 
-void findbot(long double a[], int na, int iord[], int nb)
+void findbot(_Float128 a[], int na, int iord[], int nb)
 {
     int i;
 
@@ -24,7 +24,7 @@ void findbot(long double a[], int na, int iord[], int nb)
     for (i = 0; i < nb; i++) iord[i]--;
 }
 
-void findtpa(long double a[], int na, int iord[], int nb)
+void findtpa(_Float128 a[], int na, int iord[], int nb)
 {
     int i;
 
@@ -33,7 +33,7 @@ void findtpa(long double a[], int na, int iord[], int nb)
     for (i = 0; i < nb; i++) iord[i]--;
 }
 
-void findbta(long double a[], int na, int iord[], int nb)
+void findbta(_Float128 a[], int na, int iord[], int nb)
 {
     int i;
 

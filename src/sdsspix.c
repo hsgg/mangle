@@ -9,14 +9,14 @@ Get the original at http://lahmu.phyast.pitt.edu/~scranton/SDSSPix/
 #include "manglefn.h"
 
 unsigned long nx0, ny0;
-long double pi, deg2Rad, rad2Deg, strad2Deg, etaOffSet;
-long double surveyCenterRA, surveyCenterDEC, node, etaPole;
+_Float128 pi, deg2Rad, rad2Deg, strad2Deg, etaOffSet;
+_Float128 surveyCenterRA, surveyCenterDEC, node, etaPole;
 
 void assign_parameters()
 {
   extern unsigned long nx0, ny0;
-  extern long double pi, deg2Rad, rad2Deg, strad2Deg, etaOffSet;
-  extern long double surveyCenterRA, surveyCenterDEC, node, etaPole;
+  extern _Float128 pi, deg2Rad, rad2Deg, strad2Deg, etaOffSet;
+  extern _Float128 surveyCenterRA, surveyCenterDEC, node, etaPole;
 
   /* With these base resolutions, we can achieve nearly equal area pixels, with
      nearly square pixels at lambda = 30 degrees.  A resolution factor of 
@@ -43,10 +43,10 @@ void assign_parameters()
   etaPole = deg2Rad*surveyCenterDEC;
 }
 
-void pix2ang(int resolution, unsigned long pixnum, long double *lambda, long double *eta)
+void pix2ang(int resolution, unsigned long pixnum, _Float128 *lambda, _Float128 *eta)
 {
   extern unsigned long nx0, ny0;
-  extern long double pi, deg2Rad, rad2Deg, strad2Deg; 
+  extern _Float128 pi, deg2Rad, rad2Deg, strad2Deg; 
   long nx, ny, i, j;
 
   /* This module takes a pixel index and converts it into LAMBDA-ETA
@@ -67,12 +67,12 @@ void pix2ang(int resolution, unsigned long pixnum, long double *lambda, long dou
   *lambda = 90.0 - rad2Deg*acosl(1.0-2.0*(j+0.5)/ny);
 }
 
-void ang2pix(int resolution, long double lambda, long double eta, unsigned long *pixnum)
+void ang2pix(int resolution, _Float128 lambda, _Float128 eta, unsigned long *pixnum)
 {
   extern unsigned long nx0, ny0;
-  extern long double pi, deg2Rad, rad2Deg, strad2Deg; 
+  extern _Float128 pi, deg2Rad, rad2Deg, strad2Deg; 
   unsigned long nx, ny, i, j;
-  long double eta2;
+  _Float128 eta2;
 
   /* The complement to pix2ang, this module converts LAMBDA-ETA to pixel
      index.  This single number uniquely identifies a pixel on the sky. 
@@ -109,10 +109,10 @@ void ang2pix(int resolution, long double lambda, long double eta, unsigned long 
   *pixnum = nx*j + i;
 }
 
-void pix2ang_radec(int resolution, unsigned long pixnum, long double *ra, long double *dec) {
+void pix2ang_radec(int resolution, unsigned long pixnum, _Float128 *ra, _Float128 *dec) {
 
-  void csurvey2eq(long double lambda, long double eta, long double *ra, long double *dec);
-  long double lam, eta, ra_tmp, dec_tmp;
+  void csurvey2eq(_Float128 lambda, _Float128 eta, _Float128 *ra, _Float128 *dec);
+  _Float128 lam, eta, ra_tmp, dec_tmp;
 
   /* Same as pix2ang, but returning RA-DEC coordinates instead of LAMBDA-ETA */
 
@@ -124,11 +124,11 @@ void pix2ang_radec(int resolution, unsigned long pixnum, long double *ra, long d
   *dec = dec_tmp;
 }
 
-void ang2pix_radec(int resolution, long double ra, long double dec, unsigned long *pixnum) {
+void ang2pix_radec(int resolution, _Float128 ra, _Float128 dec, unsigned long *pixnum) {
 
-  void eq2csurvey(long double ra, long double dec, long double *lambda, long double *eta);
+  void eq2csurvey(_Float128 ra, _Float128 dec, _Float128 *lambda, _Float128 *eta);
   unsigned long tmp_pixnum;
-  long double lambda, eta;
+  _Float128 lambda, eta;
 
   /* Same as ang2pix, but taking RA-DEC coordinates instead of LAMBDA-ETA */
 
@@ -139,9 +139,9 @@ void ang2pix_radec(int resolution, long double ra, long double dec, unsigned lon
   *pixnum = tmp_pixnum;
 }
 
-void csurvey2eq(long double lambda, long double eta, long double *ra, long double *dec) {
+void csurvey2eq(_Float128 lambda, _Float128 eta, _Float128 *ra, _Float128 *dec) {
 
-  long double x, y, z;
+  _Float128 x, y, z;
 
   /* Conversion from LAMBDA-ETA to RA-DEC coordinates */
 
@@ -153,9 +153,9 @@ void csurvey2eq(long double lambda, long double eta, long double *ra, long doubl
   *dec = asinl(z)/deg2Rad;
 }
 
-void eq2csurvey(long double ra, long double dec, long double *lambda, long double *eta) {
+void eq2csurvey(_Float128 ra, _Float128 dec, _Float128 *lambda, _Float128 *eta) {
 
-  long double x, y, z;
+  _Float128 x, y, z;
 
   /* Conversion from RA-DEC to LAMBDA-ETA coordinates */
 
@@ -252,7 +252,7 @@ void subpix(int resolution, unsigned long pixnum, unsigned long *sub_pixnum1,
 
   /* Reverse of superpix.  
 
-  **Only works for long doubled resolution**
+  **Only works for _Float128d resolution**
 
   */
 
@@ -273,10 +273,10 @@ void subpix(int resolution, unsigned long pixnum, unsigned long *sub_pixnum1,
 }
 
 void pix_bound(int resolution, unsigned long pixnum, 
-	       long double *lammin, long double *lammax, long double *etamin, long double *etamax)
+	       _Float128 *lammin, _Float128 *lammax, _Float128 *etamin, _Float128 *etamax)
 {
   extern unsigned long nx0, ny0;
-  extern long double pi, deg2Rad, rad2Deg, strad2Deg; 
+  extern _Float128 pi, deg2Rad, rad2Deg, strad2Deg; 
   unsigned long nx, ny, i, j;
 
   /* Returns ETA-LAMBDA boundaries for a given pixel index.
@@ -300,10 +300,10 @@ void pix_bound(int resolution, unsigned long pixnum,
 
 }
 
-long double pix_area(int resolution, unsigned long pixnum)
+_Float128 pix_area(int resolution, unsigned long pixnum)
 {
-  extern long double pi, deg2Rad, rad2Deg, strad2Deg; 
-  long double lammin, lammax, etamin, etamax;
+  extern _Float128 pi, deg2Rad, rad2Deg, strad2Deg; 
+  _Float128 lammin, lammax, etamin, etamax;
 
   /* Returns the area of a given pixel index and resolution */
 
@@ -314,11 +314,11 @@ long double pix_area(int resolution, unsigned long pixnum)
 }
 
 void pix2xyz(int resolution, unsigned long pixnum, 
-	     long double *x, long double *y, long double *z)
+	     _Float128 *x, _Float128 *y, _Float128 *z)
 {
-  extern long double pi, deg2Rad, rad2Deg, strad2Deg; 
-  extern long double surveyCenterRA, surveyCenterDEC, node, etaPole;
-  long double lam, eta;
+  extern _Float128 pi, deg2Rad, rad2Deg, strad2Deg; 
+  extern _Float128 surveyCenterRA, surveyCenterDEC, node, etaPole;
+  _Float128 lam, eta;
 
   pix2ang(resolution,pixnum,&lam,&eta);
 
@@ -327,13 +327,13 @@ void pix2xyz(int resolution, unsigned long pixnum,
   *z = cosl(lam*deg2Rad)*sinl(eta*deg2Rad+etaPole);
 }
 
-void area_index(int resolution, long double lammin, long double lammax, long double etamin, 
-		long double etamax, unsigned long *x_min, unsigned long *x_max, 
+void area_index(int resolution, _Float128 lammin, _Float128 lammax, _Float128 etamin, 
+		_Float128 etamax, unsigned long *x_min, unsigned long *x_max, 
 		unsigned long *y_min, unsigned long *y_max)
 {
   extern unsigned long nx0, ny0;
-  extern long double pi, deg2Rad, rad2Deg, strad2Deg; 
-  void ang2pix(int resolution, long double lambda, long double eta, 
+  extern _Float128 pi, deg2Rad, rad2Deg, strad2Deg; 
+  void ang2pix(int resolution, _Float128 lambda, _Float128 eta, 
 	       unsigned long *pixnum);
   unsigned long nx, ny, pixnum;
 
@@ -380,13 +380,13 @@ void area_index_stripe(int resolution, int stripe,
 		       unsigned long *y_min, unsigned long *y_max)
 {
   extern unsigned long nx0, ny0;
-  extern long double pi, deg2Rad, rad2Deg, strad2Deg; 
-  void ang2pix(int resolution, long double lambda, long double eta, 
+  extern _Float128 pi, deg2Rad, rad2Deg, strad2Deg; 
+  void ang2pix(int resolution, _Float128 lambda, _Float128 eta, 
 	       unsigned long *pixnum);
-  void primary_bound(int stripe, long double *lammin, long double *lammax, 
-		     long double *etamin, long double *etamax);
+  void primary_bound(int stripe, _Float128 *lammin, _Float128 *lammax, 
+		     _Float128 *etamin, _Float128 *etamax);
   unsigned long nx, ny, pixnum;
-  long double lammin, lammax, etamin, etamax;
+  _Float128 lammin, lammax, etamin, etamax;
 
 
   /* Similar to area_index, but this returns the x-y range of the pixels in 
@@ -769,14 +769,14 @@ void make_superpix_struct(int superpix_resolution,
 }
 
 void rand_pixel_position(int resolution, unsigned long pixnum, 
-			 long double *lambda, long double *eta)
+			 _Float128 *lambda, _Float128 *eta)
 {
   extern unsigned long nx0, ny0;
-  extern long double pi, deg2Rad, rad2Deg, strad2Deg; 
+  extern _Float128 pi, deg2Rad, rad2Deg, strad2Deg; 
   void pix_bound(int resolution, unsigned long pixnum, 
-		 long double *lammin, long double *lammax, 
-		 long double *etamin, long double *etamax);
-  long double z_min, z, z_length, lammin, lammax, etamin, etamax, eta_length;
+		 _Float128 *lammin, _Float128 *lammax, 
+		 _Float128 *etamin, _Float128 *etamax);
+  _Float128 z_min, z, z_length, lammin, lammax, etamin, etamax, eta_length;
 
   pix_bound(resolution,pixnum,&lammin,&lammax,&etamin,&etamax);
 
@@ -791,16 +791,16 @@ void rand_pixel_position(int resolution, unsigned long pixnum,
 }
 */
 
-long double stripe_inclination(int stripe) 
+_Float128 stripe_inclination(int stripe) 
 {
   return 2.5*(stripe-10);
 }
 
-void primary_bound(int stripe, long double *lammin, long double *lammax, 
-		   long double *etamin, long double *etamax)
+void primary_bound(int stripe, _Float128 *lammin, _Float128 *lammax, 
+		   _Float128 *etamin, _Float128 *etamax)
 {
-  long double inc;
-  long double stripe_inclination(int stripe);
+  _Float128 inc;
+  _Float128 stripe_inclination(int stripe);
   
   inc = stripe_inclination(stripe);
   
@@ -943,7 +943,7 @@ void primary_bound(int stripe, long double *lammin, long double *lammax,
   if (*lammax < -1000.0) *lammax = 60.0;
 }
 /*
-void hunt(gsl_vector *xx, long double x, long *jlo)
+void hunt(gsl_vector *xx, _Float128 x, long *jlo)
 {
   long up, down, mid, n;
   int ascnd;

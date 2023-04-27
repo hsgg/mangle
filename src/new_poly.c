@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "manglefn.h"
 
-#define MEG(i)		(long double)((i+999)/1000)/1000.
+#define MEG(i)		(_Float128)((i+999)/1000)/1000.
 
 static long memory = 0, femory = 0;
 static int mpoly = 0, fpoly = 0;
@@ -33,9 +33,9 @@ polygon *new_poly(int npmax)
     memory += sizeof(vec) * npmax;
 
     /* allocate new cm array */
-    poly->cm = (long double *) malloc(sizeof(long double) * npmax);
+    poly->cm = (_Float128 *) malloc(sizeof(_Float128) * npmax);
     if (!poly->cm) return(0x0);
-    memory += sizeof(long double) * npmax;
+    memory += sizeof(_Float128) * npmax;
 
     /* allocated number of caps of polygon */
     poly->npmax = npmax;
@@ -62,7 +62,7 @@ void free_poly(polygon *poly)
 	if (poly->cm) {
 	    free(poly->cm);
 	    poly->cm = 0x0;
-	    femory += sizeof(long double) * poly->npmax;
+	    femory += sizeof(_Float128) * poly->npmax;
 	}
 	free(poly);
     }

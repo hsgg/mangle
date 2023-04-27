@@ -15,7 +15,7 @@ extern polygon *polys[];
       real *8 w(IM,NW)
       call harmonizepolys(mtol, lmax, w)
 */
-void harmonizepolys_(long double *mtol, int *lmax, harmonic w[])
+void harmonizepolys_(_Float128 *mtol, int *lmax, harmonic w[])
 {
     int ndone;
 

@@ -16,16 +16,16 @@
 		 the required memory is allocated.
   Return value: number of polygons that contain az, el position.
 */
-int poly_id(int npoly, polygon *poly[/*npoly*/], long double az, long double el, long long **id_p, long double **weight_p)
+int poly_id(int npoly, polygon *poly[/*npoly*/], _Float128 az, _Float128 el, long long **id_p, _Float128 **weight_p)
 {
 /* number of extra polygon id numbers to allocate, to allow for expansion */
 #define DNID		16
     static int nidmax = 0;
     static long long *id = 0x0;
-    static long double *weight = 0x0;
+    static _Float128 *weight = 0x0;
 
     int ipoly, nid;
-    long double rp[3];
+    _Float128 rp[3];
 
     /* unit vector corresponding to angular position az, el */
     rp[0] = cosl(el) * cosl(az);
@@ -41,13 +41,13 @@ int poly_id(int npoly, polygon *poly[/*npoly*/], long double az, long double el,
             if (id) free(id);
             if (weight) free(weight);
             id = (long long *) malloc(sizeof(long long) * (nid + DNID));
-	    weight = (long double *) malloc(sizeof(long double) * (nid + DNID));
+	    weight = (_Float128 *) malloc(sizeof(_Float128) * (nid + DNID));
             if (!id) {
                 fprintf(stderr, "poly_id: failed to allocate memory for %d long longs\n", nid + DNID);
                 return(-1);
             }
             if (!weight) {
-                fprintf(stderr, "poly_id: failed to allocate memory for %d long doubles\n", nid + DNID);
+                fprintf(stderr, "poly_id: failed to allocate memory for %d _Float128s\n", nid + DNID);
                 return(-1);
             }
 	    nidmax = nid + DNID;

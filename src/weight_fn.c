@@ -17,7 +17,7 @@ extern int verbose;
 ================================================================================
 In c, the user-supplied function should take the form:
 
-long double weight(long double *az, long double *el)
+_Float128 weight(_Float128 *az, _Float128 *el)
 
 verbose is available as a global variable that can be declared with
 extern int verbose;
@@ -36,9 +36,9 @@ calling fortran routines from c):
   Output: weight at angular position az, el;
 	  if survey is null, then weight is set to 1.
 */
-long double weight_fn(long double az, long double el, char *survey)
+_Float128 weight_fn(_Float128 az, _Float128 el, char *survey)
 {
-    long double weight;
+    _Float128 weight;
 
     /* null survey */
     if (!survey) {
@@ -77,13 +77,13 @@ long double weight_fn(long double az, long double el, char *survey)
   Input: survey = name of file containing weights.
   Return value: weight.
 */
-long double rdweight(char *survey)
+_Float128 rdweight(char *survey)
 {
 #ifndef BUFSIZE
 #  define	BUFSIZE		64
 #endif
     static int init = 0, nweight = 0;
-    static long double weight;
+    static _Float128 weight;
     static inputfile file = {
 	'\0',		/* input filename */
 	0x0,		/* input file stream */

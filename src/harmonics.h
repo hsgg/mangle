@@ -4,4 +4,4 @@
 #define IM		2
 #define NW		(((lmax + 1) * (lmax + 2)) / 2)
 
-typedef long double harmonic[IM];
+typedef _Float128 harmonic[IM];

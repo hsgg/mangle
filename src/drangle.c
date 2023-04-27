@@ -148,8 +148,8 @@ int drangle(char *azel_in_filename, char *th_in_filename, char *out_filename, fo
     /* maximum number of angular angular radii: will expand as necessary */
     static int nthmax = 0;
     static int ndrmax = 0;
-    static long double *th = 0x0, *cm = 0x0, *drsum = 0x0;
-    static long double *dr = 0x0;
+    static _Float128 *th = 0x0, *cm = 0x0, *drsum = 0x0;
+    static _Float128 *dr = 0x0;
 
 #ifdef TIME
     clock_t time;
@@ -158,7 +158,7 @@ int drangle(char *azel_in_filename, char *th_in_filename, char *out_filename, fo
     char *word, *next;
     char az_str[AZEL_STR_LEN], el_str[AZEL_STR_LEN], th_str[AZEL_STR_LEN], dr_str[AZEL_STR_LEN];
     int ier, ird, ith, len, lenth, np, nt, nth;
-    long double rp[3], s, t;
+    _Float128 rp[3], s, t;
     azel v;
     char *out_fn;
     FILE *outfile;
@@ -212,9 +212,9 @@ int drangle(char *azel_in_filename, char *th_in_filename, char *out_filename, fo
 			nthmax *= 2;
 		    }
 		    /* (re)allocate memory for th array */
-		    th = (long double *) realloc(th, sizeof(long double) * nthmax);
+		    th = (_Float128 *) realloc(th, sizeof(_Float128) * nthmax);
 		    if (!th) {
-			fprintf(stderr, "drangle: failed to allocate memory for %d long doubles\n", nthmax);
+			fprintf(stderr, "drangle: failed to allocate memory for %d _Float128s\n", nthmax);
 			return(-1);
 		    }
 		}
@@ -234,21 +234,21 @@ int drangle(char *azel_in_filename, char *th_in_filename, char *out_filename, fo
 	if (nth == 0) return(nth);
 
 	/* (re)allocate memory for th array */
-	th = (long double *) realloc(th, sizeof(long double) * nth);
+	th = (_Float128 *) realloc(th, sizeof(_Float128) * nth);
 	if (!th) {
-	    fprintf(stderr, "drangle: failed to allocate memory for %d long doubles\n", nth);
+	    fprintf(stderr, "drangle: failed to allocate memory for %d _Float128s\n", nth);
 	    return(-1);
 	}
 	/* (re)allocate memory for cm array */
-	cm = (long double *) realloc(cm, sizeof(long double) * nth);
+	cm = (_Float128 *) realloc(cm, sizeof(_Float128) * nth);
 	if (!cm) {
-	    fprintf(stderr, "drangle: failed to allocate memory for %d long doubles\n", nth);
+	    fprintf(stderr, "drangle: failed to allocate memory for %d _Float128s\n", nth);
 	    return(-1);
 	}
 	/* (re)allocate memory for drsum array */
-	drsum = (long double *) realloc(drsum, sizeof(long double) * nth);
+	drsum = (_Float128 *) realloc(drsum, sizeof(_Float128) * nth);
 	if (!drsum) {
-	    fprintf(stderr, "drangle: failed to allocate memory for %d long doubles\n", nth);
+	    fprintf(stderr, "drangle: failed to allocate memory for %d _Float128s\n", nth);
 	    return(-1);
 	}
 	nthmax = nth;
@@ -401,15 +401,15 @@ int drangle(char *azel_in_filename, char *th_in_filename, char *out_filename, fo
 		    } else {
 			nthmax *= 2;
 		    }
-		    th = (long double *) realloc(th, sizeof(long double) * nthmax);
+		    th = (_Float128 *) realloc(th, sizeof(_Float128) * nthmax);
 		    if (!th) {
-			fprintf(stderr, "drangle: failed to allocate memory for %d long doubles\n", nthmax);
+			fprintf(stderr, "drangle: failed to allocate memory for %d _Float128s\n", nthmax);
 			return(-1);
 		    }
 		    /* (re)allocate memory for cm array */
-		    cm = (long double *) realloc(cm, sizeof(long double) * nthmax);
+		    cm = (_Float128 *) realloc(cm, sizeof(_Float128) * nthmax);
 		    if (!cm) {
-			fprintf(stderr, "drangle: failed to allocate memory for %d long doubles\n", nthmax);
+			fprintf(stderr, "drangle: failed to allocate memory for %d _Float128s\n", nthmax);
 			return(-1);
 		    }
 		}
@@ -426,9 +426,9 @@ int drangle(char *azel_in_filename, char *th_in_filename, char *out_filename, fo
 	/* allocate memory for dr */
 	if (nth > ndrmax) {
 	    ndrmax = nth;
-	    dr = (long double *) realloc(dr, sizeof(long double) * ndrmax);
+	    dr = (_Float128 *) realloc(dr, sizeof(_Float128) * ndrmax);
 	    if (!dr) {
-		fprintf(stderr, "drangle: failed to allocate memory for %d long doubles\n", ndrmax);
+		fprintf(stderr, "drangle: failed to allocate memory for %d _Float128s\n", ndrmax);
 		return(-1);
 	    }
 	}
@@ -494,7 +494,7 @@ int drangle(char *azel_in_filename, char *th_in_filename, char *out_filename, fo
 	    scale(&th[ith], 'r', inunit);
 	    wrangle(th[ith], inunit, fmt->outprecision, AZEL_STR_LEN, th_str);
 	    scale(&drsum[ith], 'r', outunit);
-	    wrangle(drsum[ith] / (long double)np, outunit, fmt->outprecision, AZEL_STR_LEN, dr_str);
+	    wrangle(drsum[ith] / (_Float128)np, outunit, fmt->outprecision, AZEL_STR_LEN, dr_str);
 	    fprintf(outfile, "%s %s\n", th_str, dr_str);
 	}
 	fflush(outfile);
@@ -502,7 +502,7 @@ int drangle(char *azel_in_filename, char *th_in_filename, char *out_filename, fo
 	fprintf(outfile, "%*s", 2 * len + 1, "Average:");
 	for (ith = 0; ith < nth; ith++) {
 	    scale(&drsum[ith], 'r', outunit);
-	    wrangle(drsum[ith] / (long double)np, outunit, fmt->outprecision, AZEL_STR_LEN, dr_str);
+	    wrangle(drsum[ith] / (_Float128)np, outunit, fmt->outprecision, AZEL_STR_LEN, dr_str);
 	    fprintf(outfile, " %s", dr_str);
 	}
 	fprintf(outfile, "\n");

@@ -24,7 +24,7 @@ void	usage(void);
 int main(int argc, char *argv[])
 {
     int ifile, nfiles, npoly, npolys, nws,i;
-    long double area;
+    _Float128 area;
     harmonic *w;
     polygon **polys;
     polys=polys_global;

@@ -27,14 +27,14 @@
   Return value: number of coefficients written,
 		or -1 if error occurred.
 */
-int wrrrcoeffs(char *filename, long double area, long double bound[2], long double vert[2])
+int wrrrcoeffs(char *filename, _Float128 area, _Float128 bound[2], _Float128 vert[2])
 {
 /* precision with which harmonics are written */
 #define PRECISION	16
 /* number of coefficients */
 #define NCOEFF		4
     int icoeff, width;
-    long double rrcoeff[NCOEFF];
+    _Float128 rrcoeff[NCOEFF];
     FILE *file;
 
     /* first 4 coefficients of power series expansion of <RR> */

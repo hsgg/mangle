@@ -17,9 +17,9 @@
 
 polygon *get_pixel(int pix, char scheme){
   int m,n,res,base_pix,i,ier,pix_c[4];
-  long double azmax, azmin, elmax, elmin;
-  long double lammin, lammax, etamin, etamax;
-  long double angle[4], lammin_c[4], lammax_c[4], etamin_c[4], etamax_c[4];
+  _Float128 azmax, azmin, elmax, elmin;
+  _Float128 lammin, lammax, etamin, etamax;
+  _Float128 angle[4], lammin_c[4], lammax_c[4], etamin_c[4], etamax_c[4];
   azel v[4],v_r[4];
   polygon *pixel;
   

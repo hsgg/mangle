@@ -42,11 +42,11 @@
 		1 if fatal degenerate intersection of boundaries;
 		-1 if could not allocate memory.
 */
-int gverts(polygon *poly, int vcirc, long double *tol, int per, int nve, int *nv, vec **ve_p, long double **angle_p, int **ipv_p, int **gp_p, int *nev, int *nev0, int **ev_p)
+int gverts(polygon *poly, int vcirc, _Float128 *tol, int per, int nve, int *nv, vec **ve_p, _Float128 **angle_p, int **ipv_p, int **gp_p, int *nev, int *nev0, int **ev_p)
 {
     static int nvmax = 0, nvemax = 0, npmax = 0;
     static int *ipv = 0x0, *gp = 0x0, *ev = 0x0;
-    static long double *angle = 0x0;
+    static _Float128 *angle = 0x0;
     static vec *ve = 0x0;
 
     int ier;
@@ -74,9 +74,9 @@ int gverts(polygon *poly, int vcirc, long double *tol, int per, int nve, int *nv
 		fprintf(stderr, "gverts: failed to allocate memory for %d x %d vecs\n", *nv + DNV, nvemax);
 		return(-1);
 	    }
-	    angle = (long double *) malloc(sizeof(long double) * (*nv + DNV));
+	    angle = (_Float128 *) malloc(sizeof(_Float128) * (*nv + DNV));
 	    if (!angle) {
-		fprintf(stderr, "gverts: failed to allocate memory for %d long doubles\n", *nv + DNV);
+		fprintf(stderr, "gverts: failed to allocate memory for %d _Float128s\n", *nv + DNV);
 		return(-1);
 	    }
 	    ipv = (int *) malloc(sizeof(int) * (*nv + DNV));
@@ -155,13 +155,13 @@ int gverts(polygon *poly, int vcirc, long double *tol, int per, int nve, int *nv
 		 1 if fatal intersection of boundaries;
 		-1 if failed to allocate memory.
 */
-int gvert(polygon *poly, int vcirc, long double *tol, int nvmax, int per, int nve, int *nv, vec ve[/*nvmax * nve*/], long double angle[/*nvmax*/], int ipv[/*nvmax*/], int gp[/*poly->np*/], int *nev, int *nev0, int ev[/*nvmax*/])
+int gvert(polygon *poly, int vcirc, _Float128 *tol, int nvmax, int per, int nve, int *nv, vec ve[/*nvmax * nve*/], _Float128 angle[/*nvmax*/], int ipv[/*nvmax*/], int gp[/*poly->np*/], int *nev, int *nev0, int ev[/*nvmax*/])
 {
     int iv;
     logical ldegen;
     /* work arrays */
     int *iord, *iwk;
-    long double *phi, *wk;
+    _Float128 *phi, *wk;
 
     /* allocate memory for work arrays */
     iord = (int *) malloc(sizeof(int) * poly->np * 2);
@@ -169,9 +169,9 @@ int gvert(polygon *poly, int vcirc, long double *tol, int nvmax, int per, int nv
 	fprintf(stderr, "gvert: failed to allocate memory for %d ints\n", poly->np * 2);
 	return(-1);
     }
-    phi = (long double *) malloc(sizeof(long double) * poly->np * 2);
+    phi = (_Float128 *) malloc(sizeof(_Float128) * poly->np * 2);
     if (!phi) {
-	fprintf(stderr, "gvert: failed to allocate memory for %d long doubles\n", poly->np * 2);
+	fprintf(stderr, "gvert: failed to allocate memory for %d _Float128s\n", poly->np * 2);
 	return(-1);
     }
     iwk = (int *) malloc(sizeof(int) * nvmax * 4);
@@ -179,9 +179,9 @@ int gvert(polygon *poly, int vcirc, long double *tol, int nvmax, int per, int nv
 	fprintf(stderr, "gvert: failed to allocate memory for %d ints\n", nvmax * 4);
 	return(-1);
     }
-    wk = (long double *) malloc(sizeof(long double) * nvmax);
+    wk = (_Float128 *) malloc(sizeof(_Float128) * nvmax);
     if (!wk) {
-	fprintf(stderr, "gvert: failed to allocate memory for %d long doubles\n", nvmax);
+	fprintf(stderr, "gvert: failed to allocate memory for %d _Float128s\n", nvmax);
 	return(-1);
     }
 

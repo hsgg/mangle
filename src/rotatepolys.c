@@ -19,9 +19,9 @@ polygon *polys_global[NPOLYSMAX];
 /* local functions */
 void	usage(void);
 #ifdef	GCC
-int	rotatepolys(int npoly, polygon *[npoly], long double, long double, long double);
+int	rotatepolys(int npoly, polygon *[npoly], _Float128, _Float128, _Float128);
 #else
-int	rotatepolys(int npoly, polygon *[/*npoly*/], long double, long double, long double);
+int	rotatepolys(int npoly, polygon *[/*npoly*/], _Float128, _Float128, _Float128);
 #endif
 
 /*------------------------------------------------------------------------------
@@ -118,12 +118,12 @@ void usage(void)
   Return value: number of polygons weighted,
 		or -1 if error occurred.
 */
-int rotatepolys(int npoly, polygon *poly[/*npoly*/], long double azn,long double eln, long double azp)
+int rotatepolys(int npoly, polygon *poly[/*npoly*/], _Float128 azn,_Float128 eln, _Float128 azp)
 {
 #define AZEL_STR_LEN	32
 
   int ipoly, ip,j;
-  long double cpsi,spsi,ctheta,stheta,cphi,sphi,xold,yold,zold,r;
+  _Float128 cpsi,spsi,ctheta,stheta,cphi,sphi,xold,yold,zold,r;
   //rows of rotation matrix
   vec row0,row1, row2;
   char az_str[AZEL_STR_LEN], el_str[AZEL_STR_LEN];

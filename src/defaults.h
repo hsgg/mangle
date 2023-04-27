@@ -8,7 +8,7 @@
 /* maximum harmonic */
 static int lmax = LMAX;
 /* smoothing parameters */
-static long double lsmooth = LSMOOTH, esmooth = ESMOOTH;
+static _Float128 lsmooth = LSMOOTH, esmooth = ESMOOTH;
 
 /* name of file containing harmonics */
 static char *Wlm_filename = 0x0;
@@ -80,31 +80,31 @@ int verbose = 1;
 int infiles = 0;
 
 /* tolerances */
-long double axtol = AXTOL;		/* snap angle for axis */
+_Float128 axtol = AXTOL;		/* snap angle for axis */
 char axunit = AXUNIT;		/* unit of snap angle for axis */
-long double btol = BTOL;		/* snap angle for latitude */
+_Float128 btol = BTOL;		/* snap angle for latitude */
 char bunit = BUNIT;		/* unit of snap angle for latitude */
-long double thtol = THTOL;		/* snap angle for edge */
+_Float128 thtol = THTOL;		/* snap angle for edge */
 char thunit = THUNIT;		/* unit of snap angle for edge */
-long double ytol = YTOL;		/* edge to length tolerance */
-long double mtol = MTOL;		/* tolerance angle for multiple intersections */
+_Float128 ytol = YTOL;		/* edge to length tolerance */
+_Float128 mtol = MTOL;		/* tolerance angle for multiple intersections */
 char munit = MUNIT;		/* unit of tolerance angle for multiple intersections */
-long double grow_angle = GROW_ANGLE;		/* angle defining borders to grow around polygons with the grow function */
+_Float128 grow_angle = GROW_ANGLE;		/* angle defining borders to grow around polygons with the grow function */
 char gunit = GUNIT;		/* unit of grow angle */
 
 /* whether min, max weight are turned on */
 int is_weight_min = 0;
 int is_weight_max = 0;
 /* min, max weight to keep */
-long double weight_min;
-long double weight_max;
+_Float128 weight_min;
+_Float128 weight_max;
 
 /* whether min, max area are turned on */
 int is_area_min = 0;
 int is_area_max = 0;
 /* min, max area to keep */
-long double area_min;
-long double area_max;
+_Float128 area_min;
+_Float128 area_max;
 
 /* whether min, max id are turned on */
 int is_id_min = 0;

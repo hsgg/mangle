@@ -142,7 +142,7 @@ int snap(int npoly, polygon *poly[/*npoly*/])
   int *start;
   int *total;
   int p, max_pixel, ier;
-  long double r;
+  _Float128 r;
 
   /* start by sorting polygons by pixel number*/
   poly_sort(npoly,poly,'p');

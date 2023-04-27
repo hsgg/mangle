@@ -15,7 +15,7 @@ int parse_fopt(void)
     char opt = 'f';
     char ins[16], outs[16];
     char *ch, *word;
-    long double angle, az, el, azn, eln, azp;
+    _Float128 angle, az, el, azn, eln, azp;
 
     itr = 0;
 

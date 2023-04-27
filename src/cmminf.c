@@ -6,10 +6,10 @@
 /*------------------------------------------------------------------------------
   Find smallest cap of polygon.
 */
-void cmminf(polygon *poly, int *ipmin, long double *cmmin)
+void cmminf(polygon *poly, int *ipmin, _Float128 *cmmin)
 {
     int ip;
-    long double cmi;
+    _Float128 cmi;
 
     *cmmin = 2.;
     for (ip = 0; ip < poly->np; ip++) {

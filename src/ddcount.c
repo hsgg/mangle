@@ -125,7 +125,7 @@ long ddcount(char *azel_in_filename, char *th_in_filename, char *out_filename, f
     /* maximum number of az-el points: will expand as necessary */
     static int nazelmax = 0;
     static int *dd = 0x0, *id = 0x0, *iord = 0x0;
-    static long double *cm = 0x0, *th = 0x0;
+    static _Float128 *cm = 0x0, *th = 0x0;
     static azel *v = 0x0;
     static vec *rp = 0x0;
 
@@ -138,7 +138,7 @@ long ddcount(char *azel_in_filename, char *th_in_filename, char *out_filename, f
     int i, iazel, idi, ird, ith, j, jazel, manyid, nazel, nid, noid, nth;
     int *id_p;
     long np;
-    long double az, cmm, el, s, t;
+    _Float128 az, cmm, el, s, t;
     char *out_fn;
     FILE *outfile;
 
@@ -187,9 +187,9 @@ long ddcount(char *azel_in_filename, char *th_in_filename, char *out_filename, f
 		    nthmax *= 2;
 		}
 		/* (re)allocate memory for th array */
-		th = (long double *) realloc(th, sizeof(long double) * nthmax);
+		th = (_Float128 *) realloc(th, sizeof(_Float128) * nthmax);
 		if (!th) {
-		    fprintf(stderr, "ddcount: failed to allocate memory for %d long doubles\n", nthmax);
+		    fprintf(stderr, "ddcount: failed to allocate memory for %d _Float128s\n", nthmax);
 		    return(-1);
 		}
 	    }
@@ -300,9 +300,9 @@ long ddcount(char *azel_in_filename, char *th_in_filename, char *out_filename, f
     }
 
     /* (re)allocate memory */
-    cm = (long double *) realloc(dd, sizeof(long double) * nth);
+    cm = (_Float128 *) realloc(dd, sizeof(_Float128) * nth);
     if (!cm) {
-	fprintf(stderr, "ddcount: failed to allocate memory for %d long doubles\n", nth);
+	fprintf(stderr, "ddcount: failed to allocate memory for %d _Float128s\n", nth);
 	return(-1);
     }
     dd = (int *) realloc(dd, sizeof(int) * nth);

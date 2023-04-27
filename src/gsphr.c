@@ -22,14 +22,14 @@
 		 1 if fatal error;
 		-1 if could not allocate temporary memory.
 */
-int gsphr(polygon *poly, int lmax, long double *tol, harmonic w[/*NW*/])
+int gsphr(polygon *poly, int lmax, _Float128 *tol, harmonic w[/*NW*/])
 {
     logical ldegen;
     int i, ibv, ier, im, iphi, iw, lmax1, npc, nw, verb;
-    long double area, bound[2], darea, vert[2];
+    _Float128 area, bound[2], darea, vert[2];
     /* work arrays */
     int *iord;
-    long double *v, *phw;
+    _Float128 *v, *phw;
 
     /* determine area without 2 pi ambiguity, and a good value for tol */
     verb = 1;
@@ -51,14 +51,14 @@ int gsphr(polygon *poly, int lmax, long double *tol, harmonic w[/*NW*/])
 	fprintf(stderr, "gsphr: failed to allocate memory for %d ints\n", poly->np * 2);
 	return(-1);
     }
-    phw = (long double *) malloc(sizeof(long double) * poly->np * 2);
+    phw = (_Float128 *) malloc(sizeof(_Float128) * poly->np * 2);
     if (!phw) {
-	fprintf(stderr, "gsphr: failed to allocate memory for %d long doubles\n", poly->np * 2);
+	fprintf(stderr, "gsphr: failed to allocate memory for %d _Float128s\n", poly->np * 2);
 	return(-1);
     }
-    v = (long double *) malloc(sizeof(long double) * (lmax + 1));
+    v = (_Float128 *) malloc(sizeof(_Float128) * (lmax + 1));
     if (!v) {
-	fprintf(stderr, "gsphr: failed to allocate memory for %d long doubles\n", lmax + 1);
+	fprintf(stderr, "gsphr: failed to allocate memory for %d _Float128s\n", lmax + 1);
 	return(-1);
     }
 
@@ -104,20 +104,20 @@ int gsphr(polygon *poly, int lmax, long double *tol, harmonic w[/*NW*/])
   Return value:  0 if ok;
 		-1 if could not allocate temporary memory.
 */
-int gsphra(long double azmin, long double azmax, long double elmin, long double elmax, int lmax, harmonic w[/*NW*/])
+int gsphra(_Float128 azmin, _Float128 azmax, _Float128 elmin, _Float128 elmax, int lmax, harmonic w[/*NW*/])
 {
     /* array used for acceleration */
-    static long double *dw = 0x0;
+    static _Float128 *dw = 0x0;
 
     int ibv, im, lmax1, nw;
-    long double area, bound[2], vert[2];
+    _Float128 area, bound[2], vert[2];
     /* work array */
-    long double *v;
+    _Float128 *v;
 
     /* allocate memory for work arrays */
-    v = (long double *) malloc(sizeof(long double) * (lmax + 1));
+    v = (_Float128 *) malloc(sizeof(_Float128) * (lmax + 1));
     if (!v) {
-	fprintf(stderr, "gsphra: failed to allocate memory for %d long doubles\n", lmax + 1);
+	fprintf(stderr, "gsphra: failed to allocate memory for %d _Float128s\n", lmax + 1);
 	return(-1);
     }
 
@@ -129,9 +129,9 @@ int gsphra(long double azmin, long double azmax, long double elmin, long double 
 
     /* dw contains array that is pre-computed, then used by all rects with same elmin, elmax */
     if (!dw) {
-	dw = (long double *) malloc(sizeof(long double) * NW);
+	dw = (_Float128 *) malloc(sizeof(_Float128) * NW);
 	if (!dw) {
-	    fprintf(stderr, "gsphra: failed to allocate memory for %d long doubles\n", NW);
+	    fprintf(stderr, "gsphra: failed to allocate memory for %d _Float128s\n", NW);
 	    return(-1);
 	}
     }

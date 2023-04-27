@@ -10,7 +10,7 @@
 #define TWOPI		(2. * PI)
 
 static int *iord = 0x0;
-static long double *cmmin = 0x0, *cmmax = 0x0;
+static _Float128 *cmmin = 0x0, *cmmax = 0x0;
 
 /*------------------------------------------------------------------------------
   Minimum and maximum values of cm = 1-cosl(th) between each of npoly polygons
@@ -23,28 +23,28 @@ static long double *cmmin = 0x0, *cmmax = 0x0;
   Return value: number of polygons done;
 		-1 if error.
 */
-int cmlim_polys(int npoly, polygon *poly[/*npoly*/], long double mtol, long double rp[3])
+int cmlim_polys(int npoly, polygon *poly[/*npoly*/], _Float128 mtol, _Float128 rp[3])
 {
     int ier, ipoly;
-    long double tol;
+    _Float128 tol;
 
     /* allocate memory for cmmin, cmmax, iord */
     if (!cmmin) {
-	cmmin = (long double *) malloc(sizeof(long double) * npoly);
+	cmmin = (_Float128 *) malloc(sizeof(_Float128) * npoly);
     } else {
-	cmmin = (long double *) realloc(cmmin, sizeof(long double) * npoly);
+	cmmin = (_Float128 *) realloc(cmmin, sizeof(_Float128) * npoly);
     }
     if (!cmmin) {
-	fprintf(stderr, "cmlim_polys: failed to allocate memory for %d long doubles\n", npoly);
+	fprintf(stderr, "cmlim_polys: failed to allocate memory for %d _Float128s\n", npoly);
 	return(-1);
     }
     if (!cmmax) {
-	cmmax = (long double *) malloc(sizeof(long double) * npoly);
+	cmmax = (_Float128 *) malloc(sizeof(_Float128) * npoly);
     } else {
-	cmmax = (long double *) realloc(cmmax, sizeof(long double) * npoly);
+	cmmax = (_Float128 *) realloc(cmmax, sizeof(_Float128) * npoly);
     }
     if (!cmmax) {
-	fprintf(stderr, "cmlim_polys: failed to allocate memory for %d long doubles\n", npoly);
+	fprintf(stderr, "cmlim_polys: failed to allocate memory for %d _Float128s\n", npoly);
 	return(-1);
     }
     if (!iord) {
@@ -85,10 +85,10 @@ int cmlim_polys(int npoly, polygon *poly[/*npoly*/], long double mtol, long doub
   Return value: number of angular radii done;
 		-1 if error.
 */
-int drangle_polys(int npoly, polygon *poly[/*npoly*/], long double mtol, long double rp[3], int nth, long double cm[/*nth*/], long double dr[/*nth*/])
+int drangle_polys(int npoly, polygon *poly[/*npoly*/], _Float128 mtol, _Float128 rp[3], int nth, _Float128 cm[/*nth*/], _Float128 dr[/*nth*/])
 {
     int ier, ip, ipoly, ith;
-    long double angle, tol;
+    _Float128 angle, tol;
 
     /* angle within mask at each angular radius */
     for (ith = 0; ith < nth; ith++) {

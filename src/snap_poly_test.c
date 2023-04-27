@@ -37,7 +37,7 @@
 			 set to 0x0 on input to ignore.
   Return value: number of caps adjusted.
 */
-int snap_polys(format *fmt, int npoly, polygon *poly[/*npoly*/], int selfsnap, long double axtol, long double btol, long double thtol, long double ytol, long double mtol, int warnmax, char snapped_poly[/*npoly*/])
+int snap_polys(format *fmt, int npoly, polygon *poly[/*npoly*/], int selfsnap, _Float128 axtol, _Float128 btol, _Float128 thtol, _Float128 ytol, _Float128 mtol, int warnmax, char snapped_poly[/*npoly*/])
 {
     int dnadj, dnadjo, i, j, nadj, pass, snapped, stuck, warn;
 
@@ -178,10 +178,10 @@ int snap_polys(format *fmt, int npoly, polygon *poly[/*npoly*/], int selfsnap, l
   Output: adjusted caps of poly2 (i.e. poly2->rp, poly2->cm).
   Return value: number of caps adjusted.
 */
-int snap_poly(polygon *poly1, polygon *poly2, long double axtol, long double btol)
+int snap_poly(polygon *poly1, polygon *poly2, _Float128 axtol, _Float128 btol)
 {
     int adjusted, ip, ip1, ip2, nadj, sp;
-    long double cm, dl, drp, dx, dy, dz;
+    _Float128 cm, dl, drp, dx, dy, dz;
 
     nadj = 0;
     for (ip1 = 0; ip1 < poly1->np; ip1++) {	/* for each cap of poly1 ... */
@@ -264,15 +264,15 @@ int snap_poly(polygon *poly1, polygon *poly2, long double axtol, long double bto
   Return value: number of caps adjusted,
 		or -1 if error occurred.
 */
-int snap_polyth(polygon *poly1, polygon *poly2, long double thtol, long double ytol, long double mtol)
+int snap_polyth(polygon *poly1, polygon *poly2, _Float128 thtol, _Float128 ytol, _Float128 mtol)
 {
     const int per = 0;
     const int nve = 2;
 
     int adjusted, do_vcirc, i, ier, in, ip1, ip2, iv, ivp, nadj, nev, nev0, nv;
     int *ipv, *gp, *ev;
-    long double cm, cm1, dth, dthmax, sp, tol;
-    long double *angle;
+    _Float128 cm, cm1, dth, dthmax, sp, tol;
+    _Float128 *angle;
     vec *v, *ve;
         
     // vertices and centres of edges of poly2 

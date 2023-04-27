@@ -26,7 +26,7 @@ int poly_cmp_id(polygon **poly1, polygon **poly2)
 int poly_cmp_weight(polygon **poly1, polygon **poly2)
 {
   int intweight;
-  long double weight=(*poly1)->weight - (*poly2)->weight;
+  _Float128 weight=(*poly1)->weight - (*poly2)->weight;
   if(weight>0){
     intweight=1;
   } else if(weight<0){

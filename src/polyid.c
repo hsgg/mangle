@@ -125,7 +125,7 @@ int poly_ids(char *in_filename, char *out_filename, format *fmt, int npoly, poly
     int i, idwidth, ird, len, nid, nids, nid0, nid2, np;
     long long idmin, idmax;
     long long *id;
-    long double *weight;
+    _Float128 *weight;
     azel v;
     char *out_fn;
     FILE *outfile;
@@ -225,8 +225,8 @@ int poly_ids(char *in_filename, char *out_filename, format *fmt, int npoly, poly
 	if (poly[i]->id < idmin) idmin = poly[i]->id;
 	if (poly[i]->id > idmax) idmax = poly[i]->id;
     }
-    idmin = ((idmin < 0)? floorl(log10l((long double)-idmin)) + 2 : 1);
-    idmax = ((idmax > 0)? floorl(log10l((long double)idmax)) + 1 : 1);
+    idmin = ((idmin < 0)? floorl(log10l((_Float128)-idmin)) + 2 : 1);
+    idmax = ((idmax > 0)? floorl(log10l((_Float128)idmax)) + 1 : 1);
     idwidth = ((idmin > idmax)? idmin : idmax);
 
     /* write header */

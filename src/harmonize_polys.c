@@ -22,15 +22,15 @@
   Return value: number of polygons for which spherical harmonics were computed,
 		or -1 if error occurred.
 */
-int harmonize_polys(int npoly, polygon *poly[/*npoly*/], long double mtol, int lmax, harmonic w[/*NW*/])
+int harmonize_polys(int npoly, polygon *poly[/*npoly*/], _Float128 mtol, int lmax, harmonic w[/*NW*/])
 {
     int accelerate, i, ier, ip, ipoly, iq, ir, isrect, iw, naccelerate, ndone, ner, nrect;
-    long double azmin, azmax, elmin, elmax, azmn, azmx, elmn, elmx, tol;
+    _Float128 azmin, azmax, elmin, elmax, azmn, azmx, elmn, elmx, tol;
     /* work array contains harmonics of single polygon */
     harmonic *dw;
     /* work arrays to deal with possible acceleration */
     int *iord, *ir_to_ip;
-    long double *elord;
+    _Float128 *elord;
 
     /* work arrays */
     dw = (harmonic *) malloc(sizeof(harmonic) * NW);
@@ -48,9 +48,9 @@ int harmonize_polys(int npoly, polygon *poly[/*npoly*/], long double mtol, int l
 	fprintf(stderr, "harmonize_polys: failed to allocate memory for %d ints\n", npoly);
 	return(-1);
     }
-    elord = (long double *) malloc(sizeof(long double) * npoly);
+    elord = (_Float128 *) malloc(sizeof(_Float128) * npoly);
     if (!elord) {
-	fprintf(stderr, "harmonize_polys: failed to allocate memory for %d long doubles\n", npoly);
+	fprintf(stderr, "harmonize_polys: failed to allocate memory for %d _Float128s\n", npoly);
 	return(-1);
     }
 

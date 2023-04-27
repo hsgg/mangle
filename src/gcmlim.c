@@ -18,11 +18,11 @@
   Return value:  0 if ok;
 		-1 if failed to allocate memory.
 */
-int gcmlim(polygon *poly, long double *tol, vec rp, long double *cmmin, long double *cmmax)
+int gcmlim(polygon *poly, _Float128 *tol, vec rp, _Float128 *cmmin, _Float128 *cmmax)
 {
     /* work arrays */
     int *iord;
-    long double *phi;
+    _Float128 *phi;
 
     /* allocate memory for work arrays */
     iord = (int *) malloc(sizeof(int) * poly->np * 2);
@@ -30,9 +30,9 @@ int gcmlim(polygon *poly, long double *tol, vec rp, long double *cmmin, long dou
 	fprintf(stderr, "gcmlim: failed to allocate memory for %d ints\n", poly->np * 2);
 	return(-1);
     }
-    phi = (long double *) malloc(sizeof(long double) * poly->np * 2);
+    phi = (_Float128 *) malloc(sizeof(_Float128) * poly->np * 2);
     if (!phi) {
-	fprintf(stderr, "gcmlim: failed to allocate memory for %d long doubles\n", poly->np * 2);
+	fprintf(stderr, "gcmlim: failed to allocate memory for %d _Float128s\n", poly->np * 2);
 	return(-1);
     }
 

@@ -4,11 +4,11 @@
 /*------------------------------------------------------------------------------
 This subroutine recognizes the following formats:
 
-<keyword> <id> ( <int> caps, <long double> weight ...
+<keyword> <id> ( <int> caps, <_Float128> weight ...
 
 polygon
 -------
-polygon <id> ( <n> caps, <long double> weight):
+polygon <id> ( <n> caps, <_Float128> weight):
 <rp_00> <rp_10> <rp_20> <cm_0>
 <rp_01> <rp_11> <rp_21> <cm_1>
 ...
@@ -335,7 +335,7 @@ int new_fmt(char *keyword, char **line_rest, format *fmt)
     char *blank = " \t\n\r";
     int ird, iscan, nholes, i, flag;
     size_t word_len;
-    long double temp_pixel;
+    _Float128 temp_pixel;
     int res_max_temp;
     char scheme_temp;
 
@@ -730,7 +730,7 @@ int get_nang(format *fmt, char *lin, int nh)
     char unit;
     char *next, *word;
     int i, iang, ird;
-    long double angle;
+    _Float128 angle;
 
     word = lin;
     iang = 0;
@@ -885,7 +885,7 @@ polygon *rd_hpix(format *fmt)
 {
   int nweight, ird, nside;
   polygon *poly;
-  long double weight;
+  _Float128 weight;
 
   if(fmt->nweights == 0) return(0x0);
 
@@ -977,7 +977,7 @@ polygon *rd_circ(format *fmt)
     char unit;
     char *next, *word;
     int i, iang, icirc, ird, ncirc;
-    long double angle[3];
+    _Float128 angle[3];
     polygon *poly = 0x0;
 
     /* point word to start of line */
@@ -1074,8 +1074,8 @@ polygon *rd_edge(format *fmt)
     char unit;
     char *next, *word;
     int anti, i, iang, iedge, iev, ird, iv, ive, ivert, nedge, nv, nve, nvert, reverse;
-    long double *angle;
-    long double az, el;
+    _Float128 *angle;
+    _Float128 az, el;
     polygon *poly = 0x0;
 
     /* point word to start of line */
@@ -1306,7 +1306,7 @@ polygon *rd_rect(format *fmt)
     char unit;
     char *next, *word;
     int i, iang, irect, ird, nrect;
-    long double angle[4];
+    _Float128 angle[4];
     polygon *poly = 0x0;
     polygon *poly_rect = 0x0;
 

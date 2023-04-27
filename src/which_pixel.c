@@ -16,11 +16,11 @@
    returns the number of the pixel containing the point, or -1 if error occurs
 */
 
-int which_pixel(long double az, long double el, int res, char scheme)
+int which_pixel(_Float128 az, _Float128 el, int res, char scheme)
 {
   int n,m,pix,base_pix,i;
   unsigned long pixnum;
-  long double az_check, el_check;
+  _Float128 az_check, el_check;
   int *parent_pixels;
 
   if(az<0){
@@ -118,7 +118,7 @@ int which_pixel(long double az, long double el, int res, char scheme)
 int get_parent_pixels(int pix_c, int pix_p[], char scheme){
   int m,n,res,base_pix,i,j;
   unsigned long pixp;
-  //long double res_d;
+  //_Float128 res_d;
 
   if(pix_c<0){
     fprintf(stderr, "error in get_parent_pixels: %d is not a valid pixel number\n",pix_c);
@@ -152,7 +152,7 @@ int get_parent_pixels(int pix_c, int pix_p[], char scheme){
     //printf("res = %d\n", res);
     //printf("res1 (1) = %d\n", res1);
     //if (res >= 1) { 
-    //  res_d = (long double)(logl((long double)res)/logl(2.0))+1;
+    //  res_d = (_Float128)(logl((_Float128)res)/logl(2.0))+1;
     //  res1 = (int)(res_d + 0.1);
     //}
     //printf("res1 (2) = %d\n", res1);
@@ -193,7 +193,7 @@ int get_parent_pixels(int pix_c, int pix_p[], char scheme){
 int pixel_start(int res, char scheme){
 
   //int res1;
-  //long double res_d;
+  //_Float128 res_d;
   
   if(res<0){
     fprintf(stderr, "error in pixel_start: %d not a valid resolution.\n", res);
@@ -204,7 +204,7 @@ int pixel_start(int res, char scheme){
     return ((int)((powl(4,res)-1)/3));
   }
   else if(scheme=='d'){
-    //res_d = (long double)(logl((long double)res)/logl(2.0))+1;
+    //res_d = (_Float128)(logl((_Float128)res)/logl(2.0))+1;
     //res1 = (int)(res_d + 0.1);
     //printf("pixel_start: res = %d\n", res);
     if(res==0) return(0);

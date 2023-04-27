@@ -12,7 +12,7 @@
 		0 if point < array[0]
 		n if point >= array[n-1]
 */
-int search(int n, long double array[/*n*/], long double point)
+int search(int n, _Float128 array[/*n*/], _Float128 point)
 {
     int i, im, ip;
 

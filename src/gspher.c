@@ -25,14 +25,14 @@
 		 1 if fatal error;
 		-1 if could not allocate temporary memory.
 */
-int gspher(polygon *poly, int lmax, long double *tol, long double *area, long double bound[2], long double vert[2], harmonic w[/*NW*/])
+int gspher(polygon *poly, int lmax, _Float128 *tol, _Float128 *area, _Float128 bound[2], _Float128 vert[2], harmonic w[/*NW*/])
 {
     logical ldegen;
     int i, ibv, ier, im, iphi, iw, lmax1, nw, verb;
-    long double darea;
+    _Float128 darea;
     /* work arrays */
     int *iord;
-    long double *v, *phw;
+    _Float128 *v, *phw;
 
     /* determine area without 2 pi ambiguity, and a good value for tol */
     verb = 1;
@@ -58,14 +58,14 @@ int gspher(polygon *poly, int lmax, long double *tol, long double *area, long do
 	fprintf(stderr, "gspher: failed to allocate memory for %d ints\n", poly->np * 2);
 	return(-1);
     }
-    phw = (long double *) malloc(sizeof(long double) * poly->np * 2);
+    phw = (_Float128 *) malloc(sizeof(_Float128) * poly->np * 2);
     if (!phw) {
-	fprintf(stderr, "gspher: failed to allocate memory for %d long doubles\n", poly->np * 2);
+	fprintf(stderr, "gspher: failed to allocate memory for %d _Float128s\n", poly->np * 2);
 	return(-1);
     }
-    v = (long double *) malloc(sizeof(long double) * (lmax + 1));
+    v = (_Float128 *) malloc(sizeof(_Float128) * (lmax + 1));
     if (!v) {
-	fprintf(stderr, "gspher: failed to allocate memory for %d long doubles\n", lmax + 1);
+	fprintf(stderr, "gspher: failed to allocate memory for %d _Float128s\n", lmax + 1);
 	return(-1);
     }
 
@@ -111,19 +111,19 @@ int gspher(polygon *poly, int lmax, long double *tol, long double *area, long do
   Return value:  0 if ok;
 		-1 if could not allocate temporary memory.
 */
-int gsphera(long double azmin, long double azmax, long double elmin, long double elmax, int lmax, long double *area, long double bound[2], long double vert[2], harmonic w[/*NW*/])
+int gsphera(_Float128 azmin, _Float128 azmax, _Float128 elmin, _Float128 elmax, int lmax, _Float128 *area, _Float128 bound[2], _Float128 vert[2], harmonic w[/*NW*/])
 {
     /* array used for acceleration */
-    static long double *dw = 0x0;
+    static _Float128 *dw = 0x0;
 
     int ibv, im, lmax1, nw;
     /* work array */
-    long double *v;
+    _Float128 *v;
 
     /* allocate memory for work arrays */
-    v = (long double *) malloc(sizeof(long double) * (lmax + 1));
+    v = (_Float128 *) malloc(sizeof(_Float128) * (lmax + 1));
     if (!v) {
-	fprintf(stderr, "gsphera: failed to allocate memory for %d long doubles\n", lmax + 1);
+	fprintf(stderr, "gsphera: failed to allocate memory for %d _Float128s\n", lmax + 1);
 	return(-1);
     }
 
@@ -135,9 +135,9 @@ int gsphera(long double azmin, long double azmax, long double elmin, long double
 
     /* dw contains array that is pre-computed, then used by all rects with same elmin, elmax */
     if (!dw) {
-	dw = (long double *) malloc(sizeof(long double) * NW);
+	dw = (_Float128 *) malloc(sizeof(_Float128) * NW);
 	if (!dw) {
-	    fprintf(stderr, "gsphera: failed to allocate memory for %d long doubles\n", NW);
+	    fprintf(stderr, "gsphera: failed to allocate memory for %d _Float128s\n", NW);
 	    return(-1);
 	}
     }

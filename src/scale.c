@@ -7,7 +7,7 @@
 /*------------------------------------------------------------------------------
   Convert angle from specified unit to specified unit.
 */
-void scale(long double *angle, char from, char to)
+void scale(_Float128 *angle, char from, char to)
 {
     /* scale from specified unit to arcseconds */
     switch (from) {

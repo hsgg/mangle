@@ -23,15 +23,15 @@
 		 1 if fatal error;
 		-1 if failed to allocate memory.
 */
-int garea(polygon *poly, long double *tol, int verb, long double *area)
+int garea(polygon *poly, _Float128 *tol, int verb, _Float128 *area)
 {
     static polygon *dpoly = 0x0;
     logical ldegen;
     int ier, ipmin, ipoly, np;
-    long double cmmin, darea;
+    _Float128 cmmin, darea;
     /* work arrays */
     int *iord;
-    long double *phi;
+    _Float128 *phi;
 
     /* smallest cap of polygon */
     cmminf(poly, &ipmin, &cmmin);
@@ -45,9 +45,9 @@ int garea(polygon *poly, long double *tol, int verb, long double *area)
 	fprintf(stderr, "garea: failed to allocate memory for %d ints\n", np * 2);
 	return(-1);
     }
-    phi = (long double *) malloc(sizeof(long double) * np * 2);
+    phi = (_Float128 *) malloc(sizeof(_Float128) * np * 2);
     if (!phi) {
-	fprintf(stderr, "garea: failed to allocate memory for %d long doubles\n", np * 2);
+	fprintf(stderr, "garea: failed to allocate memory for %d _Float128s\n", np * 2);
 	return(-1);
     }
 

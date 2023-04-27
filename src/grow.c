@@ -18,9 +18,9 @@ polygon *polys_global[NPOLYSMAX];
 /* local functions */
 void	usage(void);
 #ifdef  GCC
-int     grow(int npoly, polygon *[npoly], int npolys, polygon *[npolys], long double grow_angle);
+int     grow(int npoly, polygon *[npoly], int npolys, polygon *[npolys], _Float128 grow_angle);
 #else
-int     grow(int npoly, polygon *[/*npoly*/], int npolys, polygon *[/*npolys*/], long double grow_angle);
+int     grow(int npoly, polygon *[/*npoly*/], int npolys, polygon *[/*npolys*/], _Float128 grow_angle);
 #endif
 
 
@@ -134,10 +134,10 @@ void usage(void)
   Return value: number of polygons weighted,
 		or -1 if error occurred.
 */
-int grow(int npoly, polygon *poly[/*npoly*/], int npolys, polygon *polys[/*npolys*/], long double grow_angle)
+int grow(int npoly, polygon *poly[/*npoly*/], int npolys, polygon *polys[/*npolys*/], _Float128 grow_angle)
 {
   int ipoly,iret,n,np;
-  long double tol;
+  _Float128 tol;
   
   n=npoly;
   for (ipoly = 0; ipoly < npoly; ipoly++) {
@@ -159,9 +159,9 @@ int grow(int npoly, polygon *poly[/*npoly*/], int npolys, polygon *polys[/*npoly
   return(n);
 }
 
-int grow_poly(polygon **poly, int npolys, polygon *polys[/*npolys*/], long double grow_angle, long double mtol, int *np){
+int grow_poly(polygon **poly, int npolys, polygon *polys[/*npolys*/], _Float128 grow_angle, _Float128 mtol, int *np){
   int i, ip, jp, iret, ier, dn;
-  long double s, cmi, cm_new,theta, theta_new, tol;
+  _Float128 s, cmi, cm_new,theta, theta_new, tol;
   polygon *poly1= 0x0;
   
 /* part_poly should lasso all one-boundary polygons */

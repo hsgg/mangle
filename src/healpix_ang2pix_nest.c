@@ -34,7 +34,7 @@
 #include "pi.h"
 #include "manglefn.h"
 
-void healpix_ang2pix_nest( const int nside, long double theta, long double phi, int *ipix) {
+void healpix_ang2pix_nest( const int nside, _Float128 theta, _Float128 phi, int *ipix) {
 
   /* =======================================================================
    * subroutine ang2pix_nest(nside, theta, phi, ipix)
@@ -48,7 +48,7 @@ void healpix_ang2pix_nest( const int nside, long double theta, long double phi, 
    * =======================================================================
    */
   
-  long double z, za, z0, tt, tp, tmp;
+  _Float128 z, za, z0, tt, tp, tmp;
   int    face_num,jp,jm;
   int    ifp, ifm;
   int    ix, iy, ix_low, ix_hi, iy_low, iy_hi, ipf, ntt;

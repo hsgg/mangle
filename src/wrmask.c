@@ -17,15 +17,15 @@
 const int verb = 0;
 
 /* initial angular tolerance within which to merge multiple intersections */
-extern long double mtol;
+extern _Float128 mtol;
 
 /* min, max weights to keep */
 extern int is_weight_min, is_weight_max;
-extern long double weight_min, weight_max;
+extern _Float128 weight_min, weight_max;
 
 /* min, max areas to keep */
 extern int is_area_min, is_area_max;
-extern long double area_min, area_max;
+extern _Float128 area_min, area_max;
 
 /* min, max ids to keep */
 extern int is_id_min, is_id_max;
@@ -45,7 +45,7 @@ extern int pixelized;                /*switch indicating whether input has been 
 extern int snapped;                /*switch indicating whether input has been snapped */
 extern int balkanized;                /*switch indicating whether input has been balkanized */
 
-extern int real;             /*equal to either '8' or '10' depending on whether doubles (real*8) or long doubles (real*10) are used*/
+extern int real;             /*equal to either '8' or '10' depending on whether doubles (real*8) or _Float128s (real*10) are used*/
 
 /*------------------------------------------------------------------------------
   Write mask data.
@@ -139,7 +139,7 @@ int wr_circ(char *filename, format *fmt, int npolys, polygon *polys[/*npolys*/],
     char unit;
     char az_str[AZEL_STR_LEN], el_str[AZEL_STR_LEN], th_str[AZEL_STR_LEN];
     int i, ier, ip, ipoly, nbadarea, npoly;
-    long double area, angle[3], tol;
+    _Float128 area, angle[3], tol;
     FILE *file;
     char *circle_fmt = "circle %lld ( %d caps, %.18Lg weight, %.18Lf str):\n";
 
@@ -247,8 +247,8 @@ int wr_edge(char *filename, format *fmt, int npolys, polygon *polys[/*npolys*/],
     char az_str[AZEL_STR_LEN], el_str[AZEL_STR_LEN];
     int do_vcirc, i, ier, imid, ipoly, iv, ive, ivm, jv, manybounds, nbadverts, nev, nev0, npoly, npt, nv, nvm;
     int *ipv, *gp, *ev;
-    long double azo, tol;
-    long double *angle;
+    _Float128 azo, tol;
+    _Float128 *angle;
     vec *ve, *vm;
     azel v;
     FILE *file;
@@ -427,8 +427,8 @@ int wr_list(char *filename, format *fmt, int npolys, polygon *polys[/*npolys*/],
     char az_str_mid[AZEL_STR_LEN], el_str_mid[AZEL_STR_LEN];
     int do_vcirc, i, ier, imid, ipoly, iv, ive, ivm, jv, manybounds, nbadverts, nev, nev0, npoly, npt, nv, nvm,firstpoint;
     int *ipv, *gp, *ev;
-    long double azo, tol,az1,el1;
-    long double *angle;
+    _Float128 azo, tol,az1,el1;
+    _Float128 *angle;
     vec *ve, *vm;
     azel v;
     FILE *file;
@@ -638,7 +638,7 @@ int wr_rect(char *filename, format *fmt, int npolys, polygon *polys[/*npolys*/],
     char unit;
     char azmin_str[AZEL_STR_LEN], azmax_str[AZEL_STR_LEN], elmin_str[AZEL_STR_LEN], elmax_str[AZEL_STR_LEN];
     int ier, ipoly, isrect, nbadarea, nrect;
-    long double area, azmin, azmax, elmin, elmax, tol;
+    _Float128 area, azmin, azmax, elmin, elmax, tol;
     FILE *file;
     char *rect_fmt = "rectangle %lld ( %d caps, %.18Lg weight, %.18Lf str):\n";
 
@@ -758,7 +758,7 @@ int wr_rect(char *filename, format *fmt, int npolys, polygon *polys[/*npolys*/],
 int wr_poly(char *filename, format *fmt, int npolys, polygon *polys[/*npolys*/], int npolyw)
 {
     int ier, ip, ipoly, nbadarea, npoly;
-    long double area, tol;
+    _Float128 area, tol;
     FILE *file;
     char *poly_fmt;
     char *polygon_fmt = "polygon %lld ( %d caps, %.19Lg weight, %d pixel, %.19Lg str):\n";
@@ -858,7 +858,7 @@ int wr_poly(char *filename, format *fmt, int npolys, polygon *polys[/*npolys*/],
 int wr_dpoly(char *filename, format *fmt, int npolys, polygon *polys[/*npolys*/], int npolyw, long long raster_ids[/*npolys*/])
 {
   int ier, ip, ipoly, jpoly,nbadarea, npoly,npolysub;
-  long double area, tol;
+  _Float128 area, tol;
   FILE *file;
   FILE *file_exists;
   char subfilename[1000];
@@ -1109,7 +1109,7 @@ int wr_area(char *filename, format *fmt, int npolys, polygon *polys[/*npolys*/],
 #define	PRECISION	18
     int idwidth, ier, ipoly, nbadarea, npoly, precision, width;
     long long idmin,idmax;
-    long double area, tol;
+    _Float128 area, tol;
     FILE *file;
 
     /* open filename for writing */
@@ -1131,8 +1131,8 @@ int wr_area(char *filename, format *fmt, int npolys, polygon *polys[/*npolys*/],
 	if (polys[ipoly]->id < idmin) idmin = polys[ipoly]->id;
 	if (polys[ipoly]->id > idmax) idmax = polys[ipoly]->id;
     }
-    idmin = ((idmin < 0)? floorl(log10l((long double)-idmin)) + 2 : 1);
-    idmax = ((idmax > 0)? floorl(log10l((long double)idmax)) + 1 : 1);
+    idmin = ((idmin < 0)? floorl(log10l((_Float128)-idmin)) + 2 : 1);
+    idmax = ((idmax > 0)? floorl(log10l((_Float128)idmax)) + 1 : 1);
     idwidth = ((idmin > idmax)? idmin : idmax);
 
     /* width of area in steradians */
@@ -1217,8 +1217,8 @@ int wr_id(char *filename, int npolys, polygon *polys[/*npolys*/], int npolyw)
 	if (polys[ipoly]->id < idmin) idmin = polys[ipoly]->id;
 	if (polys[ipoly]->id > idmax) idmax = polys[ipoly]->id;
     }
-    idmin = ((idmin < 0)? floorl(log10l((long double)-idmin)) + 2 : 1);
-    idmax = ((idmax > 0)? floorl(log10l((long double)idmax)) + 1 : 1);
+    idmin = ((idmin < 0)? floorl(log10l((_Float128)-idmin)) + 2 : 1);
+    idmax = ((idmax > 0)? floorl(log10l((_Float128)idmax)) + 1 : 1);
     idwidth = ((idmin > idmax)? idmin : idmax);
 
     /* write header */
@@ -1268,8 +1268,8 @@ int wr_midpoint(char *filename, format *fmt, int npolys, polygon *polys[/*npolys
     int i, idwidth, ier, imid, ipoly, ivm, nev, nev0, npoly, nv, nvm, width;
     long long idmin,idmax;
     int *ipv, *gp, *ev;
-    long double tol;
-    long double *angle;
+    _Float128 tol;
+    _Float128 *angle;
     vec *ve, *vm;
     azel v;
     FILE *file;
@@ -1293,8 +1293,8 @@ int wr_midpoint(char *filename, format *fmt, int npolys, polygon *polys[/*npolys
 	if (polys[ipoly]->id < idmin) idmin = polys[ipoly]->id;
 	if (polys[ipoly]->id > idmax) idmax = polys[ipoly]->id;
     }
-    idmin = ((idmin < 0)? floorl(log10l((long double)-idmin)) + 2 : 1);
-    idmax = ((idmax > 0)? floorl(log10l((long double)idmax)) + 1 : 1);
+    idmin = ((idmin < 0)? floorl(log10l((_Float128)-idmin)) + 2 : 1);
+    idmax = ((idmax > 0)? floorl(log10l((_Float128)idmax)) + 1 : 1);
     idwidth = ((idmin > idmax)? idmin : idmax);
 
     /* write header */
@@ -1377,7 +1377,7 @@ int wr_weight(char *filename, format *fmt, int npolys, polygon *polys[/*npolys*/
 #define	PRECISION	10
     int idwidth, ipoly, npoly, precision, width;
     long long idmin,idmax;
-    long double weightmax;
+    _Float128 weightmax;
     FILE *file;
 
     /* open filename for writing */
@@ -1399,8 +1399,8 @@ int wr_weight(char *filename, format *fmt, int npolys, polygon *polys[/*npolys*/
 	if (polys[ipoly]->id < idmin) idmin = polys[ipoly]->id;
 	if (polys[ipoly]->id > idmax) idmax = polys[ipoly]->id;
     }
-    idmin = ((idmin < 0)? floorl(log10l((long double)-idmin)) + 2 : 1);
-    idmax = ((idmax > 0)? floorl(log10l((long double)idmax)) + 1 : 1);
+    idmin = ((idmin < 0)? floorl(log10l((_Float128)-idmin)) + 2 : 1);
+    idmax = ((idmax > 0)? floorl(log10l((_Float128)idmax)) + 1 : 1);
     idwidth = ((idmin > idmax)? idmin : idmax);
 
     /* largest width of weight */
@@ -1451,12 +1451,12 @@ int wr_weight(char *filename, format *fmt, int npolys, polygon *polys[/*npolys*/
    Return value: number of weights written,
 		or -1 if error occurred.
 */
-int wr_healpix_weight(char *filename, format *fmt, int numweight, long double weights[/*numweight*/])
+int wr_healpix_weight(char *filename, format *fmt, int numweight, _Float128 weights[/*numweight*/])
 {
 #undef	PRECISION
 #define	PRECISION	6
     int iweight, nweight, precision, width;
-    long double weightmax;
+    _Float128 weightmax;
     FILE *file;
 
     /* open filename for writing */
@@ -1516,7 +1516,7 @@ int wr_healpix_weight(char *filename, format *fmt, int numweight, long double we
 int discard_poly(int npolys, polygon *polys[/*npolys*/])
 {
     int discard, ier, ipoly, nbadarea, noutarea, noutweight, noutid, noutpixel, npoly;
-    long double area, tol;
+    _Float128 area, tol;
 
     if (is_weight_min || is_weight_max || is_area_min || is_area_max || is_id_min || is_id_max || is_pixel_min || is_pixel_max) {
 	noutweight = 0;

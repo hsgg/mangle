@@ -14,7 +14,7 @@ extern polygon *polys[];
       real*8 rp(3)
       call cmlimpolys(mtol, rp)
 */
-void cmlimpolys_(long double *mtol, vec rp)
+void cmlimpolys_(_Float128 *mtol, vec rp)
 {
     int ndone;
 
@@ -30,7 +30,7 @@ void cmlimpolys_(long double *mtol, vec rp)
       real*8 cm(nth),dr(nth)
       call dranglepolys(mtol, rp, nth, cm, dr)
 */
-void dranglepolys_(long double *mtol, vec rp, int *nth, long double cm[/**nth*/], long double dr[/**nth*/])
+void dranglepolys_(_Float128 *mtol, vec rp, int *nth, _Float128 cm[/**nth*/], _Float128 dr[/**nth*/])
 {
     int ndone;
 

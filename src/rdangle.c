@@ -18,14 +18,14 @@
   Return value: 1 = ok,
 		otherwise error.
 */
-int rdangle(char *word, char **next, char unit, long double *angle)
+int rdangle(char *word, char **next, char unit, _Float128 *angle)
 {
     const char *blank = " \t\n\r";
     const char *number = "+-.0123456789eE";
 
     int i, ird, sgn;
     unsigned int deg, min;
-    long double sec;
+    _Float128 sec;
     char *ch;
 
     /* find first non-blank character */

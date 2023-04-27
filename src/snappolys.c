@@ -20,7 +20,7 @@
 	            the same polygon.
   Return value: number of caps adjusted.
 */
-int snap(int npoly, polygon *poly[/*npoly*/], long double mtol, format *fmt, long double axtol, long double btol, long double thtol, long double ytol, int selfsnap)
+int snap(int npoly, polygon *poly[/*npoly*/], _Float128 mtol, format *fmt, _Float128 axtol, _Float128 btol, _Float128 thtol, _Float128 ytol, int selfsnap)
 {
 #define WARNMAX		8
   int i, inull, iprune, nadj, dnadj, warnmax;

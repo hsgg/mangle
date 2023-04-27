@@ -131,8 +131,8 @@ int weight(int npoly, polygon *poly[/*npoly*/], char *survey)
 
     int do_vcirc, i, imid, ipoly, iverts, ivm, nev, nev0, nomid, nv, nvm, nzero;
     int *ipv, *gp, *ev;
-    long double tol;
-    long double *angle;
+    _Float128 tol;
+    _Float128 *angle;
     vec *ve, *vm;
     azel v;
 

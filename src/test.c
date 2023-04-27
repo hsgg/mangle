@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
   int ifile, ipoly, nfiles, npoly;
    
   int i, pixel, res, n, m, pixel_num;
-  long double ra, dec;
+  _Float128 ra, dec;
   char scheme;
   int *child_pix;
   int children;
@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
       
       // polys[ipoly]->weight=(n+m) % 2;
       polys[ipoly]->id=(long long)ipoly;
-      polys[ipoly]->weight=(long double)ipoly/(long double)npoly;
+      polys[ipoly]->weight=(_Float128)ipoly/(_Float128)npoly;
     }
     */
     

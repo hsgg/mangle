@@ -144,7 +144,7 @@ int unify_poly(polygon **poly1, polygon *poly2)
 
     int bnd, bndin, bndout, bnd1, bnd2, i, ier, i1, i2, np, verb;
     int np1, np2;
-    long double area, areain, tol;
+    _Float128 area, areain, tol;
     polygon *polyin, *polyout;
 
     bnd = 0;
