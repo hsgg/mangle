@@ -38,153 +38,153 @@ polygon *get_healpix_poly(int nside, int hpix)
      return(pixel);
   }
 
-  else {
-    healpix_verts(nside, hpix, center, verts_vec);
-    
-    /* north vertex */
-    for(i=0;i<=2;i++) (vertices_vec[0])[i] = verts_vec[i];
+  healpix_verts(nside, hpix, center, verts_vec);
 
-    /* east vertex */
-    for(i=0;i<=2;i++) (vertices_vec[1])[i] = verts_vec[i+3];
+  /* north vertex */
+  for(i=0;i<=2;i++) (vertices_vec[0])[i] = verts_vec[i];
 
-    /* south vertex */
-    for(i=0;i<=2;i++) (vertices_vec[2])[i] = verts_vec[i+6];
+  /* east vertex */
+  for(i=0;i<=2;i++) (vertices_vec[1])[i] = verts_vec[i+3];
 
-    /* west vertex */
-    for(i=0;i<=2;i++) (vertices_vec[3])[i] = verts_vec[i+9];
+  /* south vertex */
+  for(i=0;i<=2;i++) (vertices_vec[2])[i] = verts_vec[i+6];
 
-    rp_to_azel(vertices_vec[0], vertices_azel[0]);
-    rp_to_azel(vertices_vec[3], vertices_azel[2]);
-    rp_to_azel(vertices_vec[2], vertices_azel[4]);
-    rp_to_azel(vertices_vec[1], vertices_azel[6]);
+  /* west vertex */
+  for(i=0;i<=2;i++) (vertices_vec[3])[i] = verts_vec[i+9];
 
-    pix_n = 4*hpix + 3;
-    pix_e = 4*hpix + 1;
-    pix_s = 4*hpix;
-    pix_w = 4*hpix + 2;
+  rp_to_azel(vertices_vec[0], vertices_azel[0]);
+  rp_to_azel(vertices_vec[3], vertices_azel[2]);
+  rp_to_azel(vertices_vec[2], vertices_azel[4]);
+  rp_to_azel(vertices_vec[1], vertices_azel[6]);
 
-    healpix_verts(nside*2, pix_n, center_n, verts_vec_n);
-    healpix_verts(nside*2, pix_e, center_e, verts_vec_e);
-    healpix_verts(nside*2, pix_s, center_s, verts_vec_s);
-    healpix_verts(nside*2, pix_w, center_w, verts_vec_w);
+  pix_n = 4*hpix + 3;
+  pix_e = 4*hpix + 1;
+  pix_s = 4*hpix;
+  pix_w = 4*hpix + 2;
 
-    /* north vertex of each child pixel */
-    for(i=0;i<=2;i++){
-      (vertices_vec_n[0])[i] = verts_vec_n[i];
-      (vertices_vec_e[0])[i] = verts_vec_e[i];
-      (vertices_vec_s[0])[i] = verts_vec_s[i];
-      (vertices_vec_w[0])[i] = verts_vec_w[i];
-    }
+  healpix_verts(nside*2, pix_n, center_n, verts_vec_n);
+  healpix_verts(nside*2, pix_e, center_e, verts_vec_e);
+  healpix_verts(nside*2, pix_s, center_s, verts_vec_s);
+  healpix_verts(nside*2, pix_w, center_w, verts_vec_w);
 
-    /* east vertex of each child pixel */
-    for(i=0;i<=2;i++){
-      (vertices_vec_n[1])[i] = verts_vec_n[i+3];
-      (vertices_vec_e[1])[i] = verts_vec_e[i+3];
-      (vertices_vec_s[1])[i] = verts_vec_s[i+3];
-      (vertices_vec_w[1])[i] = verts_vec_w[i+3];
-    }
-
-    /* south vertex of each child pixel */
-    for(i=0;i<=2;i++){
-      (vertices_vec_n[2])[i] = verts_vec_n[i+6];
-      (vertices_vec_e[2])[i] = verts_vec_e[i+6];
-      (vertices_vec_s[2])[i] = verts_vec_s[i+6];
-      (vertices_vec_w[2])[i] = verts_vec_w[i+6];
-    }
-
-    /* west vertex of each child pixel */
-    for(i=0;i<=2;i++){
-      (vertices_vec_n[3])[i] = verts_vec_n[i+9];
-      (vertices_vec_e[3])[i] = verts_vec_e[i+9];
-      (vertices_vec_s[3])[i] = verts_vec_s[i+9];
-      (vertices_vec_w[3])[i] = verts_vec_w[i+9];
-    }
-    
-    rp_to_azel(vertices_vec_n[3], vertices_azel[1]);
-    rp_to_azel(vertices_vec_w[2], vertices_azel[3]);
-    rp_to_azel(vertices_vec_s[1], vertices_azel[5]);
-    rp_to_azel(vertices_vec_e[0], vertices_azel[7]);
-
-    for(i=0; i<8; i++){
-      if(vertices[i].az < 0.) vertices[i].az = vertices[i].az + TWOPI;
-      else {};
-    }
-
-    for(i=0; i<8; i++){
-      if(vertices[i].az >= TWOPI) vertices[i].az = vertices[i].az - TWOPI;
-      else {};
-    } 
-
-    nv=8; nvmax=8;
-    vert=new_vert(nvmax);
-    if(!vert){
-      fprintf(stderr, "error in get_healpix_poly: failed to allocate memory for 8 vertices\n");
-      return(0x0);
-    }
-    vert->nv=nv; vert->v=&vertices[0];
-
-    pixel=new_poly(4);
-    
-    if(!pixel){
-      fprintf(stderr, "error in get_healpix_poly: failed to allocate memory for polygon of 4 caps\n");
-      return(0x0);
-    }
-
-    ev[0] = 8;
-
-    edge_to_poly(vert, 2, &ev[0], pixel);
-    pixel->id = (long long)hpix;
-
-    pixelbetter=new_poly(5);
-    
-    if(!pixelbetter){
-      fprintf(stderr, "error in get_healpix_poly: failed to allocate memory for polygon of 5 caps\n");
-      return(0x0);
-    }
-
-    pixelbetter->np = 5;
-    pixelbetter->npmax = 5;
-
-    for(i=0; i<=3; i++) {
-      pixelbetter->rp[i][0] = pixel->rp[i][0];
-      pixelbetter->rp[i][1] = pixel->rp[i][1];
-      pixelbetter->rp[i][2] = pixel->rp[i][2];
-      pixelbetter->cm[i] = pixel->cm[i];
-    }
-
-    pixelbetter->rp[4][0] = center[0]; pixelbetter->rp[4][1] = center[1]; pixelbetter->rp[4][2] = center[2];
-    pixelbetter->id = (long long)hpix;
-
-    dist_n = cmrpirpj(center, vertices_vec[0]);
-    dist_w = cmrpirpj(center, vertices_vec[3]);
-    dist_s = cmrpirpj(center, vertices_vec[2]);
-    dist_e = cmrpirpj(center, vertices_vec[1]);
-
-    if(dist_n>=dist_w && dist_n>=dist_s && dist_n>=dist_e){
-      pixelbetter->cm[4] = dist_n+0.000001;
-    }
-    else if(dist_w>=dist_n && dist_w>=dist_s && dist_w>=dist_e){
-      pixelbetter->cm[4] = dist_w+0.000001;
-    }
-    else if(dist_s>=dist_n && dist_s>=dist_w && dist_s>=dist_e){
-      pixelbetter->cm[4] = dist_s+0.000001;
-    }
-    else if(dist_e>=dist_n && dist_e>=dist_s && dist_e>=dist_w){
-      pixelbetter->cm[4] = dist_e+0.000001;
-    }
-    else{
-      fprintf(stderr, "error in get_healpix_poly: cannot find correct fifth cap\n");
-      return(0x0);
-    }
-
-
-    if(!pixelbetter){
-      fprintf(stderr, "error in get_healpix_poly: polygon is NULL.\n");
-      return(0x0);
-    }
-
-    return(pixelbetter);
+  /* north vertex of each child pixel */
+  for(i=0;i<=2;i++){
+    (vertices_vec_n[0])[i] = verts_vec_n[i];
+    (vertices_vec_e[0])[i] = verts_vec_e[i];
+    (vertices_vec_s[0])[i] = verts_vec_s[i];
+    (vertices_vec_w[0])[i] = verts_vec_w[i];
   }
+
+  /* east vertex of each child pixel */
+  for(i=0;i<=2;i++){
+    (vertices_vec_n[1])[i] = verts_vec_n[i+3];
+    (vertices_vec_e[1])[i] = verts_vec_e[i+3];
+    (vertices_vec_s[1])[i] = verts_vec_s[i+3];
+    (vertices_vec_w[1])[i] = verts_vec_w[i+3];
+  }
+
+  /* south vertex of each child pixel */
+  for(i=0;i<=2;i++){
+    (vertices_vec_n[2])[i] = verts_vec_n[i+6];
+    (vertices_vec_e[2])[i] = verts_vec_e[i+6];
+    (vertices_vec_s[2])[i] = verts_vec_s[i+6];
+    (vertices_vec_w[2])[i] = verts_vec_w[i+6];
+  }
+
+  /* west vertex of each child pixel */
+  for(i=0;i<=2;i++){
+    (vertices_vec_n[3])[i] = verts_vec_n[i+9];
+    (vertices_vec_e[3])[i] = verts_vec_e[i+9];
+    (vertices_vec_s[3])[i] = verts_vec_s[i+9];
+    (vertices_vec_w[3])[i] = verts_vec_w[i+9];
+  }
+
+  rp_to_azel(vertices_vec_n[3], vertices_azel[1]);
+  rp_to_azel(vertices_vec_w[2], vertices_azel[3]);
+  rp_to_azel(vertices_vec_s[1], vertices_azel[5]);
+  rp_to_azel(vertices_vec_e[0], vertices_azel[7]);
+
+  for(i=0; i<8; i++){
+    if(vertices[i].az < 0.) vertices[i].az = vertices[i].az + TWOPI;
+    else {};
+  }
+
+  for(i=0; i<8; i++){
+    if(vertices[i].az >= TWOPI) vertices[i].az = vertices[i].az - TWOPI;
+    else {};
+  } 
+
+  nv=8; nvmax=8;
+  vert=new_vert(nvmax);
+  if(!vert){
+    fprintf(stderr, "error in get_healpix_poly: failed to allocate memory for 8 vertices\n");
+    return(0x0);
+  }
+  vert->nv=nv; vert->v=&vertices[0];
+
+  pixel=new_poly(4);
+
+  if(!pixel){
+    fprintf(stderr, "error in get_healpix_poly: failed to allocate memory for polygon of 4 caps\n");
+    return(0x0);
+  }
+
+  ev[0] = 8;
+
+  edge_to_poly(vert, 2, &ev[0], pixel);
+  pixel->id = (long long)hpix;
+
+  pixelbetter=new_poly(5);
+
+  if(!pixelbetter){
+    fprintf(stderr, "error in get_healpix_poly: failed to allocate memory for polygon of 5 caps\n");
+    return(0x0);
+  }
+
+  pixelbetter->np = 5;
+  pixelbetter->npmax = 5;
+
+  for(i=0; i<=3; i++) {
+    pixelbetter->rp[i][0] = pixel->rp[i][0];
+    pixelbetter->rp[i][1] = pixel->rp[i][1];
+    pixelbetter->rp[i][2] = pixel->rp[i][2];
+    pixelbetter->cm[i] = pixel->cm[i];
+  }
+
+  pixelbetter->rp[4][0] = center[0]; pixelbetter->rp[4][1] = center[1]; pixelbetter->rp[4][2] = center[2];
+  pixelbetter->id = (long long)hpix;
+
+  dist_n = cmrpirpj(center, vertices_vec[0]);
+  dist_w = cmrpirpj(center, vertices_vec[3]);
+  dist_s = cmrpirpj(center, vertices_vec[2]);
+  dist_e = cmrpirpj(center, vertices_vec[1]);
+  //fprintf(stderr, "dist_n=%Lf, dist_w=%Lf, dist_s=%Lf, dist_e=%Lf\n", dist_n, dist_w, dist_s, dist_e);
+  //fprintf(stderr, "sizeof(long double) = %zu\n", sizeof(long double));
+
+  if(dist_n>=dist_w && dist_n>=dist_s && dist_n>=dist_e){
+    pixelbetter->cm[4] = dist_n+0.000001;
+  }
+  else if(dist_w>=dist_n && dist_w>=dist_s && dist_w>=dist_e){
+    pixelbetter->cm[4] = dist_w+0.000001;
+  }
+  else if(dist_s>=dist_n && dist_s>=dist_w && dist_s>=dist_e){
+    pixelbetter->cm[4] = dist_s+0.000001;
+  }
+  else if(dist_e>=dist_n && dist_e>=dist_s && dist_e>=dist_w){
+    pixelbetter->cm[4] = dist_e+0.000001;
+  }
+  else{
+    fprintf(stderr, "error in get_healpix_poly: cannot find correct fifth cap\n");
+    return(0x0);
+  }
+
+
+  if(!pixelbetter){
+    fprintf(stderr, "error in get_healpix_poly: polygon is NULL.\n");
+    return(0x0);
+  }
+
+  return(pixelbetter);
 }
 
 /*------------------------------------------------------------
