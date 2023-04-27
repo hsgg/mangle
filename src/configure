@@ -103,7 +103,7 @@ cat <<EOF >> Makefile
 #------
 # Gnu
 
-CC = gcc
+CC = gcc-12
 CFLAGS = -g -O3 -Wall -DMACOSX -DGCC $MFLAG -D_FILE_OFFSET_BITS=64
 
 F77 = gfortran
