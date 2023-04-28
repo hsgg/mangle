@@ -947,6 +947,7 @@ polygon *rd_hpix(format *fmt)
   }
 
   nside = get_nside(fmt->nweights);
+  fprintf(stderr, "nside = %d, fmt->nweights = %d, fmt->id = %lld\n", nside, fmt->nweights, fmt->id);
 
   /* calculate correct HEALPix polygon */
   poly = get_healpix_poly(nside, fmt->id);

@@ -3,6 +3,7 @@
 -------------------------------------------------------------*/
 #include <stdlib.h>
 #include <math.h>
+#include <quadmath.h>
 #include "pi.h"
 #include "manglefn.h"
 
@@ -27,6 +28,8 @@ polygon *get_healpix_poly(int nside, int hpix)
   _Float128 verts_vec[12], verts_vec_n[12], verts_vec_e[12], verts_vec_s[12], verts_vec_w[12], dist_n, dist_w, dist_s, dist_e;
   vec center, center_n, center_e, center_s, center_w, vertices_vec[4], vertices_vec_n[4], vertices_vec_e[4], vertices_vec_s[4], vertices_vec_w[4];
   azel *vertices_azel[8], vertices[8];
+
+  fprintf(stderr, "nside=%d, hpix=%d\n", nside, hpix);
 
   for(i=0;i<=7;i++) vertices_azel[i] = &(vertices[i]);
 
@@ -158,8 +161,29 @@ polygon *get_healpix_poly(int nside, int hpix)
   dist_w = cmrpirpj(center, vertices_vec[3]);
   dist_s = cmrpirpj(center, vertices_vec[2]);
   dist_e = cmrpirpj(center, vertices_vec[1]);
+
   //fprintf(stderr, "dist_n=%Lf, dist_w=%Lf, dist_s=%Lf, dist_e=%Lf\n", dist_n, dist_w, dist_s, dist_e);
-  //fprintf(stderr, "sizeof(_Float128) = %zu\n", sizeof(_Float128));
+
+  char* s1 = malloc(100);
+  char* s2 = s1 + 25;
+  char* s3 = s2 + 25;
+  char* s4 = s3 + 25;
+  quadmath_snprintf(s1, 25, "%.20Qf", dist_n);
+  quadmath_snprintf(s2, 25, "%.20Qf", dist_w);
+  quadmath_snprintf(s3, 25, "%.20Qf", dist_s);
+  quadmath_snprintf(s4, 25, "%.20Qf", dist_e);
+  fprintf(stderr, "dist_n = %s, dist_w %s, dist_s = %s, dist_e = %s\n", s1, s2, s3, s4);
+  dist_n = strtoflt128(s1, NULL);
+  dist_w = strtoflt128(s2, NULL);
+  dist_s = strtoflt128(s3, NULL);
+  dist_e = strtoflt128(s4, NULL);
+  quadmath_snprintf(s1, 25, "%.20Qf", dist_n);
+  quadmath_snprintf(s2, 25, "%.20Qf", dist_w);
+  quadmath_snprintf(s3, 25, "%.20Qf", dist_s);
+  quadmath_snprintf(s4, 25, "%.20Qf", dist_e);
+  fprintf(stderr, "dist_n = %s, dist_w %s, dist_s = %s, dist_e = %s\n", s1, s2, s3, s4);
+  free(s1);
+
 
   if(dist_n>=dist_w && dist_n>=dist_s && dist_n>=dist_e){
     pixelbetter->cm[4] = dist_n+0.000001;
