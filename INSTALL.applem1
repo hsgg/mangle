@@ -1,0 +1,28 @@
+Some things that might help, at least for one person on an Apple M1:
+
+Make sure to use the same gcc versions for fortran and C code. E.g., if you
+install gfortran via brew, then don't use the system-provided gcc (which is
+clang), but use gcc-12 (or whichever later version matches gfortran) provided
+by homebrew.
+
+Make sure MANGLEBINDIR is correct in the script. For example, only call
+healpixpolys.sh from the directory it resides in.
+
+sh might be a symlink to dash, which doesn't like the for-loops in mangle shell
+scripts.
+
+Apple M1 doesn't have extended 80-bit floats. Best option is probably to go to
+quad precision, but Apple's libc is a bit behind in that respect. Some
+observations:
+	1. Extended precision floats (80 bits) are not available on Apple M1.
+	   (`long double` equals `double`.)
+	2. Mangle needs >53 bits of precision.
+	3. Apple has not updated their libc for quad-precision (128 bits) math
+	   (though it is available).
+Quad-precision is available as a software implementation by the compiler. On
+modern platforms like Linux, quad-precision works transparently with the
+scanf-family of functions by using the `Q` or `q` length modifiers. However,
+due to point 3, on MacOS you have to rewrite all the calls to `*scanf()`
+using `strtoflt128()` (and `*printf()`-calls using `quad_snprintf()`).
+Some more information is here:
+https://stackoverflow.com/questions/6457385/how-to-use-gcc-4-6-0-libquadmath-and-float128-on-x86-and-x86-64
