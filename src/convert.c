@@ -3,6 +3,7 @@
 ------------------------------------------------------------------------------*/
 #include <math.h>
 #include <stdlib.h>
+#include <quadmath.h>
 #include "manglefn.h"
 
 /* initial angular tolerance within which to merge multiple intersections */
@@ -114,9 +115,10 @@ void rect_to_poly(_Float128 angle[4], polygon *poly){
       }
       /* check azimuthal extent is in interval [0, pi] */
       if (daz > PI) {
+	char s[40];
+	quadmath_snprintf(s, sizeof(s), "%.36Qg", places(daz * 180./PI, 14));
 	fprintf(stderr, " warning:");
-	fprintf(stderr, " rectangle has azimuthal extent %.16Lg deg > 180 deg\n",
-		places(daz * 180./PI, 14));
+	fprintf(stderr, " rectangle has azimuthal extent %s deg > 180 deg\n", s);
       }
     }
   }

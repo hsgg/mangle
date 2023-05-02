@@ -2,7 +2,10 @@
 © A J S Hamilton 2001
 ------------------------------------------------------------------------------*/
 #include <string.h>
+#include <quadmath.h>
 #include "manglefn.h"
+#include "highprecisionmath.h"
+
 
 /*------------------------------------------------------------------------------
   Parse arguments.
@@ -94,7 +97,7 @@ void parse_args(int argc, char *argv[])
 	    break;
 	case 'g':		/* smoothing harmonic number */
 				/* and smoothing exponent (default 2.) */
-	    iscan = sscanf(optarg, "%Lg %*[,] %Lg", &lsmooth, &esmooth);
+	    iscan = sscanf(optarg, "%"Q"g %*[,] %"Q"g", &lsmooth, &esmooth);
 	    if (iscan < 1) {
 		fprintf(stderr, "-%c%s: expecting real argument\n", opt, optarg);
 		exit(1);
