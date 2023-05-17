@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : commands</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Commands</h5><!--img src="./commands.png" alt="commands" style="margin-left: 182.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>harmonize</h2>
+<p style="margin-left: 193px;">
+
+<tt>harmonize</tt>
+computes the weighted sum of harmonics of the polygons
+in the input polygon files.
+The weighted area of the mask equals
+(4&#160;pi)<sup>1/2</sup>
+times
+the zeroth harmonic.
+<br><br>
+<tt>
+harmonize [-d] [-q] [-l&lt;lmax&gt;] [-m&lt;a&gt;[u]] [-s&lt;n&gt;] [-e&lt;n&gt;] [-p[+|-]&lt;n&gt;]
+[-i&lt;f&gt;[&lt;n&gt;][u]] polygon_infile1 [polygon_infile2 ...] Wlm_outfile
+</tt>
+<br><br>
+The spherical harmonics are computed
+analytically, in the manner described in the Appendix of
+<a href="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1993ApJ...417...19H&db_key=AST&high=397f4b86cb15244">
+Hamilton (1993), MNRAS, ApJ 417, 19-35</a>.
+The algorithm for computing spherical harmonics is recursive and stable,
+and can reasonably defended as being fast, considering what it does.
+However, you should be aware that there is a numerical penalty
+to be paid for allowing a mask to have arbitrary shape:
+the computation time for harmonics up to <i>l</i>
+increases as <i>l</i><sup>3</sup>,
+a pretty steep penalty when <i>l</i> is large.
+The computation time is proportional to the number of edges of the mask,
+and on Andrew Hamilton's laptop circa 2003 (a 750MHz Pentium III),
+it takes 3 cpu minutes per edge to compute harmonics up to
+<i>l</i>&#160;=&#160;1000.
+<br><br>
+The algorithm is able to compute harmonics to machine precision to arbitrarily high order,
+limited only by computer power and patience.
+The recursion recovers correctly from underflow,
+which can occur at large harmonic number <i>l</i>.
+<br><br>
+The spherical harmonics of an angular mask
+are given by integrals of spherical harmonics over the area of the mask.
+As detailed in the aforementioned reference,
+the key mathematical trick is to integrate by parts
+to convert the integrals over the area of the
+mask into integrals over its boundary.
+If the boundary is resolved into arc segments, or edges,
+then the integral over each arc segment can be done analytically,
+and the integral over the boundary is the sum of the integrals over each
+arc segment.
+The problem is well-suited to computation:
+the computational problem is to identify the arc segments
+of the boundary of the mask,
+and then to accumulate the harmonics contributed by each arc segment.
+The computation is naturally parallelizable, if there were need.
+<br><br>
+The most time-consuming part of the computation is rotating
+the harmonics of an arc segment from its natural frame of reference
+into the final frame of reference.
+The computational time for a rotation goes as
+<i>l</i><sup>3</sup> where <i>l</i> is the maximum harmonic number.
+The rotation is unnecessary
+if the circle is a line of constant latitude in the final reference frame,
+and the computation goes faster (as <i>l</i><sup>2</sup>)
+in this case.
+<br><br>
+<tt>harmonize</tt>
+detects polygons which are rectangles,
+polygons bounded by lines of constant azimuth and elevation,
+and applies an accelerated computation for such polygons.
+The computation is accelerated in two respects:</p>
+<ul style="list-style-type: decimal; margin-left: 193px; padding-left: 62px;">
+    <li>The computation of the harmonics contributed by lines of constant elevation
+        is naturally faster, because no rotation to the final frame is necessary;</li>
+    <li>If two rectangles have the same minimum and maximum elevation,
+        then the harmonics contributed by lines of constant azimuth
+        are related by a simple rotation about the polar axis,
+        for which the rotation matrix is diagonal.</li>
+</ul>
+<p style="margin-left: 193px;">
+Note that the second acceleration
+works only if at least two rectangles
+have the same minimum and maximum elevation.
+Two such rectangles need not be adjacent in the polygon file:
+mangle reorders the computation of polygons
+so as to take advantage of accelerations where possible.
+<br><br>
+Back to <a href="./commands.html">list of commands</a>.
+
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

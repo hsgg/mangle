@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : troubleshooting</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Troubleshooting</h5><!--img src="./troubleshooting.png" alt="troubleshooting" style="margin-left: 122.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>Your fortran refuses to read the unformatted fortran files made on another system</h2>
+<p style="margin-left: 193px;">
+
+Diagnosis:
+Your computer stores bytes with opposite endianness.<br>
+<br>
+OR<br>
+<br>
+Your version of mangle was compiled using the gfortran fortran compiler, 
+but you are trying to read unformatted fortran files produced with g77 
+fortran code.
+<br><br>
+Solution: Use the formatted fortran files instead, which you can download from the <a href="../download/data.html">data</a> page.<br>
+<br>
+<br>
+Another Solution:
+<br>
+<table cellpadding=10 bgcolor="#ffccff"><tr><td>
+WARNING: The following hack only works if each number in the unformatted
+fortran file is a single word, i.e. an INTEGER or REAL (not DOUBLE PRECISION).
+</td></tr></table>
+<br>
+On a 32-bit machine, each word contains 4 bytes.
+Convert the files to the other endianness using the cpio command,
+famous for its obtuseness:
+<br>
+<table border=0>
+<tr><td valign=top>
+
+1.
+</td><td valign=top>
+Make a cpio archive file from the original files, as in
+<pre>
+	ls -1 file1 file2 ... | cpio -o &gt; files.cpio
+</pre>
+Notice that the switch <tt>-1</tt> is a one, not an ell.
+</td></tr>
+
+<tr><td valign=top>
+2.
+
+</td><td valign=top>
+Move the cpio archive to another directory where it will not overwrite
+the old files
+<pre>
+	mv files.cpio other_directory
+</pre>
+</td></tr>
+
+<tr><td valign=top>
+3.
+</td><td valign=top>
+Extract the files from the cpio archive in the new directory
+<pre>
+	cd other_directory
+	cpio -i -b &lt; files.cpio
+
+</pre>
+The <tt>-b</tt> switch is the thing that does the byte-swapping.
+</td></tr>
+</table>
+
+<br>
+Back to <a href="./troubleshooting.html">list of problems</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

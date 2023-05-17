@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : troubleshooting</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Troubleshooting</h5><!--img src="./troubleshooting.png" alt="troubleshooting" style="margin-left: 122.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>How to make the complement of a mask?</h2>
+<p style="margin-left: 193px;">
+
+Suppose that your mask consists of the entire sky <em>except</em>
+for a list of excluded regions, or holes,
+which you have prepared in a polygon file <tt>holes.pol</tt>.
+How do you make a polygon file,
+<tt>complement.pol</tt>,
+that defines the entire sky less the excluded regions in <tt>holes.pol</tt>?
+<br><br>
+We have created a shell script, <tt>find_complement.sh</tt>, that does 
+exactly this by stringing together mangle commands.  You can find it in the 
+<tt>[MANGLEDIR]/scripts</tt> directory, or download it from our <a href="../download/scripts.html">scripts</a> page.  To run the script, do:<br>
+<br>
+<tt>sh [MANGLEDIR]/scripts/find_complement.sh holes.pol complement.pol</tt><br>
+<br>
+Alternatively, you can follow the step-by-step instructions below:
+</p>
+
+<table border=0 style="margin-left: 193px;">
+<tr><td valign=top>
+1.
+</td><td valign=top>
+As always, start by running <tt>snap</tt>:
+
+<pre>
+	snap holes.pol jh
+</pre>
+where you may need to use the <tt>-i..</tt> switch
+to specify the format of the input polygon file <tt>holes.pol</tt>.
+</td></tr>
+
+<tr><td valign=top>
+2.
+</td><td valign=top>
+Edit the snap'd output polygon file <tt>jh</tt> so that the weights of
+all polygons are zero.
+A weight of 0 will cause <tt>balkanize</tt>
+
+to treat the holes as being empty.
+</td></tr>
+
+<tr><td valign=top>
+3.
+</td><td valign=top>
+Run <tt>balkanize</tt> on the allsky polygon file <tt>allsky.pol</tt>
+(in the mangle/masks/allsky/ directory)
+and the editted polygon file <tt>jh</tt> of excluded regions:
+<pre>
+	balkanize allsky.pol jh jb
+</pre>
+The order here is important,
+the allsky file <tt>allsky.pol</tt> first
+and the holes file <tt>jh</tt> second,
+because you want the holes to override the allsky.
+If the allsky file came first, it would override the holes,
+the net result
+(after much worthless work)
+being allsky again.
+</td></tr>
+
+<tr><td valign=top>
+4.
+</td><td valign=top>
+Run <tt>unify</tt> on the balkanized polygon file <tt>jb</tt>:
+
+<pre>
+	unify jb complement.pol
+</pre>
+Voil&#224;.
+You have a polygon file <tt>complement.pol</tt>
+defining the complement of your mask.
+</td></tr>
+</table>
+
+<p style="margin-left: 193px;">
+If the resulting set of balkanized polygons looks a mess,
+or if you think there are more balkanized polygons than there should be,
+then you might consider creating a special <tt>allsky.pol</tt>
+polygon file that subdivides the whole sky in a judiciously
+chosen fashion better matched to the geometry of your holes.
+See <tt>mangle/masks/pscz/allsky.rect</tt> for an example.
+<br><br>
+Back to <a href="./troubleshooting.html">list of problems</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : references</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="../manual/">Manual</a></li>
+    <li><a href="./">References</a></li> 
+</ul>
+</div>
+
+<br>
+
+<img src="./references.png" alt="references">
+
+<p>
+The scheme that evolved into mangle began life
+in the delightful atmosphere of an Aspen Center for Physics workshop in 1985.
+The mathematics of harmonization
+and other aspects of the computation of angular integrals
+are written up in the Appendix of
+<a href="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1993ApJ...417...19H&db_key=AST&high=397f4b86cb15244">
+Hamilton (1993) ApJ 417, 19-35</a>.
+The mathematics of balkanization and other features of mangle
+are described by
+<a href="http://arXiv.org/abs/astro-ph/0306324">
+Hamilton &amp; Tegmark (2004), MNRAS 349, 115-128</a>. In 2007, Molly Swanson, Max Tegmark, and Colin Hill
+updated mangle to quickly handle the latest generation of galaxy survey masks.
+The updates, including pixelization and the interface with <a href="http://healpix.jpl.nasa.gov/">HEALPix</a>,
+are described in <a href="http://adsabs.harvard.edu/abs/2008MNRAS.387.1391S">Swanson et al. (2008), MNRAS 387, 1391-1402</a>.
+</p>
+
+<h4>Current Galaxy Surveys</h4>
+
+<ul style="list-style-type: disc; padding-left: 14px;">
+    <li><a href="http://www.sdss.org">The Sloan Digital Sky Survey</a></li>
+    <ul style="list-style-type: circle;">
+        <li><a href="http://www.sdss.org/dr6/">Data Release 6</a>: J. Adelman-McCarthy et al. (2008) <a href="http://adsabs.harvard.edu/abs/2008ApJS..175..297A">ApJS 175, 297</a></li>
+        <li><a href="http://www.sdss.org/dr5/">Data Release 5</a>: J. Adelman-McCarthy et al. (2007) <a href="http://adsabs.harvard.edu/abs/2008ApJS..175..297A">ApJS 172, 634</a></li>
+	<li><a href="http://www.sdss.org/dr4/">Data Release 4</a>: 
+	    J. Adelman-McCarthy et al. (2006) <a href="http://adsabs.harvard.edu/cgi-bin/bib_query?2006ApJS..162...38A">ApJS 162, 38</a></li>
+	<li><a href="http://sdss.physics.nyu.edu/vagc/">The New York University Value-Added Galaxy Catalog</a>: provides SDSS masks and galaxy data in a convenient format.</li>
+    </ul>
+
+    <li><a href="http://www.mso.anu.edu.au/2dFGRS/Public/Release/index.html">The 2dFGRS Galaxy Redshift Survey</a></li>
+    <ul style="list-style-type: circle;">
+        <li>100k Data Release: M. Colless et al. (2001) <a href="http://adsabs.harvard.edu/abs/2001MNRAS.328.1039C">MNRAS 328, 1039</a></li>
+	<li>Final Data Release: M. Colless et al. (2003) <a href="http://arXiv.org/abs/astro-ph/0306581">astro-ph/0306581</a></li>
+    </ul>
+
+    <li><a href="http://www.2dfquasar.org/">The 2dF QSO Redshift Survey</a></li>
+    <ul style="list-style-type: circle;">
+        <li>10k Catalogue: S. M. Croom, R. J. Smith, B. J. Boyle, T. Shanks, N. S. Loaring, L. Miller, &amp; I. J. Lewis (2000)
+	    <a href="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=2001MNRAS.322L..29C">MNRAS 322, 29</a></li>
+	<li>Final Catalogue: S. M. Croom, R. J. Smith, B. J. Boyle, T. Shanks, L. Miller, P. J. Outram, N. S. Loaring (2004)
+	    <a href="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=2004MNRAS.349.1397">MNRAS 349, 1397</a></li>
+    </ul>
+    <li><a href="http://adc.astro.umd.edu/adc-cgi/cat.pl?/catalogs/7/7221/">The PSCz Catalogue</a></li>
+    <ul style="list-style-type: circle;">
+        <li>W. Saunders et al. (2000) <a href="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=2000MNRAS.317...55S">MNRAS 317, 55</a></li>
+    </ul>    
+   <li><a href="http://deep.berkeley.edu/">DEEP2 Redshift Survey</a></li>
+   <li><a href="http://www.ukidss.org/">UKIRT Infrared Deep Sky Survey (UKIDSS)</a></li>
+   <li><a href="http://www.galex.caltech.edu/about/overview.html">Galaxy Evolution Explorer (GALEX)</a></li>
+
+
+</ul>
+
+<h4>Ongoing and Future Galaxy Surveys</h4>
+
+<ul style="list-style-type: disc; padding-left: 14px;">
+   <li><a href="http://www.ast.obs-mip.fr/article204.html">Canada-France-Hawaii Telescope Legacy Survey - Deep (CFHTLS-Deep)</a></li>
+   <li><a href="http://terapix.iap.fr/cplt/oldSite/Descart/summarycfhtlswide.html">Canada-France-Hawaii Telescope Legacy Survey - Wide (CFHTLS-Wide)</a></li>
+   <li><a href="http://swire.ipac.caltech.edu/swire/swire.html">Spitzer Wide-area InfraRed Extragalactic survey (SWIRE)</a></li>
+  <li><a href="http://www.sstd.rl.ac.uk/fmos/">Fibre Multi Object Spectrograph (FMOS)</a></li>
+   <li><a href="http://www.lamost.org/en/">Large Sky Area Multi-Object Fiber Spectroscopic Telescope (LAMOST)</a></li>
+   <li><a href="http://www.darkenergysurvey.org/">Dark Energy Survey</a></li>
+   <li><a href="http://wigglez.swin.edu.au/Welcome.html">WiggleZ Survey with the AAOmega Spectrograph</a></li>
+   <li><a href="http://www.oamp.fr/virmos/vvds.htm">VIMOS VLT Deep Survey (VVDS)</a></li>
+   <li><a href="http://www.eso.org/sci/observing/policies/PublicSurveys/sciencePublicSurveys.html">VST and VISTA surveys</a></li>
+    <li><a href="http://www.as.utexas.edu/hetdex/">Hobby-Eberly Telescope Dark Energy Experiment (HETDEX)</a></li>
+   <li><a href="http://www.astro.princeton.edu/~rhl/HSC/">Hyper Suprime Cam on the Subaru Telescope</a></li>
+   <li><a href="http://www.scitech.ac.uk/roadmap/rmProject.aspx?q=128">Wide-Field Multi-Object Spectrograph (WFMOS)</a></li>
+    <li><a href="http://pan-starrs.ifa.hawaii.edu/public/">Pan-STARRS</a></li>
+    <li><a href="http://www.lsst.org/">Large Synoptic Survey Telescope (LSST)</a></li>
+
+</ul>
+
+<h4>Other Useful Tools</h4>
+
+<ul style="list-style-type: disc; padding-left: 14px;">
+    <li><a href="http://healpix.jpl.nasa.gov/">HEALPix</a>: K. M. Gorski, B. D. Wandelt, F. K. Hansen, E. Hivon, A. J. Banday
+        (1998) <a href="http://arXiv.org/abs/astro-ph/9905275">The HEALPix Primer</a>.</li>
+    <li><a href="http://lahmu.phyast.pitt.edu/~scranton/SDSSPix/">SDSSPix</a></li>
+    <li><a href="http://nvogre.phyast.pitt.edu:8080/gestalt_tutorial/index.jsp">GESTALT Footprint Server</a></li>
+    <li><a href="http://casa.colorado.edu/~ajsh/mangle/">Original mangle web page</a></li>
+</ul>
+
+<h4>Mangle Papers</h4>
+
+<ul style="list-style-type: disc; padding-left: 14px;">
+    <li>A. J. S. Hamilton (1993) <a href="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1993ApJ...417...19H&db_key=AST&high=397f4b86cb15244">ApJ 417, 19-35</a>.
+    <li>A. J. S. Hamilton &amp; M. Tegmark (2004) A scheme to deal accurately and efficiently with complex angular masks in galaxy surveys,
+        <a href="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=2004MNRAS.349..115H&amp;db_key=AST&amp;high=3f53a783a825087">MNRAS 349, 115-128</a>
+	(<a href="http://arXiv.org/abs/astro-ph/0306324">astro-ph/0306324</a>).
+    <li>M. E. C. Swanson, M. Tegmark, A. J. S. Hamilton, &amp; J. Colin Hill (2007) Methods for rapidly processing angular masks of next-generation
+        galaxy surveys, <a href="http://adsabs.harvard.edu/abs/2008MNRAS.387.1391S">MNRAS 387, 1391-1402</a> (<a href="http://arXiv.org/abs/0711.4352">arXiv:0711.4352</a>).
+</ul>
+
+<a name="contact"></a>
+<h4>Mangle Development Team</h4>
+
+<ul style="list-style-type: disc; padding-left: 14px;">
+    <li>Molly Swanson, MIT: <tt>mollyswanson at alum dot mit dot edu</tt></li>
+    <li>Prof. Max Tegmark, MIT: <tt>tegmark at mit dot edu</tt></li>
+    <li>Prof. Andrew Hamilton, Colorado/JILA: <tt>Andrew dot Hamilton at colorado dot edu</tt></li>
+    <li>Colin Hill, MIT: <tt>c_hill at alum dot mit dot edu</tt></li>
+</ul>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

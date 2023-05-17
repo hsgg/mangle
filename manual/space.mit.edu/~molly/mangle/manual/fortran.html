@@ -1,0 +1,179 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : commands</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Commands</h5><!--img src="./commands.png" alt="commands" style="margin-left: 182.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>Fortran Subroutines</h2>
+<p style="margin-left: 193px;">
+These subroutines are responsible for the angular mathematics which underlies the
+various mangle routines.
+<br><br>
+<center>
+<table bgcolor="#f6eecc" cellpadding=2 border=0>
+<tr><td>
+<table cellspacing=2 cellpadding=4 border=1>
+
+<caption>
+Fortran subroutines, in alphabetical order
+</caption>
+
+<tr><th valign=top>
+code
+</th><th>
+computes
+</th></tr>
+
+<tr><td valign=top>
+<em>garea</em>
+</td><td valign=top>
+
+the area of a polygon
+</td></tr>
+
+<tr><td valign=top>
+<em>gcmlim</em>
+</td><td valign=top>
+the minimum and maximum angular distances from a point to anywhere on a polygon
+</td></tr>
+
+<tr><td valign=top>
+<em>gphi</em>
+</td><td valign=top>
+the angle subtended by that part of a circle which lies inside a polygon
+
+</td></tr>
+
+<tr><td valign=top>
+<em>gptin</em>
+</td><td valign=top>
+whether a point lies inside or outside a polygon
+</td></tr>
+
+<tr><td valign=top>
+<em>gspher</em>
+</td><td valign=top>
+the spherical harmonics of a polygon
+</td></tr>
+
+<tr><td valign=top>
+<em>gsphera</em>
+</td><td valign=top>
+the spherical harmonics of a rectangle (accelerated)
+</td></tr>
+
+<tr><td valign=top>
+<em>gvert</em>
+</td><td valign=top>
+points on the edges of a polygon,
+ordered right-handedly about it
+</td></tr>
+
+<tr><td valign=top>
+<em>gvlim</em>
+</td><td valign=top>
+the minimum and maximum angular distances between a point
+and each edge of a polygon
+</td></tr>
+
+<tr><td valign=top>
+<em>gvphi</em>
+</td><td valign=top>
+find that point on a circle which (a) lies inside a polygon,
+and (b) lies closest to a given point
+</td></tr>
+
+<tr><td valign=top>
+
+<em>iylm</em>
+</td><td valign=top>
+integral&#160;from&#160;<i>&#952;</i><sub>min</sub>&#160;to&#160;<i>&#952;</i><sub>max</sub>&#160;<i>Y<sub>lm</sub></i>(<i>&#952;</i>,&#160;0)&#160;sin<i>&#952;</i>&#160;<i>d&#952;</i>
+
+</td></tr>
+
+<tr><td valign=top>
+<em>wlm</em>
+</td><td valign=top>
+contribution to spherical harmonics from an edge
+</td></tr>
+
+<tr><td valign=top>
+<em>wrho</em>
+</td><td valign=top>
+value of summed harmonics at a specified angular position
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+</center>
+<br>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

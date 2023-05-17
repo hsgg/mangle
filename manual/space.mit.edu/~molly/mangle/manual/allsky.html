@@ -1,0 +1,133 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : troubleshooting</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Troubleshooting</h5><!--img src="./troubleshooting.png" alt="troubleshooting" style="margin-left: 122.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>How to define a polygon which is the entire sky?</h2>
+<p style="margin-left: 193px;">
+
+A polygon with 0 caps is the entire sky.
+The file <tt>allsky.pol</tt> in the mangle/masks/allsky/ directory
+is a polygon file specifying the allsky polygon.
+It should contain the following single line:
+<br><br><tt>
+polygon 0 ( 0 caps, 1 weight, 12.56637061435917 str):
+</tt><br><br>
+The line could be abbreviated to
+<br><br><tt>
+polygon 0 0
+</tt><br><br>
+which specifies a polygon of 0 caps, with a default weight of 1.
+<br><br>
+Similarly,
+in <tt>circle</tt> format, the allsky polygon can be specified with
+<br><br><tt>
+circle 0 0
+</tt><br><br>
+or more verbosely with
+<br><br><tt>
+circle 0 ( 0 caps, 1 weight, 12.56637061435917 str):
+</tt><br><br>
+Normally, a line of the form
+<br><br><tt>
+circle 0 n
+</tt><br><br>
+in a polygon file (<tt>n</tt> is some integer)
+would instruct mangle to expect subsequent lines in the file to
+contain <tt>n</tt> circles per line.
+However, for the particular case where <tt>n</tt> is zero,
+mangle assumes that only one polygon can be an allsky polygon.
+Therefore, it is essential that
+the format be re-initialized
+following the declaration of an allsky polygon, as for example in</p>
+<pre style="margin-left: 193px;">
+circle 0 0
+circle
+az<sub>1</sub>&#160;el<sub>1</sub>&#160;th<sub>1</sub>&#160;...&#160;az<sub>n</sub>&#160;el<sub>n</sub>&#160;th<sub>n</sub>
+...
+</pre>
+<p style="margin-left: 193px;">
+The first line, <tt>circle 0 0</tt>, specifies an allsky polygon
+(you can add an optional blank line for clarity, if you want),
+while the <tt>circle</tt> keyword on the second line
+instructs mangle that subsequent lines are in <tt>circle</tt> format.
+The fact that <tt>circle</tt> appears with no arguments
+declares that the number of circles per line is variable;
+mangle deduces the number of circles from the number of angles
+it finds in a line.
+<br><br>
+Back to <a href="./troubleshooting.html">list of problems</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

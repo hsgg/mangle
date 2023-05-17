@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : commands</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Commands</h5><!--img src="./commands.png" alt="commands" style="margin-left: 182.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;">
+A summary table of basic mangle commands appears in the <a href="../quickstart/">QuickStart</a> section; a full
+table of all mangle commands is given below.  The QuickStart commands yield a functioning polygon file, while the
+more advanced commands below let you play with it.
+See the individual linked pages for more detailed information about each command.
+There is a standard set of command line switches for all commands:</p>
+<ul style="list-style-type: none; margin-left: 193px;">
+        <li><a href="./switches.html">Summary of command line switches</a></li>
+</ul>
+<p style="margin-left: 193px;">
+Also, there is a suite of Fortran subroutines which is responsible for the angular mathematics in mangle:</p>
+<ul style="list-style-type: none; margin-left: 193px;">
+        <li><a href="./fortran.html">Fortran subroutines</a></li>
+</ul>
+<p style="margin-left: 193px;">
+The mangle commands are:</p>
+<ul style="list-style-type: disc; margin-left: 193px; padding-left: 14px;">
+	<li><a href="./pixelize.html">pixelize</a></li>
+	<li><a href="./snap.html">snap</a></li>
+	<li><a href="./balkanize.html">balkanize</a></li>
+	<li><a href="./unify.html">unify</a></li>
+	<li><a href="./weight.html">weight</a></li>
+	<li><a href="./harmonize.html">harmonize</a></li>
+	<li><a href="./map.html">map</a></li>
+	<li><a href="./drangle.html">drangle</a></li>
+	<li><a href="./ransack.html">ransack</a></li>
+	<li><a href="./poly2poly.html">poly2poly</a></li>
+	<li><a href="./polyid.html">polyid</a></li>
+	<li><a href="./rasterize.html">rasterize</a></li>
+	<li><a href="./pixelmap.html">pixelmap</a></li>
+</ul>
+
+<table bgcolor="#f6eecc" cellpadding=2 border=0>
+<tr><td>
+<table cellspacing=2 cellpadding=4 border=1>
+
+<caption>
+Basic mangle commands
+</caption>
+
+<tr><th valign=top>
+command
+</th><th>
+does
+</th><th>
+purpose
+</th></tr>
+
+<tr><td valign=top>
+<em>pixelize</em>
+
+</td><td valign=top>
+splits polygons in the mask so that each polygon is in only one pixel
+</td><td valign=top>
+Several mangle commands require comparing each polygon to all of the other
+polygons in the mask.  If the mask is pixelized first, mangle only needs to
+compare a polygon to the other polygons in the same pixel, which speeds up
+the processing considerably.
+</td></tr>
+
+<tr><td valign=top>
+<em>snap</em>
+</td><td valign=top>
+identifies almost coincident cap boundaries and snaps them together
+</td><td valign=top>
+The positions of the intersections of two almost but not exactly coincident
+cap boundaries may be subject to significant numerical uncertainty.
+To avoid numerical problems, such boundaries must be made exactly coincident.
+</td></tr>
+
+<tr><td valign=top>
+<em>balkanize</em>
+</td><td valign=top>
+subdivides the angular mask into many disjoint polygons
+</td><td valign=top>
+Polygons must not overlap,
+to avoid regions being double-counted.
+</td></tr>
+
+<tr><td valign=top>
+<em>weight</em>
+</td><td valign=top>
+assigns a weight to each polygon
+</td><td valign=top>
+Define the weight to be applied to each polygon,
+for example
+in computing the weighted sum of spherical harmonics of polygons.
+This command may be avoided in many cases:
+see <a href="../manual/weight.html">Losing Weight</a>.
+</td></tr>
+
+<tr><td valign=top>
+<em>unify</em>
+</td><td valign=top>
+
+unifies polygons where possible
+</td><td valign=top>
+Reduce the number of polygons,
+for grace and efficiency.
+</td></tr>
+
+<tr><td colspan=3 align=center>
+Advanced mangle commands
+</td></tr>
+
+<tr><td valign=top>
+<em>harmonize</em>
+
+</td><td valign=top>
+computes the spherical harmonics of a mask
+</td><td valign=top>
+Investigations of large scale structure, especially at the largest scales,
+often proceed most advantageously through spherical harmonics.
+The area of the mask is proportional to the zeroth harmonic.
+</td></tr>
+
+<tr><td valign=top>
+<em>map</em>
+</td><td valign=top>
+maps the mask reconstructed from its spherical harmonics
+</td><td valign=top>
+So you can see what you got.
+</td></tr>
+
+<tr><td valign=top>
+<em>drangle</em>
+</td><td valign=top>
+computes the angle subtended by that part of a circle
+lying within the mask
+</td><td valign=top>
+This is the basic element needed to compute the cross-correlation
+(commonly denoted
+&lt;DR&gt;,
+for Data-Random, in cosmological parlance),
+between a given point and points in the mask
+separated from it by a given angle.
+<p>
+If the points are random points generated by
+<tt>ransack</tt>,
+then the result will be a Monte Carlo realization of
+the auto-correlation
+(commonly denoted
+
+&lt;RR&gt;,
+for Random-Random, in cosmological parlance),
+between pairs of points in the mask
+separated by a given angle.</p>
+</td></tr>
+
+<tr><td valign=top>
+<em>ransack</em>
+</td><td valign=top>
+generates random points within the mask
+</td><td valign=top>
+Correlation functions are often measured with the help of random backgrounds
+of points.
+</td></tr>
+
+<tr><td valign=top>
+
+<em>poly2poly</em>
+</td><td valign=top>
+converts a polygon file from one format to another
+</td><td valign=top>
+For example,
+you can generate points suitable for plotting the polygons
+of your mask by converting to graphics format.
+Or,
+you can determine the vertices of the polygons of your mask
+by converting to vertices format,
+or you can find a point inside each polygon of your mask
+by converting to midpoint format.
+</td></tr>
+
+<tr><td valign=top>
+<em>polyid</em>
+
+</td><td valign=top>
+determines which polygon(s) a point lies inside
+</td><td valign=top>
+Useful utility.
+Is there such a thing as a useless utility?
+</td></tr>
+
+<tr><td valign=top>
+<em>rasterize</em>
+
+</td><td valign=top>
+pixelizes a mask according to a user-defined pixelization scheme, returns a polygon file describing the area-averaged weight within each pixel
+</td><td valign=top>
+One direction of the HEALPix &hArr; mangle conversion scheme, although it works with any spherical pixelization scheme.  Allows one to take a standard
+mangle polygon file and make a discrete approximation to it according to an arbitrary pixelization scheme (e.g., HEALPix); the output can then be converted
+to a FITS file (using the weight in each HEALPix pixel) or turned into another polygon file in mangle (using <tt>poly2poly</tt>).
+</td></tr>
+
+<tr><td valign=top>
+<em>pixelmap</em>
+
+</td><td valign=top>
+takes a mask pixelized by one of mangle's pixelization schemes, returns a polygon file describing the area-averaged weight within each pixel
+</td><td valign=top>
+This routine uses the internal mangle pixelization information to produce a discrete approximation to a mask without the additional steps used in <tt>rasterize</tt>.  It can produce a pixelmap using any of the pixelization schemes available in <tt>pixelize</tt>.  
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+
+<br><br>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

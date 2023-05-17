@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : quickstart</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="./">QuickStart</a></li>
+    <li><a href="../manual/">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<img src="./quickstart.png" alt="quickstart">
+
+<h4>Getting Started</h4>
+
+<p>
+To start using mangle, download the <a href="../download/index.html">latest version</a> of the software, 
+and unpack it with the following commands (for Mac OSX, replace 'linux' with 'intelmac' or 'ppcmac'):
+<br><br>
+<tt>gunzip mangle2.1-linux.tar.gz</tt><br>
+<tt>tar xvf mangle2.1-linux.tar</tt><br><br>
+This should produce a directory called <tt>mangle2.1</tt> containing the following directories:
+<ul>
+<li><tt>bin</tt> containing the binary executables for each mangle command,</li>
+<li><tt>src</tt> containing the source code,<br>
+<li><tt>scripts</tt> containing shell scripts for doing interesting tasks with mangle, and</li>
+<li><tt>masks</tt> containing data files for masks of several galaxy surveys.</li>
+</ul>
+</p>
+<p>
+To give you a flavor for how mangle works, the rest of this page walks you through a step-by-step example.
+Let's start by constructing a portion of the angular mask for the <a href="http://www.sdss.org/">Sloan Digital Sky Survey</a>, a.k.a. SDSS:<br><br>
+<tt>cd mangle2.1/masks/sdss</tt>
+</p>
+<p>
+The first step is to define your mask. Mangle can read masks described in a variety of formats
+(see <a href="../manual/polyformat.html">Polygon Formats</a>).
+Fortunately, in the case of SDSS, much of the work has already been done for us.  The <a href="http://sdss.physics.nyu.edu/vagc/">NYU Value-Added Galaxy Catalog</a> provides a description of the SDSS angular mask with two files in mangle <tt><a href="../manual/polygon.html">polygon</a></tt> format:
+<ul>
+<li><tt>window.XXX.ply</tt> gives the completeness of the survey in regions defined by the 
+stripes of the <a href="http://cas.sdss.org/dr4/en/sdss/instruments/instruments.asp#camera">photometric survey</a> and the 3&deg; circular plates of the <a href="http://cas.sdss.org/dr4/en/sdss/instruments/instruments.asp#spectrographs">spectroscopic survey</a>.
+The weight of each polygon represents the fraction of galaxies with measured redshifts in that region: a weight of 0 means no galaxies in that region have measured redshifts, and a weight of 1 means that 100% of the target galaxies selected in that region by the photometric survey have measured redshifts.</li>
+<li><tt>mask.XXX.ply</tt> provides polygons representing the holes in the survey area, i.e., regions that are blocked out to avoid bright stars, satellite trails, and so forth.  It is not a 'mask' in the <a href="../manual/index.html">usual mangle sense</a>, but should rather be thought of as something that 'masks' the view out of the 'window' described in the file above. The polygons in the mask file have weights equal to the weights of the window polygons they are obscuring.
+</ul>
+
+The 'XXX' above is a placeholder for tags denoting the data release and the sample - for example, the window file for the 'safe0' sample of Data Release 6 is called <tt>window.dr6safe0.ply</tt>. The window and mask files for several SDSS data releases can be downloaded from the <a href="http://sdss.physics.nyu.edu/vagc/">NYU-VAGC</a> or from the <a href="../download/data.html">data</a> section of this website.
+<br><br>
+For our example, we will use portions of the window and mask files for DR6, containing just the polygons in one of SDSS's equatorial slices, which are in the <tt>masks/sdss</tt> directory:
+<ul>
+<li><a href="./window.dr6safe0.slice.ply">window.dr6safe0.slice.ply</a></li>
+<li><a href="./mask.dr6safe0.slice.ply">mask.dr6safe0.slice.ply</a></li>
+</ul>
+
+<!-- For example, the masks of the 2QZ survey are defined by 3 polygon files in this directory
+which define the boundaries of:
+<ul>
+<li>UKST plates: <tt>ngp_ukstfld.lims.txt</tt></li>
+<li>2&deg; fields: <tt>ngp_field_coords.txt</tt></li>
+<li>holes in UKST plates: <tt>ngp.used.rahole.txt</tt></li>
+</ul>
+</p>
+<p>
+The UKST plates are photographic plates containing photographs of the sky
+observed with the <a href="http://www.roe.ac.uk/ifa/wfau/ukstu/ukst.html">UK Schmidt Telescope</a> covering rectangular 
+patches of the sky, and these plates have a number of holes drilled in them
+to avoid bright stars, satellite trails, and such.
+The 2QZ survey was conducted by selecting target quasars from the UKST plates and 
+taking their spectra using the <a href="http://www.aao.gov.au/2df/">Two Degree Field</a> multi-object spectrograph, a.k.a 2dF.
+-->
+<!-- 2dF can take spectra of xx objects simultaneously over a 2&deg; circular field. -->
+</p>
+<p>
+Our goal with mangle is to resolve these window and hole polygons into the full angular selection function 
+consisting of non-overlapping polygons.
+The basic procedure for how to do this is outlined in the table below. (The tutorial continues after the table.)
+</p>
+
+<h4>Basic Commands</h4>
+
+<table bgcolor="#f6eecc" cellpadding=2 border=0>
+<tr><td>
+<table cellspacing=2 cellpadding=4 border=1>
+
+<caption>
+Basic mangle commands, listed in the order that they would normally be applied
+</caption>
+
+<tr><th valign=top>
+command
+</th><th>
+does
+</th><th>
+purpose
+</th></tr>
+
+<tr><td valign=top>
+<em>pixelize</em>
+
+</td><td valign=top>
+splits polygons in the mask so that each polygon is in only one pixel
+</td><td valign=top>
+Several mangle commands require comparing each polygon to all of the other 
+polygons in the mask.  If the mask is pixelized first, mangle only needs to
+compare a polygon to the other polygons in the same pixel, which speeds up
+the processing considerably.  
+</td></tr>
+
+<tr><td valign=top>
+<em>snap</em>
+</td><td valign=top>
+identifies almost coincident cap boundaries and snaps them together
+</td><td valign=top>
+The positions of the intersections of two almost but not exactly coincident
+cap boundaries may be subject to significant numerical uncertainty.
+To avoid numerical problems, such boundaries must be made exactly coincident.
+</td></tr>
+
+<tr><td valign=top>
+<em>balkanize</em>
+</td><td valign=top>
+subdivides the angular mask into many disjoint polygons
+</td><td valign=top>
+Polygons must not overlap,
+to avoid regions being double-counted.
+</td></tr>
+
+<tr><td valign=top>
+<em>weight</em>
+</td><td valign=top>
+assigns a weight to each polygon
+</td><td valign=top>
+Define the weight to be applied to each polygon,
+for example
+in computing the weighted sum of spherical harmonics of polygons.
+This command may be avoided in many cases:
+see <a href="../manual/weight.html">Losing Weight</a> in the Manual.
+</td></tr>
+
+<tr><td valign=top>
+<em>unify</em>
+</td><td valign=top>
+
+unifies polygons where possible
+</td><td valign=top>
+Reduce the number of polygons,
+for grace and efficiency.
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+<h4>Walkthrough for Making the SDSS Example Mask</h4>
+<p>
+Our first order of business is to set the weights of the polygons representing the holes to zero.
+First, make a file called <tt>jw</tt> just containing a 0 with the command<br><br>
+<tt>echo 0 > jw</tt><br>
+<br>
+Then we apply weight 0 to all of the polygons in <tt>mask.dr6safe0.slice.ply</tt> with the command<br><br>
+<tt>../../bin/weight -zjw mask.dr6safe0.slice.ply holes.dr6safe0.slice.ply</tt><br>
+<br>
+The <tt>-z</tt> switch tells mangle where to read the weight(s) from - in this case, the file <tt>jw</tt>.<br>
+<br>
+The next step is to run the <tt>pixelize</tt> command on our input files.  This speeds up the computation
+for the following steps, and combines the window and holes polygons into one file called <tt>jfhp</tt>:<br><br>
+<tt>../../bin/pixelize window.dr6safe0.slice.ply holes.dr6safe0.slice.ply jfhp</tt><br>
+<br> 
+Note that the window file comes before the holes file on the command line - this is important!  For polygons that overlap, the weights of polygons listed later in the file take precedence.  By putting the holes after the window, this ensures that the holes are assigned a weight of zero in the final mask.<br>
+<br>
+The next step is to <tt>snap</tt> this file, which makes nearly-coincident polygon boundaries exactly
+coincident to avoid numerical problems later. This command takes the file we just made with the 
+<tt>pixelize</tt> step and writes the snapped polygons to <tt>jfh</tt>:<br>
+<br>
+<tt>../../bin/snap jfhp jfh</tt><br>
+<br>
+We then <tt>balkanize</tt> the file <tt>jfh</tt> to resolve it into non-overlapping polygons,
+and write the output to <tt>jb</tt>:
+<br><br>
+<tt>../../bin/balkanize jfh jb</tt><br>
+<br>
+(Note that we don't have to apply <tt>weight</tt> here, as suggested in the table, because the window file comes with the appropriate weights defined and we already weighted the holes to 0 in the first step.)<br>
+<br>
+Finally, we <tt>unify</tt> the mask to clean things up by combining neighboring polygons with the same weight.  This step takes our balkanized file <tt>jb</tt> as input and outputs our final angular mask of the SDSS slice to <tt>sdss_dr6safe0_slice.pol</tt>.
+<br><br>
+<tt>../../bin/unify jb sdss_dr6safe0_slice.pol</tt><br>
+<br>
+As an example application, let's make a list of a thousand random SDSS "galaxies" with
+the appropriate angular distribution in our slice:
+<br><br>
+<tt>../../bin/ransack -r1000 sdss_dr6safe0_slice.pol galaxies.dat</tt><br>
+<br>
+This produces <tt>galaxies.dat</tt>, a list of right ascensions and declinations (RA and Dec) describing the positions of the mock galaxies on the sky.
+</p>
+
+<h4>Plotting the SDSS Slice Mask</h4>
+<p>
+If you have Matlab installed on your system, you can plot the SDSS slice mask in an EPS file with the script <tt>graphmask.sh</tt> as follows: first convert it into <tt><a href="../manual/list.html">list</a></tt> format which can be read by Matlab:
+<br><br>
+<tt>../../bin/poly2poly -ol30 sdss_dr6safe0_slice.pol sdss_dr6safe0_slice.list</tt><br>
+<br>
+Then run the plotting script, which calls Matlab from the command line:<br><br>
+<tt>sh ../../scripts/graphmask.sh sdss_dr6safe0_slice.list sdss_dr6safe0_slice.eps -45 35 8 21 "Completeness mask for a slice of SDSS dr6 safe0"</tt><br>
+<br>
+The "-45 35 8 21" in the arguments specifies the range in RA and Dec (in degrees) over which to plot the mask.<br>
+<br>
+If you have <a href="http://www.astro.princeton.edu/~rhl/sm/sm.html">Supermongo</a> installed on your system, you can plot the SDSS slice mask with the script <tt>graphmasksm.sh</tt> as follows:
+<br><br>
+<tt>../../bin/poly2poly -og10 -p3 sdss_dr6safe0_slice.pol sdss_dr6safe0_slice.grph</tt><br>
+<br>
+converts the polygon file to <tt><a href="../manual/graphics.html">graphics</a></tt> format, and<br>
+<br> 
+<tt>sh ../../scripts/graphmasksm.sh sdss_dr6safe0_slice.grph sdss_dr6safe0_slice1.eps 0 35 0 0 "Completeness mask for a slice of SDSS dr6 safe0"</tt><br><br>
+<tt>sh ../../scripts/graphmasksm.sh sdss_dr6safe0_slice.grph sdss_dr6safe0_slice2.eps 315 360 0 0 "Completeness mask for a slice of SDSS dr6 safe0"</tt><br>
+<br>
+plot the mask using Supermongo.  Note that the range arguments "0 35 0 0" and "315 360 0 0" range arguments tell the script to plot the mask in two halves to avoid trickiness at the RA=360&deg; to RA=0&deg; crossover.<br>
+<br>
+You can view your newly-created plot with <tt>gv</tt> or <tt>ggv</tt>, e.g.:<br>
+<br>
+<tt>ggv sdss_dr6safe0_slice.eps</tt><br>
+<br>
+If you used the Matlab script and everything worked properly, it will look like this: <a href="./sdss_dr6safe0_slice.eps">sdss_dr6safe0_slice.eps</a>.
+</p>
+<h4>Mangle Environment Variables</h4>
+<p>
+If you want to avoid typing the path to the mangle commands, e.g., just type <tt>balkanize</tt> rather than <tt>../../bin/balkanize</tt>, run the following command, which defines environment variables pointing to the mangle directories and adds them to your path:<br>
+<br>
+<tt>cd [MANGLEDIR]</tt><br>
+<tt>source setup_mangle_environment $PWD/</tt><br>
+<br>
+where you should replace <tt>[MANGLEDIR]</tt> with the path to where you installed mangle, e.g., <tt>/home/yourname/mangle2.1/</tt>.<br>
+<br>
+To do this automatically when you log in, add the following line to the script that runs each time you start your shell. (this is a file in your home directory called either <tt>.bashrc</tt>, <tt>.tcshrc</tt>, <tt>.cshrc</tt>, <tt>.login</tt>, or <tt>.profile</tt>, depending on your system.)<br>
+<br>
+<tt>source [MANGLEDIR]setup_mangle_environment [MANGLEDIR]</tt><br>
+</p>
+<h4>How not to Reinvent the Wheel</h4>
+<p>
+We have compiled a collection of scripts that perform many of the most common tasks that mangle can handle, 
+so before spending time trying to figure out how to best combine the various mangle tools to do what you want, 
+please check our <a href="../download/scripts.html">script collection</a> to see if it contains what you're looking for.
+</p>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

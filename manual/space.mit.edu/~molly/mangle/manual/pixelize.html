@@ -1,0 +1,310 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : commands</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Commands</h5><!--img src="./commands.png" alt="commands" style="margin-left: 182.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>pixelize</h2>
+<p style="margin-left: 193px;">
+<tt>pixelize</tt>
+splits polygons in the mask so that each polygon is in only one pixel.
+<br><br>
+<tt>
+pixelize [-d] [-q] [-m&lt;a&gt;[u]] [-s&lt;n&gt;] [-e&lt;n&gt;] [-vo|-vn|-vp] [-p[+|-][&lt;n&gt;]] [-P[scheme][&lt;p&gt;][,&lt;r&gt;]]
+[-i&lt;f&gt;[&lt;n&gt;][u]] [-o&lt;f&gt;[u]] polygon_infile1 [polygon_infile2 ...] polygon_outfile
+</tt>
+<br><br>
+The purpose of <tt>pixelize</tt> is to speed up the processing of 
+<tt>snap</tt>, <tt>balkanize</tt>, <tt>unify</tt>, and <tt>polyid</tt>.  
+It does this using a pre-defined pixelization scheme which divides the 
+whole sky up into a set of special polygons referred to as pixels.  Once a 
+mask has been pixelized, <tt>snap</tt>, <tt>balkanize</tt>, and <tt>unify</tt>
+only need to compare polygons in the same pixel, rather than comparing
+each polygon to every single other polygon in the mask.  Also, <tt>polyid</tt>
+can instantly determine which pixel a point is in, so it only has to check
+the polygons in that pixel to see if they contain the point.
+<br><br>
+<tt>pixelize</tt> is an optional step - you can skip it if your mask isn't
+too complicated and you don't need the extra speed.
+<br><br>
+When <tt>pixelize</tt> is run on a set of polygon files defining a mask,
+it compares each polygon to the pixels.  If a polygon in the mask 
+intersects with more than one pixel, <tt>pixelize</tt> will divide that 
+polygon into two or more polygons such that each new polygon is in only 
+one pixel.
+<br><br>
+In the polygon output file, the new polygons are saved with a pixel number
+defining which pixel the polygon is in.  Note: This pixelization information
+will only be saved if the polygon or spolygon output format is used.
+<br><br>
+The pixelization schemes used by mangle are defined hierarchically - that is,
+any pixel can be subdivided to produce four new pixels.  The number of
+subdivisions used to make a pixel is the called the resolution of that pixel.
+For example, in the `simple' pixelization scheme, 
+the pixel which is the whole sky has a resolution of 0.  This 
+pixel is subdivided into 4 smaller pixels, each covering a quadrant of the sky.
+These new pixels (the `child pixels' of the first pixel) have a resolution of 1.
+<br><br>
+In the `simple' pixelization scheme, this subdivision is done
+along lines of equal azimuth and equal elevation, which makes pixels that are
+rectangles.  The divisions are spaced equally in azimuth and in cos(elevation), 
+so that each pixel has equal area.  
+
+<table border=0 style="margin-left: 3px;">
+
+<tr>
+
+<td valign=middle>
+<table border = 0>
+<tr><td align=center valign=bottom>
+<img src="res0.gif" width=125 height=125 hspace=4 vspace=4
+alt="1 pixel">
+</td></tr>
+<tr><td align=center valign=top>
+resolution 0
+</td></tr>
+</table>
+</td>
+
+<td valign=middle>
+<table border = 0>
+<tr><td align=center valign=bottom>
+<img src="res1.gif" width=125 height=125 hspace=4 vspace=4
+alt="4 pixels">
+</td></tr>
+<tr><td align=center valign=top>
+resolution 1
+</td></tr>
+</table>
+
+</td>
+
+<td valign=middle>
+<table border = 0>
+<tr><td align=center valign=bottom>
+<img src="res2.gif" width=125 height=125 hspace=4 vspace=4
+alt="16 pixels">
+</td></tr>
+<tr><td align=center valign=top>
+resolution 2
+</td></tr>
+</table>
+</td>
+
+<td valign=middle>
+<table border = 0>
+
+<tr><td align=center valign=bottom>
+<img src="res3.gif" width=125 height=125 hspace=4 vspace=4
+alt="64 pixels">
+</td></tr>
+<tr><td align=center valign=top>
+resolution 3
+</td></tr>
+</table>
+</td>
+
+
+</tr>
+
+</table>
+</p>
+<p style="margin-left: 193px;">
+The pixels are numbered as follows: the pixel which is the whole sky is pixel 0, 
+which is at resolution 0.  At resolution 1, there are 4 pixels numbered 1, 2, 3, and 4. 
+ At resolution 2, there are 16 pixels, which are numbered 5-20, and so forth for 
+higher resolutions.  With this numbering scheme, a single pixel number tells mangle 
+both the resolution and the position on the sky.
+<br><br>
+Any given pixel at resolution <tt>r</tt> has a set of 4 `child pixels' (the pixels it 
+will be divided into at resolution <tt>r+1</tt>), and <tt>r</tt> `parent pixels' (the
+pixels at each lower resolution that were subdivided to make that pixel).  For example,
+the children of pixel 11 are pixels 41, 42, 49, and 50, and the parents of pixel 34 
+are pixels 0, 2, and 7.
+<br><br>
+In the `sdsspix' pixelization scheme, the subdivision is performed in a manner consistent
+with the geometry of the Sloan Digital Sky Survey.  In particular, `sdsspix' follows the
+<a href="http://lahmu.phyast.pitt.edu/~scranton/SDSSPix/">SDSSPix</a> scheme, which is
+based on the SDSS survey coordinates `LAMBDA' and `ETA'.  Like the `simple' scheme, `sdsspix'
+is defined hierarchically (each pixel at resolution <tt>r</tt> is subdivided into 4 child pixels
+at resolution <tt>r+1</tt>, with the exception of <tt>r=0</tt>), and the pixels at a given resolution all have equal areas.
+<br><br>
+`ETA' is the azimuthal angle of the SDSSPix coordinate system (lines of constant `ETA' are
+great circles perpendicular to the survey equator), and `LAMBDA' is the elevation angle
+(lines of constant `LAMBDA' are small circles parallel to the survey equator).  The SDSS
+survey coordinates thus form a spherical coordinate system rotated relative to the celestial
+coordinate system.  The official SDSSPix base resolution consists of 36 equally-spaced divisions in
+`ETA' and 13 divisions in `LAMBDA' (equally spaced in cos(`LAMBDA')), for a total of 468
+equal-area pixels.
+<br><br>
+In mangle, the `sdsspix' base resolution is actually the entire sky,
+which is pixel 0.  This base resolution has 117 child pixels (instead of 4), numbered from 1-117,
+which are not part of the official SDSSPix scheme, but are obtained by combining sets of 4 
+adjacent pixels from the official SDSSPix base resolution (which is thus resolution 2 in mangle).
+These resolution 2 pixels are numbered from 118-585.  To construct the pixels at higher resolutions,
+mangle follows the official SDSSPix hierarchical division of each pixel into 4 child pixels.
+As in the `simple' scheme, a single pixel number uniquely identifies both the resolution
+and position of that pixel on the sky.
+<br><br>
+The construction of the `sdsspix' pixels is accomplished by obtaining the pixels in
+<a href="./rectangle.html"><tt>rectangle</tt></a> format using `ETA'-`LAMBDA' coordinates,
+and then rotating these polygons into mangle's standard celestial coordinates.  See
+<a href="http://lahmu.phyast.pitt.edu/~scranton/SDSSPix/#images">here</a> for images of
+the SDSSPix pixels.
+<br><br>
+<tt>pixelize</tt> uses a recursive method to divide a mask into pixels.  It starts with
+all of the polygons in pixel 0 (i.e., all the polygons in the whole sky), and splits 
+the polygons lying along the borders of the child pixels (pixels 1, 2, 3, and 4) so that
+each polygon is in only one child pixel.  Then it repeats this process for each child
+pixel  - all of the polygons in pixel 1 are split into pixels 5, 6, 9, and 10, then the
+process is repeated for these child pixels, and so forth.
+<br><br>
+There are two different stop conditions for the pixelization process.  <tt>pixelize</tt>
+will keep subdividing each pixel until either:</p>
+<ul style="list-style-type: decimal; margin-left: 193px; padding-left: 62px;">
+    <li>There are fewer than a certain number of polygons in a given pixel, or</li>
+    <li>The maximum resolution is reached.</li>
+</ul>
+<p style="margin-left: 193px;">
+For example, if the number of polygons allowed per pixel <tt>&lt;p&gt;</tt> is set to 5, 
+<tt>pixelize</tt> won't continue subdividing any pixel containing 5 or fewer polygons.  
+If <tt>&lt;p&gt;</tt> is set to 0, <tt>pixelize</tt> will keep subdividing until it 
+reaches the maximum allowed resolution <tt>&lt;r&gt;</tt>.  Both <tt>&lt;p&gt;</tt> and 
+<tt>&lt;r&gt;</tt> can be set using the <tt><a href="#pixelizetable">-P</a></tt> switch.
+<br><br>
+This setup allows <tt>pixelize</tt> to run in two different modes.  If you run with 
+<tt>&lt;p&gt;</tt> greater than 0, regions with lots of little polygons will automatically
+be pixelized at a higher resolution than regions with a few big polygons.  This is 
+especially handy if your mask has widely varying levels of complexity in different regions
+of the sky.  
+<br><br>
+If you run with <tt>&lt;p&gt;</tt> equal to 0, the entire mask will be 
+pixelized to the same resolution.  This is useful if you have several input files that
+you want to <tt>snap</tt> separately before combining them.  Pixelizing each input file to 
+the same maximum resolution will guarantee that the pixels will line up later when
+the files are combined.
+</p>
+<a name="pixelizetable"></a>
+<p>
+
+<table bgcolor="#f6eecc" cellpadding=2 border=0 style="margin-left: 193px">
+<tr><td>
+<table cellspacing=2 cellpadding=4 border=1>
+
+<tr><td valign=top>
+<tt>
+-P[&lt;scheme&gt;][&lt;p&gt;][,&lt;r&gt;]
+</tt>
+</td><td valign=top>
+
+<tt>pixelize</tt>,
+<tt>polyid</tt>,
+<tt>pixelmap</tt>
+</td><td valign=top>
+Specify various pixelization parameters.
+<p>
+<tt>&lt;scheme&gt;</tt>
+specifies which pixelization scheme to use - may be one of:<br> 
+<tt>s</tt> simple, or 
+<tt>d</tt> sdsspix.<br>
+
+The `simple' pixelization scheme divides the sky into rectangles,
+and can have difficulties at the north pole.  The `sdsspix' pixelization
+scheme divides the sky using a method based on the 
+<a href="http://lahmu.phyast.pitt.edu/~scranton/SDSSPix/">SDSSPix</a> algorithm.
+<br>
+<tt>&lt;p&gt;</tt> is the number of polygons allowed in each pixel. 
+<tt>pixelize</tt> 
+will keep subdividing each pixel until either: <br>
+&nbsp;1. There are fewer than <tt>&lt;p&gt;</tt> polygons in the pixel, or <br>
+
+&nbsp;2. <tt>pixelize</tt> reaches the maximum resolution <tt>&lt;r&gt;</tt>.<br>
+To pixelize the entire mask to the maximum resolution, set 
+<tt>&lt;p&gt;=0</tt>.
+<br>
+<tt>&lt;r&gt;</tt> is the maximum resolution that will be used in the
+pixelization.  At resolution <tt>&lt;r&gt;</tt>, the sky is divided into
+
+<tt>4<sup>&lt;r&gt;</sup></tt> pixels.
+</td></tr>
+</table>
+</td></tr>
+</table>
+
+</p>
+
+<p style="margin-left: 193px;">
+Back to <a href="./commands.html">list of commands</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

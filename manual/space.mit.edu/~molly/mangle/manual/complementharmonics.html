@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : troubleshooting</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Troubleshooting</h5><!--img src="./troubleshooting.png" alt="troubleshooting" style="margin-left: 122.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>Is there a way to harmonize the complement of a mask directly from the holes?</h2>
+<p style="margin-left: 193px;">
+
+Suppose that you want to compute the harmonics of a mask
+consisting of the whole sky less the excluded regions
+which you have prepared in a polygon file <tt>holes.pol</tt>.
+Instead of taking the complement of the mask as in
+<a href="./complement.html">the previous question</a>,
+an alternative way to proceed is to
+compute the harmonics of the holes from <tt>holes.pol</tt>,
+and subtract those from the harmonics of the whole sky,
+whose only nonzero harmonic is the monopole harmonic
+<i>w</i><sub>00</sub>&#160;=&#160;(4&#160;pi)<sup>1/2</sup>.
+<br><br>
+In practice, you could proceed as follows:</p>
+
+<table border=0 style="margin-left: 193px;">
+<tr><td valign=top>
+1.
+</td><td valign=top>
+As always, start by running <tt>snap</tt>:
+<pre>
+	snap holes.pol jh
+</pre>
+where you may need to use the <tt>-i..</tt> switch
+to specify the format of the input polygon file <tt>holes.pol</tt>.
+
+</td></tr>
+
+<tr><td valign=top>
+2.
+</td><td valign=top>
+Edit the snap'd output polygon file <tt>jh</tt> so that the weights of
+all polygons are -1.
+A weight of -1 will cause <tt>harmonize</tt>
+to subtract (add with weight -1) the harmonics of each excluded polygon
+in <tt>jh</tt>.
+</td></tr>
+
+<tr><td valign=top>
+
+3.
+</td><td valign=top>
+Run <tt>harmonize</tt>
+on the combination of the allsky polygon in <tt>allsky.pol</tt>
+(in the mangle/masks/allsky/ directory)
+and the holes in <tt>jh</tt>
+<pre>
+	harmonize -l&lt;lmax&gt; allsky.pol jh complement.wlm
+</pre>
+The file <tt>complement.wlm</tt> contains the harmonics of the sky
+less the excluded regions.
+</td></tr>
+</table>
+
+<p style="margin-left: 193px;">
+Back to <a href="./troubleshooting.html">list of problems</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

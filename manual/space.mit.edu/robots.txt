@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /icons/
+Disallow: /images/
+Disallow: /ASC/images/
+Disallow: /certificates/
+Disallow: /webmail

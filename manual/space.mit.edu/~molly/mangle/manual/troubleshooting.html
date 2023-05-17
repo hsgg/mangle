@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : troubleshooting</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Troubleshooting</h5><!--img src="./troubleshooting.png" alt="troubleshooting" style="margin-left: 122.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;">
+
+Common problems that may arise when using mangle:</p>
+
+<ul style="list-style-type: disc; margin-left: 193px; padding-left: 14px;">
+	<li><a href="./nocompile.html">Mangle won't compile</a></li>
+	<li><a href="./snaptrouble.html">Did you remember to run snap on your input polygon files?</a></li>
+	<li><a href="./multiple.html">Multiply-intersecting and kissing circles</a></li>
+	<li><a href="./failure.html">A routine complains of `total failure' or some other fatal error</a></li>
+	<li><a href="./vastnumbers.html"><tt>balkanize</tt> is making unexpectedly vast numbers of polygons</a></li>
+	<li><a href="./antipode.html">Some of the polygons that come from my vertices file are 180&deg; away from where they should be</a></li>
+	<li><a href="./badedge.html">Some of the polygons that come from my edges file are not right &ndash; the polygon does not even pass through the points!</a></li>
+	<li><a href="./tiny.html">How can I get rid of all the tiny polygons?</a></li>
+	<li><a href="./zeroweight.html">How can I get rid of all the polygons with zero weight?</a></li>
+	<li><a href="./multipleboundaries.html">When I output to graphics (or vertices, or edges) format, it tells me that some of the polygons of my balkanized mask have multiple boundaries</a></li>
+	<li><a href="./unformatted.html">Your fortran refuses to read the unformatted fortran files made on another system</a></li>
+	<li><a href="./maskarea.html">Is there a simple way to determine the area of a mask?</a></li>
+	<li><a href="./allsky.html">How to define a polygon which is the entire sky?</a></li>
+	<li><a href="./complement.html">How to make the complement of a mask?</a></li>
+	<li><a href="./complementharmonics.html">Is there a way to harmonize the complement of a mask directly from the holes?</a></li>
+</ul>
+
+<p style="margin-left: 193px;">
+If you have diligently read and attempted all of the solutions presented here, and your problem
+still occurs, either you may have a very complicated polygon (like a fractal) or you may have
+found a genuine bug in mangle.  If you suspect it is a bug, please email the <a href="../references/index.html#contact">mangle development team</a> the
+following information:</p>
+
+<ul style="list-style-type: decimal; margin-left: 193px; padding-left: 62px;">
+    <li>The input polygon files that give the problem;</li>
+    <li>The sequence of commands that give the problem;</li>
+    <li>The output of the sequence of commands (with verbose on, i.e. without the <tt>-q</tt> quiet flag).</li>
+</ul>
+
+</p>
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

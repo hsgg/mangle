@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : troubleshooting</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Troubleshooting</h5><!--img src="./troubleshooting.png" alt="troubleshooting" style="margin-left: 122.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>Did you remember to run snap on your input polygon files?</h2>
+<p style="margin-left: 193px;">
+
+You should always run <tt>snap</tt> on all the input polygon files
+that define your mask
+before running <tt>balkanize</tt>.
+If you have several input files, you should run <tt>snap</tt>
+on the combined set of input files before balkanizing.
+Look at the
+<a href="./snap.html">
+2QZ&#160;10k&#160;North incantation</a>
+for an example.
+<br><br>
+It should be necessary to run
+<tt>snap</tt> only on the initial input files,
+not on balkanized or subsequent polygon files.
+On the other hand,
+running <tt>snap</tt> on balkanized or subsequent polygon files
+should be harmless, and in most cases should have no effect.
+<br><br>
+Whatever the case,
+if you are getting lots of incomprehensible error messages,
+your first reaction should be to run <tt>snap</tt> on the input polygon files.
+<br><br>
+Snapped polygon files should be stored in <tt>polygon</tt> (the default)
+or <tt>circle</tt> format, since other formats
+(<tt>edges</tt>, <tt>vertices</tt>, and <tt>rectangle</tt>)
+can lose information about having been snapped.
+All snapped files should be stored in the same format,
+to avoid introducing numerical discrepancies.
+<br><br>
+Back to <a href="./troubleshooting.html">list of problems</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

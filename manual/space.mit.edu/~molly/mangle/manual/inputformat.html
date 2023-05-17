@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : polygon formats</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Polygon Formats</h5><!--img src="./polyformat.png" alt="polygon formats" style="margin-left: 123.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>Input format</h2>
+<p style="margin-left: 193px;">
+
+The input formats in mangle mimic those actually used by various galaxy surveys,
+and it should not be difficult to cast the mask for your survey
+into one or other of the formats.
+<br><br>
+The intention is that the read subroutine <tt>rdmask</tt>
+should be flexible, and fairly tolerant of syntax.
+If a line of data yields an error on the first or second words
+(all formats except <tt>healpix_weight</tt> expect at least two numbers in a line of data),
+then <tt>rdmask</tt> goes to the next line,
+on the assumption that the line contains a header or a comment.
+Thus polygon files can contain arbitrary quantities of commentary.
+If on the other hand <tt>rdmask</tt> reads the first and second words of a line
+successfully, then it assumes that it has found a line in the required format.
+Any error encountered later in the line is then considered to be a genuine
+error, upon which <tt>rdmask</tt> issues an error message,
+and proceeds to the next line.
+The policy is to carry on regardless as long as possible.
+<br><br>
+
+It may well be that your existing mask files are already in a suitable format,
+and can be read without change.
+If you think your format is different and deserves to be plumbed in, please <a href="../references/index.html#contact">contact us</a>.
+There are eight possible input formats:</p>
+<ul style="list-style-type: none; margin-left: 193px;">
+<tt>
+	<li>c - <a href="./circle.html">circle</a></li>
+	<li>v -	<a href="./vertices.html">vertices</a></li>
+	<li>e -	<a href="./edges.html">edges</a></li>
+	<li>r -	<a href="./rectangle.html">rectangle</a></li>
+	<li>p -	<a href="./polygon.html">polygon</a></li>
+	<li>s -	<a href="./spolygon.html">spolygon</a></li>
+	<li>R -	<a href="./Region.html">Region</a></li>
+	<li>h - <a href="./healpixweight.html">healpix_weight</a></li>
+</tt>
+</ul>
+<p style="margin-left: 193px;">
+Note that the format of an input file
+can be specified on the command line with the
+<tt>-i</tt> (input) switch,
+or it can be specified with lines inside the input file
+that start with certain keywords:</p>
+<ul style="list-style-type: none; margin-left: 193px;">
+	<li><a href="./inputkeywords.html">Keywords in input files</a></li>
+</ul>
+<p style="margin-left: 193px;">
+Back to <a href="./polyformat.html">polygon formats</a>.
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

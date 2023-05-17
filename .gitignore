@@ -1,3 +1,5 @@
 /src/*.o
 /src/libmangle.a
 /src/Makefile
+/manual/space.mit.edu/~molly/mangle/download/data/
+/manual/space.mit.edu/~molly/mangle/download/source/

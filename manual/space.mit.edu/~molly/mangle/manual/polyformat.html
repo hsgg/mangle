@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : polygon formats</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Polygon Formats</h5><!--img src="./polyformat.png" alt="polygon formats" style="margin-left: 123.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;">
+
+If you want to apply mangle to your angular mask,
+then you will need to define your mask in a format that
+mangle can read.
+This section describes the possible formats.
+<br><br>
+The mangle software recognizes a variety of formats
+for files defining an angular mask, hereafter called `polygon files'.
+All mangle programs read and write polygon files
+through the same subroutines
+<tt>rdmask.c</tt> and <tt>wrmask.c</tt>.
+If the worst comes to the worst,
+you can look in those subroutines to see what is happening.
+<br><br>
+<p style="margin-left: 193px;">
+For information regarding the input format of polygon files, see:</p>
+<ul style="list-style-type: none; margin-left: 193px;">
+	<li><a href="./inputformat.html">Input format</a></li>
+</ul>
+<p style="margin-left: 193px;">
+For information regarding the output format of polygon files, see:</p>
+<ul style="list-style-type: none; margin-left: 193px;">
+	<li><a href="./outputformat.html">Output format</a></li>
+</ul>
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : commands</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Commands</h5><!--img src="./commands.png" alt="commands" style="margin-left: 182.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>rasterize</h2>
+<p style="margin-left: 193px;">
+
+<tt>rasterize</tt> essentially pixelizes a mask against an arbitrary
+set of `rasterizer' pixels, instead of the `simple' or `sdsspix'
+schemes used by <tt>pixelize</tt>.  The final product of rasterization is a polygon file in which each
+polygon corresponds to one of the `rasterizer' pixels (either the approximate
+HEALPix pixels or a user-defined set of pixels) and its
+weight is the area-averaged weight of the input angular mask within
+that pixel.
+
+<br><br>
+<tt>
+rasterize  [-d] [-q] [-a&lt;a&rt;[u]] [-b&lt;a&gt;[u]] [-t&lt;a&gt;[u]] [-y&lt;r&gt;] [-m&lt;a&gt;[u]] [-s&lt;n&gt;] [-e&lt;n&gt;] [-vo|-vn|-vp] [-p[+|-][&lt;n&gt;]] [-i&lt;f&gt;[&lt;n&gt;][u]] [-o&lt;f&gt;[u]] [-H] polygon_infile1 polygon_infile2 [polygon_infile3 ...] polygon_outfile
+</tt>
+<br><br>
+In order to use <tt>rasterize</tt>, you will need a <tt>polygon_infile1</tt>
+containing the `rasterizer' polygons that you would like to use as a
+pixelization scheme, as well as a <tt>polygon_infile2</tt> (or multiple files)
+containing the mask polygons that you would like to rasterize.  In order to
+speed up the routine, you should <a href="./pixelize.html"><tt>pixelize</tt></a>
+both the rasterizer polygons and your mask polygons using either the `simple'
+or `sdsspix' schemes (note that all input files must be pixelized to the same
+resolution).  If you use the approximate HEALPix pixels as your
+rasterizer polygons, the output polygon file can be written in <a href="./healpixweight.html"><tt>healpix_weight</tt></a> format
+by using the <tt>-H</tt> switch.
+<br><br>
+While the algorithm behind <tt>rasterize</tt> is completely general in that it
+works with any set of rasterizer polygons, its original intent was to allow for
+an effective method of converting mangle polygon files into
+<a href="http://healpix.jpl.nasa.gov">HEALPix</a> format files.  As such,
+before describing the workings of the algorithm, I'll go through the steps 
+involved in rasterizing to HEALPix resolution <i>N</i><sub>side</sub> = 16
+the simple polygon file <tt>allsky.pol</tt> found
+in the <tt>/masks/allsky/</tt> subdirectory in mangle (my private convention
+is to begin all junk files with a j):</p>
+<p style="margin-left: 233px;">
+<tt>
+        healpixpolys.sh 16 s 0 3 j16p3s<br>
+	pixelize -Ps0,3 allsky.pol jp3<br>
+	snap jp3 jp3s<br>
+	rasterize j16p3s jp3s jar16p3s
+</tt>
+</p>
+<p style="margin-left: 193px;">
+Let's go through these steps one-by-one:</p>
+<ul style="list-style-type: decimal; margin-left: 193px; padding-left: 62px;">
+     <li>We construct the HEALPix polygons at <i>N</i><sub>side</sub> = 16 using the
+     mangle script <tt>healpixpolys.sh</tt>; this script then pixelizes them using
+     the <tt>simple</tt> scheme to a uniform maximum resolution of 3; this script
+     finally snaps the pixelized polygons.  Note that the choice of res=3 was
+     completely arbitrary; you can pixelize your input files to any resolution, as
+     long as they are all pixelized to the same resolution.</li>
+     <li>We pixelize the mask file <tt>allsky.pol</tt> in the same way that we
+     pixelized the HEALPix polygons, that is, to a uniform maximum resolution of 3
+     using the <tt>simple</tt> scheme.</li>
+     <li>We snap the resulting pixelized mask polygons.</li>
+     <li>We rasterize the pixelized mask polygons against the pixelized HEALPix polygons;
+     the result is a polygon file containing the approximate HEALPix polygons we used, with the
+     weight of each polygon equal to the area-averaged weight of the <tt>allsky.pol</tt> 
+     mask within that polygon (a total of 12*16*16 = 3072 polygons).</li>
+</ul>
+<p style="margin-left: 193px;">
+For clarity, let's consider the same example, except that now our rasterizer polygons
+will not be the HEALPix polygons but rather some arbitrary polygon file
+<tt>rast.pol</tt>:</p>
+<p style="margin-left: 233px;">
+<tt>
+        pixelize -Ps0,3 rast.pol jrp3<br>
+        snap jrp3 jrp3s<br>
+	pixelize -Ps0,3 allsky.pol jp3<br>
+        snap jp3 jp3s<br>
+        rasterize jrp3s jp3s jarp3s
+</tt>
+</p>
+<p style="margin-left: 193px;">
+It should be clear that the same steps have been performed as in the previous example,
+except that now we do not need to construct the HEALPix polygons initially, because
+our rasterizer polygons already exist in the file <tt>rast.pol</tt>.  The result of
+this incantation is a polygon file containing the <tt>rast.pol</tt> polygons, with the 
+weight of each polygon equal to the area-averaged weight of the <tt>allsky.pol</tt> mask
+within that polygon.
+<br><br>
+
+The steps of the algorithm are as follows:</p>
+<ul style="list-style-type: lower-alpha; margin-left: 193px; padding-left: 62px;">
+    <li>Calculate the area of each rasterizer polygon;</li>
+    <li>Compute the area of the intersection of each input mask
+    polygon with each rasterizer polygon;</li>
+    <li>Use this information (along with the input mask weights)
+    to calculate the area-averaged weight within each rasterizer
+    pixel.</li>
+</ul>
+<p style="margin-left: 193px;">
+As with other mangle routines, this algorithm is greatly accelerated by pixelizing both
+the rasterizer polygons and the input mask polygons to the same `simple' or `sdsspix'
+resolution beforehand.  The second step in the above procedure then involves comparing
+only polygons in the same `simple' or `sdsspix' pixel.
+<br><br>
+A few important notes: Your input mask should be balkanized before using <tt>rasterize</tt>, since
+overlapping polygons could lead to inaccurate results.  Also, be sure to run <tt>snap</tt> on both
+the rasterizer polygon file and the input mask polygon file beforehand.
+<br><br>
+Lastly, the id numbers of the rasterizer polygons should follow the id numbers of the pixelization scheme being used
+(e.g., the NESTED numbers for HEALPix); hence, you should make sure to retain the polygon numbers
+when you snap and pixelize the rasterizer polygons before using <tt>rasterize</tt>.  In other words,
+do <i>not</i> use the <tt>-vn</tt> or <tt>-vp</tt> switch when performing these steps. (mangle defaults to <tt>-vo</tt> for the <tt>snap</tt> and <tt>pixelize</tt> commands.)
+
+<br><br>
+Back to <a href="./commands.html">list of commands</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

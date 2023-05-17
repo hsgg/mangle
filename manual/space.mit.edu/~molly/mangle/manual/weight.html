@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : commands</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Commands</h5><!--img src="./commands.png" alt="commands" style="margin-left: 182.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>weight</h2>
+<p style="margin-left: 193px;">
+<tt>weight</tt>
+assigns a weight to each polygon.
+<br><br>
+<tt>
+weight [-d] [-q] -z&lt;survey&gt; [-m&lt;a&gt;[u]] [-s&lt;n&gt;] [-e&lt;n&gt;] [-vo|-vn|-vp] [-p[+|-]&lt;n&gt;] [-i&lt;f&gt;[&lt;n&gt;][u]]
+[-o&lt;f&gt;[u]] polygon_infile1 [polygon_infile2 ...] polygon_outfile
+</tt>
+<br><br>
+<tt>weight</tt>
+requires the
+<tt>-z&lt;survey&gt;</tt>
+switch as an argument.
+The <tt>&lt;survey&gt;</tt>
+argument may be either:</p>
+<ul style="list-style-type: lower-alpha; margin-left: 193px; padding-left: 62px;">
+    <li>the name of a file containing a list of weights, or</li>
+    <li>a string that tells <tt>weight</tt> which (user-supplied) subroutine to use in computing the weight at a point.</li>
+</ul>
+<p style="margin-left: 193px;">
+Option (a) is much more practical,
+because there is no need to recompile mangle.
+
+<br><br>
+In case (a), where
+<tt>&lt;survey&gt;</tt>
+is the name of a file containing a list of weights,
+then that file should consist of an arbitrary numbers of header lines
+(not beginning with a number),
+followed by a list of weights,
+one weight per line for each polygon in the
+<tt>polygon_infile</tt>s.
+The weight is taken to be the first number in the line;
+anything beyond the first number on a line is ignored.
+If the weight file contains only a single weight,
+then that weight is applied to every polygon.
+Otherwise the weight file should contain a separate weight for each polygon,
+and it is an error for there to be fewer weights than polygons.
+
+<br><br>
+Suppose you have your own software which returns a weight given an angular position.
+You can get mangle to create a file
+containing a list of angular positions of midpoints of polygons by
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	poly2poly -om polygon_infile midpoint_outfile
+</tt>
+</p>
+<p style="margin-left: 193px;">
+Here the <tt>-om</tt> switch specifies an output file in <tt>midpoint</tt> format.
+The <tt>midpoint_outfile</tt> becomes input to your own software,
+which should produce another file containing a list of weights,
+which can be fed to <tt>weight</tt>.
+
+<br><br>
+In case (b), where
+<tt>&lt;survey&gt;</tt>
+is a string telling
+<tt>weight</tt>
+which (user-supplied) subroutine to use in computing the weight,
+then you will need to write a fortran or c subroutine that returns
+a weight given an azimuth and an elevation.
+You might like to use the 2QZ&#160;10k subroutine <tt>twoqz.f</tt> as a template.
+Having written such a subroutine,
+you must then plumb it into the mangle code by updating
+<tt>weight_fn.c</tt>, which should be self-explanatory.
+Finally, you must update the Makefile to include your subroutine,
+and recompile with the <tt>make</tt> command.
+
+<br><br>
+The surveys plumbed into mangle's <tt>weight</tt> command are the
+<a href="http://www.2dfquasar.org/">2QZ&#160;10k</a> survey and the 
+100k and 230k (final) release of the 
+<a href="http://www.mso.anu.edu.au/2dFGRS/Public/Release/index.html">
+2dF Galaxy Redshift Survey</a>.  The command line incantations for
+these surveys are 
+<tt>-z2QZ10k</tt>,
+<tt>-z2dF100k</tt>, and
+<tt>-z2dF230k</tt>.
+Thus
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	weight -z2QZ10k jb jw
+</tt>
+</p>
+<p style="margin-left: 193px;">
+reads polygons from the balkanized polygon file <tt>jb</tt>,
+applies weights from the 2QZ&#160;10k survey,
+and writes the polygon file <tt>jw</tt>.
+<br><br>
+</p>
+
+<h2>losing weight</h2>
+<p style="margin-left: 193px;">
+The <tt>weight</tt> command
+is needed only for complicated masks,
+such as that of
+<a href="http://www.2dfquasar.org/">2QZ&#160;10k</a>
+or
+<a href="http://www.mso.anu.edu.au/2dFGRS/Public/Release/index.html">2dF&#160;100k</a>,
+where each polygon of the mask has a different weight.
+But if the weighting scheme is simpler
+(for example, the weight is either 0 or 1),
+then it should be possible to arrange the input polygon files
+to avoid <tt>weight</tt>.
+
+<br><br>
+Assume that you have run <tt>snap</tt> on the original files that
+define your mask.
+By default, <tt>snap</tt> writes output files in polygon format.
+The polygon format includes a weight attached to each polygon.
+You can edit these by hand.
+<br><br>
+The default rule used by <tt>balkanize</tt> is that
+the weight of a polygon that appears later in the input file
+overrides weights of earlier polygons.
+In other words,
+if <tt>balkanize</tt> finds that two polygons intersect,
+then the weight applied to the intersection is the weight of the later polygon.
+The non-intersecting parts of the polygons inherit the weights of their parents.
+(See <a href="./balkanize.html">balkanize</a> for non-default options.)
+<br><br>
+For example,
+if you want to add (subtract?) a hole, an empty polygon, to a mask,
+then append a polygon with zero weight to the file of polygons.
+In practice, you might do this in the following way.
+Suppose you have a file <tt>fields.dat</tt> defining a list of fields,
+and another file <tt>holes.dat</tt> defining a list of holes.
+The first step is, as usual, to apply snap:
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	snap fields jf
+	snap holes jh
+</tt>
+</p>
+<p style="margin-left: 193px;">
+where of course you may need to use the <tt>-i..</tt> switch to specify the
+<a href="./polyformat.html">format</a>
+of the input polygon files.
+Now edit the holes file <tt>jh</tt> to set the weight for all polygons to zero.
+You can probably leave the fields file <tt>jf</tt> as is,
+since the default weight is 1, which may be what you want.
+Then snap the fields and holes files together:
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	snap jf jh jfh
+</tt>
+</p>
+<p style="margin-left: 193px;">
+The order of the input files <tt>jf</tt> and <tt>jh</tt> is important here,
+fields first and holes second,
+because you want the holes to override the fields.
+Next balkanize:
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	balkanize jfh jb
+</tt>
+</p>
+<p style="margin-left: 193px;">
+In the output file <tt>jb</tt> of balkanized polygons,
+some of the polygons will have weight 1
+(those inside the fields but not in a hole),
+and the rest will have weight 0
+(the holes).
+Applying <tt>unify</tt> to the balkanized file
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	unify jb pretty.poly
+</tt>
+</p>
+<p style="margin-left: 193px;">
+gets rid of the polygons of weight 0, the holes,
+and merges, as far as possible, the polygons of weight 1,
+giving a pruned file <tt>pretty.poly</tt>
+of non-overlapping polygons ready to harmonize.
+If you are daring, you can pipe the
+<tt>snap</tt>-<tt>balkanize</tt>-<tt>unify</tt>
+commands together with
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	snap -q jf jh - | balkanize -q - - | unify - pretty.poly
+</tt>
+</p>
+<p style="margin-left: 193px;">
+since an input filename of <tt>-</tt> instructs to read from stdin,
+while an output filename of <tt>-</tt> instructs to write to stdout.
+The <tt>-q</tt> switch instructs the first two commands to be quiet,
+since otherwise they would write advice to their output polygon files,
+which is probably not what you want.
+Note that advice is written to stdout;
+only error messages are written to stderr.
+<br><br>
+Back to <a href="./commands.html">list of commands</a>.
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

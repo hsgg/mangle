@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : polygon formats</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Polygon Formats</h5><!--img src="./polyformat.png" alt="polygon formats" style="margin-left: 123.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>healpix_weight format</h2>
+<p style="margin-left: 193px;">
+
+The motivation behind this format is to provide an effective method
+of converting between the other mangle formats and that of the
+<a href="http://healpix.jpl.nasa.gov">HEALPix</a> software.
+<br><br>
+HEALPix is a hierarchical, equal-area, isolatitudinal pixelization
+scheme for the sphere.  Most importantly,
+the curvilinear edges of the HEALPix pixels are not constructed by means of
+intersecting spherical caps; hence, they cannot be implemented exactly in
+mangle.  Instead, a set of polygons approximating the HEALPix pixels is
+constructed in mangle through the following procedure:</p>
+
+<ul style="list-style-type: decimal; margin-left: 193px; padding-left: 62px;">
+    <li>The exact azimuth and elevation of each vertex of a given HEALPix pixel are
+    calculated using the HEALPix utility "pix2vec_nest";</li>
+    <li>The exact azimuth and elevation of each vertex of the four child pixels
+    of the current pixel are calculated using the same utility, four of which
+    are the midpoints of the edges of the current pixel;</li>
+    <li>The four vertices of the given pixel are combined with the four midpoint
+    vertices to construct the polygon approximating the current pixel using the
+    <tt><a href="./edges.html">edges</a></tt> format;</li>
+    <li>To ensure accuracy, a fifth cap is constructed whose axis coordinates are
+    the exact center of the current pixel and whose radius is slightly greater
+    than the distance from the center of the pixel to any of the four vertices; hence,
+    this cap encloses the entire polygon.</li>
+</ul>
+
+<p style="margin-left: 193px;">
+While this construction preserves the hierarchical and isolatitudinal properties of
+the HEALPix pixels, the equal-area property is lost.  However, the average difference
+between the approximate areas and the actual areas at a given resolution is effectively
+negligible, and decreases as the resolution increases.
+<br><br>
+Since the details of the approximate HEALPix polygons are already hard-coded into
+mangle, the structure of the <tt>healpix_weight</tt> format is extremely simple.
+The form of a line specifying a HEALPix polygon in this format is
+<br><br>
+<tt>
+&lt;weight&gt;
+</tt>
+<br><br>
+which simply gives the weight of the polygon.
+<br><br>
+However, two important details should be noted.
+First, the <tt>healpix_weight</tt> keyword <em>must</em>
+appear in the input file <em>before</em> the list of weights
+begins, in a line of the following form:
+<br><br>
+<tt>
+healpix_weight&#160;&lt;nweights&gt;
+</tt>
+<br><br>
+where <tt>&lt;nweights&gt;</tt> is the number of HEALPix polygon weights that you intend to
+specify in the rest of the file.  Mangle then checks that the given number
+of HEALPix polygon weights corresponds to a valid HEALPix <i>N</i><sub>side</sub> parameter (for <i>N</i><sub>side</sub> = M,
+there are 12*M*M HEALPix pixels).
+Since the <tt>healpix_weight</tt> keyword must
+appear in the input file, this means that the <tt>-ih</tt> command-line switch,
+which supposedly specifies <tt>healpix_weight</tt> format, actually has no effect,
+although it is permitted.  
+<br><br>
+The <tt>-oh</tt> command-line switch, however, is <em>not</em> permitted - only 
+<tt>rasterize</tt> can output files in <tt>healpix_weight</tt> format.  In order 
+to do this, the <tt>-H</tt> switch should be used with <tt>rasterize</tt> instead. 
+<br><br>
+Second, note that the mangle implementation of HEALPix utilizes the "NESTED"
+HEALPix pixel numbering scheme.  As such, if you are importing a list of 
+HEALPix pixel weights from some other software, be sure that the weights are
+ordered according to that scheme.
+<br><br>
+As a final aside, note that in mangle the definition of the HEALPix <i>N</i><sub>side</sub> parameter
+(i.e., resolution) is extended to include 0, which corresponds to a single pixel
+covering the entire sphere.  So, the simplest <tt>healpix_weight</tt> file
+consists of:
+<br><br>
+<tt>
+healpix_weight 1
+<br>
+1.0
+</tt>
+<br><br>
+To facilitate easy conversion between HEALPix fits files and mangle <tt>healpix_weight</tt>
+files, we also provide two conversion programs, located in 
+<tt>[MANGLEDIR]masks/healpix/healpix_conversion_scripts</tt>:
+<ul style="list-style-type: disc; margin-left: 200px; padding-left: 14px;">
+    <li><tt>fits2dat_binary.x</tt> converts a HEALPix fits file into an ASCII list of weights, using "NESTED"
+ordering.  This can be converted to <tt>healpix_weight</tt> format by simply adding
+the appropriate <tt>
+healpix_weight&#160;&lt;nweights&gt;
+</tt>
+line to the beginning of the file.
+    <ul style="list-style-type: circle;">
+        <li>Usage: <tt>call dat2fits_binary.x [ptype] [nside] [infile] [outfile]</tt></li>
+	<li>Example: <tt>call dat2fits_binary.x 1 512 file.dat file.fits</tt></li>
+    </ul>
+</li>
+<li><tt>dat2fits_binary.x</tt> converts an ASCII list of weights into HEALPix fits format, again
+ using "NESTED" ordering. The <tt>
+healpix_weight&#160;&lt;nweights&gt;
+</tt> header
+must be removed from the file before using this to convert a <tt>healpix_weights</tt>
+file.  See <tt>healpixrast2fits.sh</tt> <a href="../download/scripts/healpixrast2fits.sh">here</a> or in the <tt>scripts</tt> directory
+for an example use of this program.
+    <ul style="list-style-type: circle;">
+        <li>Usage: <tt>call fits2dat_binary.x [ptype] [nside] [infile] [outfile]</tt></li>
+	<li>Example: <tt>call fits2dat_binary.x 1 512 file.fits file.dat</tt></li>
+    </ul>
+ </li>
+</ul>
+<p style="margin-left: 193px;">
+Back to <a href="./polyformat.html">polygon formats</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

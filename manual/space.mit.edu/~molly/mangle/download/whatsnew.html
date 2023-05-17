@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : download : changes </title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="./">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="../manual/">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./download.png" alt="download">
+</div>
+<div class="pagesubtitle">
+
+<h5 style="padding-left: 190px;">Changes</h5>
+<!-- img src="./latest.png" alt="latest version" style="margin-left: 189.5px;" -->
+
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 212px;">
+<ul>
+    <li><a href="./">Latest Version</a></li>
+    <li><a href="./source.html">Previous Versions</a></li>
+    <li><a href="./scripts.html">Scripts</a></li>
+    <li class="last"><a href="./data.html">Data</a></li>
+</ul>
+</div>
+<div class="content">
+
+<p style="margin-left: 193px;"></p>
+<h3>mangle 2.2</h3>
+<p style="margin-left: 193px;">
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+<li>Added option -B to balkanize to add weights together, or take the maximum or minimum weight instead of just using the last weight in the polygon file</li>
+<li>Added option -W to polyid to write out the weights of the polygons containing each point rather than the id numbers</li>
+<li>Snap now renormalizes input vectors to ensure that all vectors are exact unit vectors</li>
+<li>Fixed bug in weight so that weights are not skipped in file when no midpoint is found</li>
+<li>Upgraded matlab plotting script to allow for an arbitrary range of weights</li>
+<li>Changed /dev/null paths in shell scripts to avoid bub in some linux flavors</li>
+<li>Increased NPOLYSMAX to 90000000</li>
+<li>Added compile flags to allow mangle to write files larger than 2G</li>
+</ul>
+</p>
+<p style="margin-left: 193px;"></p>
+<h3>mangle 2.1</h3>
+<p style="margin-left: 193px;">
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+<li>added versions for Mac OSX (Intel and PowerPC)</li>
+<li>added versions that use real*8 in fortran and double in C (as opposed to real*10 and long double)</li>
+<li>compiled binaries statically to allow for greater portability</li>
+<li>added new example scripts (including an SDSS example)</li> 
+<li>made extensive improvements to existing scripts</li>
+<li>added a script to automatically set up mangle environment variables</li>
+<li>added "snapped" and "balkanized" keywords so polygon files can automatically track whether they've been snapped or balkanized</li>
+<li>fixed bug in rasterize that assigned the wrong weights to output polygons</li>
+</ul>
+</p>
+<h3>mangle 2.0</h3>
+<p style="margin-left: 252px;">
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+<li>pixelize functions for very speedy processing of masks</li>
+<li>HEALPix import and export capabilities</li>
+<li>loads of other new features</li>
+<li>new mangle 2.x algorithms are detailed in <a href="http://adsabs.harvard.edu/abs/2008MNRAS.387.1391S">Swanson et al. (2008), MNRAS 387, 1391-1402</a>
+<li>new mangle 2.x website: <a href="http://space.mit.edu/home/tegmark/mangle/">http://space.mit.edu/home/tegmark/mangle/</a></li>
+</ul>
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

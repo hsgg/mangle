@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : troubleshooting</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Troubleshooting</h5><!--img src="./troubleshooting.png" alt="troubleshooting" style="margin-left: 122.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>Multiply-intersecting and kissing circles</h2>
+<p style="margin-left: 193px;">
+
+Multiple intersections occur
+where 3 or more circles (cap boundaries) intersect at a single point.
+Circles kiss if they just touch.
+Mangle should deal correctly with multiply-intersecting and kissing circles
+in almost all cases.
+<br><br>
+However, multiply-intersecting and kissing circles
+do pose a potential source of numerical problems,
+because the topology of the distribution of near multiply-intersecting
+and near kissing circles
+may vary depending on precisely how the intersections are computed,
+as illustrated in the animation below right.
+Mangle is equipped to deal with these problems, and is designed to cope
+in almost all cases.
+But it is possible to fool mangle with a sufficiently complicated polygon,
+for example a polygon whose vertices have a fractal distribution of separations.</p>
+<center>
+<table border=0 style="margin-left: 118px;">
+
+<tr><td align=middle>
+<img src="mult.gif" width=64 height=64 hspace=4
+alt="Example of 3 circles intersecting at a single point">
+</td><td width=128 align=middle>
+&#160;
+</td>
+
+<td align=middle>
+<img src="multab.gif" width=64 height=64 hspace=4
+alt="Numerical roundoff can change the topology of the distribution of intersection points">
+</td></tr>
+
+<tr><td align=middle>
+Mangle can deal with this
+</td>
+
+<td align=middle>
+&#160;
+</td>
+
+<td align=middle>
+and this
+</td></tr>
+
+<tr><td>
+&#160;
+</td><td>
+&#160;
+</td><td>
+&#160;
+</td></tr>
+
+<tr><td align=middle>
+<img src="kiss.gif" width=64 height=64 hspace=4
+alt="Example of 2 kissing at a single point">
+</td><td width=128 align=middle>
+&#160;
+</td>
+
+<td align=middle>
+<img src="kissab.gif" width=64 height=64 hspace=4
+alt="Numerical roundoff can change the topology of the distribution of kissing points">
+</td></tr>
+
+<tr><td align=middle>
+and this
+</td>
+
+<td align=middle>
+&#160;
+</td>
+
+<td align=middle>
+and this.
+</td></tr>
+
+</table>
+</center>
+
+<p style="margin-left: 193px;">
+The strategy adopted by mangle is to consider all vertices
+closer than a certain tolerance angle (initially zero) to be coincident.
+The algorithm is friends-of-friends:
+two vertices closer than the tolerance are friends,
+and a friend of a friend is a friend.
+
+<!--
+The position of each vertex <i>ij</i> of a polygon,
+where edge <i>i</i> intersects edge <i>j</i>, is computed two different ways,
+first as the intersection of edge <i>i</i> with edge <i>j</i>,
+then as the intersection of edge <i>j</i> with edge <i>i</i>.
+For each of the two ways of computing it,
+the intersection is tested against all other circles,
+to determine whether the intersection is a vertex of the polygon,
+or whether it lies outside the polygon.
+For consistency, the test should give the same result in both computations:
+the intersection should be a vertex in both cases,
+or it should lie outside the polygon in both cases.
+In the animation above right,
+the intersection of the two diagonals
+is a vertex of the polygon in one case,
+but lies outside the polygon in the other,
+so the configuration is inconsistent.
+If an inconsistency is detected, then the tolerance angle is doubled
+(or set to a tiny number, if the tolerance is initially zero),
+and the computation is repeated for the inconsistent polygon.
+<p>
+In practice, consistency of the topology of the distribution
+of vertices around a polygon is checked by means of a check number.
+If the intersection <i>ij</i> of edge <i>i</i> with edge <i>j</i>
+is determined to be a vertex of the polygon,
+then a pseudo-random integer (of 64 bits)
+is added to the check number,
+and if the same intersection <i>ij</i> of edge <i>j</i> with edge <i>i</i>
+is determined to be a vertex of the polygon,
+then the same pseudo-random integer
+is subtracted from the check number.
+For consistency, the check number should be zero for the entire polygon.
+-->
+
+<br><br>
+There is a command line switch
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	-m&lt;angle&gt;[&lt;unit&gt;]
+</tt>
+</p>
+<p style="margin-left: 193px;">
+that adjusts the initial tolerance angle for multiple intersections and kisses.
+You may want to use this switch if your polygons have
+many multiple intersections or kisses
+and the default tolerance proves too loose or too tight.
+<br><br>
+If you use the <tt>-m</tt> switch in balkanizing your polygons,
+then you should make sure to use the <tt>-m</tt> switch
+with the same tolerance angle in subsequent operations,
+for example with the
+<a href="./unify.html"><tt>unify</tt></a>
+or
+<a href="./poly2poly.html"><tt>poly2poly</tt></a>
+commands.
+<br><br>
+You can find out the default value of the initial tolerance angle for multiple intersections with
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	balkanize -d
+</tt>
+</p>
+<p style="margin-left: 193px;">
+In mangle 2.1,
+the default initial angle is 10<sup>-11</sup> arcseconds for the real*10 version and 10<sup>-8</sup> arcseconds for the real*8 version.  This is appropriate for SDSS - for older surveys, try using 
+<tt>-m1e-5s</tt>.
+</p>
+
+<center>
+<table bgcolor="#f6eecc" cellpadding=2 border=0 style="margin-left: 193px;">
+<tr><td>
+<table cellspacing=2 cellpadding=4 border=1>
+<tr><td valign=top>
+<tt>
+-m&lt;angle&gt;[&lt;unit&gt;]
+
+</tt>
+</td><td valign=top>
+multiple intersection tolerance
+</td><td valign=top>
+Are two points of intersection within
+<tt>&lt;angle&gt;</tt>
+of each other?
+If so, treat the points as being coincident.
+<p>
+The specified
+<tt>&lt;angle&gt;</tt>
+is the initial tolerance applied to each polygon.
+If an inconsistency (as explained in the text)
+in the topology of the distribution of vertices of a polygon is detected,
+then the tolerance angle for that polygon is doubled
+(or set to a tiny number, if the tolerance is initially zero)
+repeatedly, until the topology is consistent.
+</td></tr>
+</table>
+</td></tr>
+</table>
+
+</center>
+
+</td></tr>
+</table>
+
+<p style="margin-left: 193px;">
+Back to <a href="./troubleshooting.html">list of problems</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

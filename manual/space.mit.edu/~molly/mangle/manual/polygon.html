@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : polygon formats</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Polygon Formats</h5><!--img src="./polyformat.png" alt="polygon formats" style="margin-left: 123.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>polygon format</h2>
+<p style="margin-left: 193px;">
+
+The <tt>polygon</tt> format is the default output format.
+It differs from the
+<tt>circle</tt>, <tt>edges</tt>, <tt>rectangle</tt>, and <tt>vertices</tt> formats
+in two important respects.
+Firstly, each cap of a polygon in <tt>polygon</tt> format
+is written on a separate line,
+whereas in the other formats the caps of a polygon
+appear altogether on a single line.
+Secondly, and associated with this difference,
+each polygon in <tt>polygon</tt> format
+<em>must</em> be introduced with the
+<tt>polygon</tt> keyword,
+which specifies the number of caps.
+Amongst other things, the requirement that the <tt>polygon</tt> keyword
+appear in the input file means that the
+<tt>-ip</tt> command-line switch,
+which supposedly specifies <tt>polygon</tt> format,
+actually has no effect, although it is permitted.
+<br><br>
+It seems doubtful that one would want to create an original mask file
+in polygon format, since it is a bit peculiar,
+but it is the standard format used by the mangle software,
+since it specifies polygons in the manner expected for many years past
+by the fortran backend.
+If you don't like that, blame history,
+which can be blamed for a lot of things.
+<br><br>
+An entry for a polygon in <tt>polygon</tt> format looks like:
+<br><br>
+<tt>
+polygon&#160;&lt;id&gt;&#160;(&#160;&lt;n&gt;&#160;caps,&#160;&lt;double&gt;&#160;weight,&#160;&lt;p&gt;&#160;pixel,&#160;&lt;double&gt;&#160;str):
+<br>
+x<sub>0</sub>&#160;y<sub>0</sub>&#160;z<sub>0</sub>&#160;cm<sub>0</sub>
+<br>
+x<sub>1</sub>&#160;y<sub>1</sub>&#160;z<sub>1</sub>&#160;cm<sub>1</sub>
+<br>
+...
+<br>
+z<sub>n</sub>&#160;y<sub>n</sub>&#160;z<sub>n</sub>&#160;cm<sub>n</sub>
+</tt>
+<br><br>
+Each
+<tt>x<sub>i</sub>&#160;y<sub>i</sub>&#160;z<sub>i</sub></tt>
+is a unit vector
+(<tt>x<sub>i</sub><sup>2</sup>&#160;+&#160;y<sub>i</sub><sup>2</sup>&#160;+&#160;z<sub>i</sub><sup>2</sup>&#160;=&#160;1</tt>)
+defining the north polar axis of the cap,
+while
+<tt>cm<sub>i</sub>&#160;=&#160;1&#160;-&#160;cos(theta<sub>i</sub>)</tt>
+defines the cap latitude,
+<tt>theta<sub>i</sub></tt>
+being the polar angle.
+Positive <tt>cm<sub>i</sub></tt>
+designates the region north of the latitude,
+while negative <tt>cm<sub>i</sub></tt>
+designates the region south of the latitude.
+<br><br>
+The <tt>polygon</tt> specification also optionally includes the weight assigned to the polygon, the pixel in which the polygon is contained, and the area of the polygon in steradians.  If these are not specified, the polygon will be assigned a default weight of 1 and a default pixel of 0.
+<br><br>
+Here are two example polygons, the first two in 2QZ&#160;10k&#160;North,
+specified in <tt>polygon</tt> format:</p>
+<pre style="margin-left: 53px;">
+polygon 0 ( 6 caps, 0.736196 weight, 0 pixel, 0.000207860166080 str):
+ -0.9989940782261225 -0.0200145430763467 -0.0401279171473552 0.0001523048436087608
+  0.0000000000000000  0.0000000000000000  1.0000000000000000 1.0469757058067
+ -0.9981574940502457 -0.0455122767695589 -0.0401279171473552 -0.0001523048436087608
+ -0.9991937369794350  0.0012752436969931 -0.0401279171473552 -0.0001523048436087608
+ -0.9991645123188478 -0.0373565773479794 -0.0165759902112463 -0.0001523048436087608
+ -0.9998014206069079 -0.0110614601624467 -0.0165759902112463 -0.0001523048436087608
+polygon 1 ( 4 caps, 0.666667 weight, 0 pixel, 0.000115712115129 str):
+ -0.9981574940502457 -0.0455122767695589 -0.0401279171473552 0.0001523048436087608
+  0.0000000000000000  0.0000000000000000  1.0000000000000000 1.0469757058067
+ -0.9989940782261225 -0.0200145430763467 -0.0401279171473552 0.0001523048436087608
+ -0.9991645123188478 -0.0373565773479794 -0.0165759902112463 -0.0001523048436087608
+</pre>
+<p style="margin-left: 193px;">
+In accordance with the mangle philosophy of being as tolerant as possible of
+the format of input polygon files,
+the <tt>polygon</tt> lines in <tt>polygon</tt> format can be abbreviated on input.
+For example,
+the above excerpt from the 2QZ&#160;10k&#160;North polygon file
+could be abbreviated to</p>
+<pre style="margin-left: 53px;">
+polygon 0 6
+ -0.9989940782261225 -0.0200145430763467 -0.0401279171473552 0.0001523048436087608
+  0.0000000000000000  0.0000000000000000  1.0000000000000000 1.0469757058067
+ -0.9981574940502457 -0.0455122767695589 -0.0401279171473552 -0.0001523048436087608
+ -0.9991937369794350  0.0012752436969931 -0.0401279171473552 -0.0001523048436087608
+ -0.9991645123188478 -0.0373565773479794 -0.0165759902112463 -0.0001523048436087608
+ -0.9998014206069079 -0.0110614601624467 -0.0165759902112463 -0.0001523048436087608
+polygon 1 4
+ -0.9981574940502457 -0.0455122767695589 -0.0401279171473552 0.0001523048436087608
+  0.0000000000000000  0.0000000000000000  1.0000000000000000 1.0469757058067
+ -0.9989940782261225 -0.0200145430763467 -0.0401279171473552 0.0001523048436087608
+ -0.9991645123188478 -0.0373565773479794 -0.0165759902112463 -0.0001523048436087608
+</pre>
+<p style="margin-left: 193px;">
+and mangle will still happily read it.
+<br><br>
+Back to <a href="./polyformat.html">polygon formats</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

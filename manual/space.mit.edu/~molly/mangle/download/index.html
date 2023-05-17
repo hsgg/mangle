@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : download : latest version </title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="./">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="../manual/">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./download.png" alt="download">
+</div>
+<div class="pagesubtitle">
+
+<h5>Latest Version</h5>
+<!-- img src="./latest.png" alt="latest version" style="margin-left: 189.5px;" -->
+
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 212px;">
+<ul>
+    <li><a href="./">Latest Version</a></li>
+    <li><a href="./source.html">Previous Versions</a></li>
+    <li><a href="./scripts.html">Scripts</a></li>
+    <li class="last"><a href="./data.html">Data</a></li>
+</ul>
+</div>
+<div class="content">
+
+<p style="margin-left: 193px;"></p>
+<p style="margin-left: 252px;">
+The latest version of mangle is mangle2.2. <a href="./whatsnew.html">See what's new.</a>
+</p>
+<h3>Terms of Use</h3>
+<p style="margin-left: 252px;">
+You are free to use mangle for any purpose whatsoever, under the condition that you cite the following paper:
+M Swanson, M Tegmark, A J S Hamilton &amp; J C Hill, MNRAS 387, 1391 (2008), <a href="http://arxiv.org/abs/0711.4352">arXiv: 0711.4352 [astro-ph]</a>.
+</p>
+<h3>Linux-Intel Version</h3>
+<p style="margin-left: 193px;">
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+	<li>real*10: <a href="./source/mangle2.2-linux.tar.gz">mangle2.2-linux.tar.gz</a> (24MB version of 26 April 2009) </li>
+        <li>real*8: <a href="./source/mangle8-2.2-linux.tar.gz">mangle8-2.2-linux.tar.gz</a> (21MB version of 26 April 2009) </li>
+</ul>
+</p>
+<h3>MacOSX-Intel Version</h3>
+<p style="margin-left: 193px;">
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+	<li>real*10: <a href="./source/mangle2.2-intelmac.tar.gz">mangle2.2-intelmac.tar.gz</a> (22MB version of 26 April 2009) </li>
+        <li>real*8: <a href="./source/mangle8-2.2-intelmac.tar.gz">mangle8-2.2-intelmac.tar.gz</a> (21MB version of 26 April 2009) </li>
+</ul>
+</p>
+<h3>Source-Only Version</h3>
+<p style="margin-left: 252px;">
+The above packages contain pre-compiled binaries and several example masks.  If you are short on space and interested in compiling mangle yourself, you can try the streamlined versions below, which just have the source code:
+</p>
+<p style="margin-left: 193px;">
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+	<li>real*10: <a href="./source/mangle2.2.tar.gz">mangle2.2.tar.gz</a> (1.7MB version of 26 April 2009) </li>
+        <li>real*8: <a href="./source/mangle8-2.2.tar.gz">mangle8-2.2.tar.gz</a> (1.7MB version of 26 April 2009) </li>
+</ul>
+</p>
+
+<p style="margin-left: 252px;">
+We strongly recommend using the real*10 version, which uses 80 bits to store floating point values with 'real*10' in fortran and 'long double' in C.
+  It is nearly as fast as the real*8 version (it uses 64-bit integer arithmetic; the last 16 bits are for the exponent, etc.), and the added precision eliminates annoying dynamic range issues that otherwise afflict (for example) the SDSS mask.  Note that if you want to compile the real*10 version yourself, you will need a fortran compiler that supports real*10, such as <a href="http://gcc.gnu.org/wiki/GFortran">gfortran</a> or <a href="http://www.g95.org/">g95</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

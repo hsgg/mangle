@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : download : scripts</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="./">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="../manual/">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./download.png" alt="download">
+</div>
+<div class="pagesubtitle">
+
+<h5>Scripts</h5>
+<!-- img src="./scripts.png" alt="scripts" style="margin-left: 199.5px;" -->
+
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 212px;">
+<ul>
+    <li><a href="./">Latest Version</a></li>
+    <li><a href="./source.html">Previous Versions</a></li>
+    <li><a href="./scripts.html">Scripts</a></li>
+    <li class="last"><a href="./data.html">Data</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 253px;">
+This page contains several scripts that illustrate how to combine mangle commands to do useful and interesting things.  Each script contains information on how to use it in the comments at the beginning of the file.  In most cases, a brief usage and example can also be accessed by simply executing the script with no command line arguments.
+<br><br>
+All of these scripts can also be found in the <tt>scripts</tt> directory in the <a href="./">latest version</a> of mangle.
+<br><br>
+To execute a script, type <tt>[SCRIPTNAME]</tt> or <tt>sh [SCRIPTNAME]</tt> at the command line, e.g.:
+<br><br>
+<tt>cd /home/yourname/mangle2.1/masks/sdss</tt><br>
+<tt>sh ../../scripts/sdss_quickstart.sh</tt>
+</p>
+
+<h3>Assembling Masks</h3>
+<p style="margin-left: 193px;">
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+    <li><a href="./scripts/mangle_sdss.sh">mangle_sdss.sh</a> combines the <a href="http://www.sdss.org">SDSS</a> window and mask files as provided by the  <a href="http://sdss.physics.nyu.edu/vagc/">NYU-VAGC</a> to make the full SDSS angular selection function.</li>
+    <li><a href="./scripts/sdss_quickstart.sh">sdss_quickstart.sh</a> combines the window and mask files for a slice of SDSS - this provides a quick example of how mangle_sdss.sh works. The steps executed in this script are described in detail in the <a href="../quickstart/index.html">QuickStart</a> section.</li>
+    <li><a href="./scripts/2df230k.sh">2df230k.sh</a> assembles the angular mask for the final data release of the <a href="http://www.mso.anu.edu.au/2dFGRS/Public/Release/index.html">
+2dF Galaxy Redshift Survey</a>.</li>
+    <li><a href="./scripts/2df100k.sh">2df100k.sh</a> assembles the angular mask for the 100k data release of the <a href="http://www.mso.anu.edu.au/2dFGRS/Public/Release/index.html">
+2dF Galaxy Redshift Survey</a>. </li>
+    <li><a href="./scripts/2qz.sh">2qz.sh</a> assembles the angular mask for the 10k data release of the <a href="http://www.2dfquasar.org/">2dF Quasar Redshift Survey</a>. </li>
+</ul>
+</p>
+
+<h3>Playing with Masks</h3>
+<p style="margin-left: 193px;">
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+    <li><a href="./scripts/find_complement.sh">find_complement.sh</a> generates a polygon file representing the complement of an input mask, and is described in more detail <a href="../manual/complement.html">here</a>.  It uses <a href="./scripts/make_allsky.sh">make_allsky.sh</a> to generate an appropriately pixelized mask covering the whole sky.</li>
+    <li><a href="./scripts/trim_mask.sh">trim_mask.sh</a> trims a mask to include only polygons in a desired region. Requires find_complement.sh.</li>
+    <li><a href="./scripts/polyid_gals.sh">polyid_gals.sh</a> takes an angular mask and a list of galaxies with the RA and Dec as the first two columns and adds a column containing the polygon id number of the polygon in the angular mask in which each galaxy was found.</li>
+    <li><a href="./scripts/make_pixelmaps.sh">make_pixelmaps.sh</a> makes pixelmaps of an angular mask at several resolutions. Pixelmaps give the average value of the mask's weight in each pixel, using one of mangle's pixelization schemes. If an input galaxy file is given, this script also uses polyid_gals.sh to find in which pixels each galaxy in the list lies.</li>
+</ul>
+</p>
+
+<h3>HEALPix Scripts</h3>
+<p style="margin-left: 193px;">
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+    <li><a href="./scripts/healpixpolys.sh">healpixpolys.sh</a> constructs, pixelizes, and snaps the approximate HEALPix polygons. </li>
+    <ul style="list-style-type: circle;">
+        <li>Usage: <tt>healpixpolys.sh &lt;Nside&gt; &lt;scheme&gt; &lt;p&gt; &lt;r&gt; &lt;polygon_outfile&gt;</tt></li>
+	<li><tt>&lt;scheme&gt;</tt> is the pixelization scheme; <tt>&lt;p&gt;</tt> is the number of polygons allowed in each pixel; <tt>&lt;r&gt;</tt> is the maximum pixelization resolution.</li>
+	<li>Example: To construct the HEALPix polygons at <i>N</i><sub>side</sub> = 16, pixelize them to `simple' resolution 3, and snap them, type <tt>healpixpolys.sh 16 s 0 3 nside16p3s.pol</tt></li>
+    </ul>
+    <li><a href="./scripts/healpixrast.sh">healpixrast.sh</a> rasterizes a mask using the approximate HEALPix polygons.</li>
+    <ul style="list-style-type: circle;">
+        <li>Usage: <tt>healpixrast.sh &lt;polygon_infile&gt; &lt;Nside&gt; &lt;polygon_outfile&gt;</tt></li>
+        <li>Steps: Pixelizes and snaps <tt>&lt;polygon_infile&gt;</tt> to the same resolution as the <i>N</i><sub>side</sub> = <tt>&lt;Nside&gt;</tt> approximate HEALPix polygons found in the <tt>masks/healpix/healpix_polys</tt> directory, then rasterizes the input file against the HEALPix polygons.</li>
+	<li>Output: <tt>&lt;polygon_outfile&gt;</tt> containing the <i>N</i><sub>side</sub> = <tt>&lt;Nside&gt;</tt> approximate HEALPix polygons, with each polygon's weight
+	    now equal to the area-averaged weight from <tt>&lt;polygon_infile&gt;</tt> contained in it.</li>
+	<li>Example: To rasterize the file <tt>mask.pol</tt> against the HEALPix polygons at <i>N</i><sub>side</sub> = 16, type <tt>healpixrast.sh mask.pol 16 rast_mask_nside16.pol</tt>.</li>
+    </ul>
+    <li><a href="./scripts/healpixrast2fits.sh">healpixrast2fits.sh</a> rasterizes a mask and converts it to a HEALPix FITS file (and plots it in HEALPix)</li>
+    <ul style="list-style-type: circle;">
+        <li>Usage: <tt>healpixrast2fits.sh &lt;polygon_infile&gt; &lt;Nside&gt; &lt;fits_outfile&gt; (&lt;Nside_out&gt; &lt;gif_outfile&gt;)</tt></li>
+	<li>Steps: Follows the steps used in healpixrast.sh above to rasterize <tt>&lt;polygon_infile&gt;</tt> against the HEALPix polygons at the specified <tt>&lt;Nside&gt;</tt>, but outputs the data such that it can be converted to a FITS file; if the user has <a href="http://healpix.jpl.nasa.gov">HEALPix</a> installed, the FITS file is plotted using the HEALPix routine <tt>map2gif</tt>, with the arguments <tt>&lt;Nside_out&gt; &lt;gif_outfile&gt;</tt> specifying the output resolution and file name.  HEALPix is invoked with the wrapper script <a href="./scripts/plotmap.sh">plotmap.sh</a>.</li>
+	<li>Example: To rasterize the file <tt>mask.pol</tt> against the HEALPix polygons at <i>N</i><sub>side</sub> = 16 and then plot the result at <i>N</i><sub>side</sub> = 8 (assuming you have HEALPix installed), type <tt>healpixrast2fits.sh mask.pol 16 rast_mask_nside16.fits 8 rast_mask_nside16.gif</tt>.</li>
+    </ul>    
+</ul>
+</p>
+
+<h3>Plotting Scripts</h3>
+<p style="margin-left: 193px;">
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+    <li><a href="./scripts/graphmask.m">graphmask.m</a> is a Matlab m-file that plots a polygon file written in <a href="../manual/list.html"><tt>list</tt></a> format using the Matlab mapping toolbox. Can be run from the command line using the wrapper script <a href="./scripts/graphmask.sh">graphmask.sh</a>.
+     <li><a href="./scripts/graphmask.m">graphmask.sm</a> is a Supermongo (sm) script that plots a polygon file written in <a href="../manual/graphics.html"><tt>graphics</tt></a> format using Supermongo. Can be run from the command line using the wrapper script <a href="./scripts/graphmasksm.sh">graphmasksm.sh</a>.
+</ul>
+</p>
+
+<p style="margin-left: 252px;">
+If you write a script for plotting mangle polygons in your own favorite graphics program or performing other clever tricks with mangle, <a href="../references/index.html#contact">contact us</a> and we'll include it here.
+</p>
+
+<h3>Mangle Environment Variables</h3>
+<p style="margin-left: 252px;">
+If you want to run the shell scripts (files ending in .sh) by just typing <tt>[SCRIPTNAME]</tt> at the prompt rather than <tt>sh [SCRIPTNAME]</tt>, run the following command:<br>
+<br>
+<tt>cd [MANGLEDIR]scripts</tt><br>
+<tt>chmod 755 *.sh</tt><br>
+<br>
+If you get a "Command not found" or similar error when trying to run a script from the directory where it is located, try typing <tt>./[SCRIPTNAME]</tt> instead of <tt>[SCRIPTNAME]</tt>, or add "." (the working directory) to your path.
+<br><br>
+If you want to avoid typing the path to the mangle scripts, e.g., just type <tt>graphmask.sh</tt> rather than <tt>../../bin/graphmask.sh</tt>, run the following command:<br>
+<br>
+<tt>cd [MANGLEDIR]</tt><br>
+<tt>source setup_mangle_environment $PWD/</tt><br>
+<br>
+where you should replace <tt>[MANGLEDIR]</tt> with the path to where you installed mangle, e.g., <tt>/home/yourname/mangle2.1/</tt>.  This calls the script <a href="./scripts/make_setup_script.sh">make_setup_script.sh</a> and defines the following environment variables:<br><br>
+
+<tt>$MANGLEBINDIR</tt> points to <tt>[MANGLEDIR]bin</tt><br> 
+<tt>$MANGLESCRIPTSDIR</tt> points to <tt>[MANGLEDIR]scripts</tt><br> 
+<tt>$MANGLEDATADIR</tt> points to <tt>[MANGLEDIR]masks</tt><br> 
+<br>
+
+Additionally, <tt>$MANGLEBINDIR</tt> and <tt>$MANGLESCRIPTSDIR</tt> are added to your path so you can execute mangle commands and scripts from any directory.
+To do this automatically when you log in, add the following line to the script that runs each time you start your shell. (this is a file in your home directory called either <tt>.bashrc</tt>, <tt>.tcshrc</tt>, <tt>.cshrc</tt>, <tt>.login</tt>, or <tt>.profile</tt>, depending on your system.)<br>
+<br>
+<tt>source [MANGLEDIR]setup_mangle_environment [MANGLEDIR]</tt><br>
+<br>
+For all scripts to work properly, downloaded mask files should be placed in the appropriate
+directories in <tt>$MANGLEDATADIR</tt> (e.g., HEALPix polygon files should be placed in <tt>$MANGLEDATADIR/healpix/healpix_polys</tt>).
+<br><br>
+If these environment variables are not defined, the scripts will use the default paths of <tt>../../bin</tt>, <tt>../../scripts</tt>, and <tt>../../masks</tt>, i.e., the default assumption is that you are running in a subdirectory of <tt>[MANGLEDIR]/masks</tt>, such as <tt>[MANGLEDIR]/masks/sdss</tt>.
+<br><br>
+If you would like to keep your mask files separate from your mangle installation, for example if you want to put the mangle directory in your home directory but download large mask files to a different hard disk with more storage space, you can customize make_setup_script.sh to have <tt>$MANGLEDATADIR</tt> point to the desired location.
+</p>
+
+<h3>Testing Mangle</h3>
+<p style="margin-left: 252px;">
+If you are having trouble getting mangle to run on your system, you can test the installation with <a href="./scripts/make_setup_script.sh">make_setup_script.sh</a> via the wrapper script <a href="./scripts/run_mangle_testsuite">run_mangle_testsuite</a> with the following command:<br> 
+<br>
+<tt>cd [MANGLEDIR]scripts</tt><br>
+<tt>source run_mangle_testsuite >& test.log</tt><br>
+<br>
+
+This executes all of the basic mangle commands and scripts and puts the output into the file <tt>test.tar.gz</tt>.  You can send this file to the <a href="../references/index.html#contact">mangle development team</a> and we will help diagnose your problem.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : download : data</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="./">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="../manual/">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./download.png" alt="download">
+</div>
+<div class="pagesubtitle">
+
+<h5>Data</h5>
+<!-- img src="./data.png" alt="data" style="margin-left: 223px;" -->
+
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 212px;">
+<ul>
+    <li><a href="./">Latest Version</a></li>
+    <li><a href="./source.html">Previous Versions</a></li>
+    <li><a href="./scripts.html">Scripts</a></li>
+    <li class="last"><a href="./data.html">Data</a></li>
+</ul>
+</div>
+<div class="content">
+
+<p style="margin-left: 193px;"></p>
+<h3>Sloan Digital Sky Survey</h3>
+<p style="margin-left: 252px;">
+Here we provide the basic resources for doing large-scale structure studies with data from the <a href="http://www.sdss.org">Sloan Digital Sky Survey</a>. This consists of:
+</p>
+<p style="margin-left: 193px;"> 
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+<li>A list of galaxies representing a flux-limited sample (to maximum apparent <i>r</i>-band magnitude of 17.6), containing the angular position of each galaxy on the sky, its redshift, and photometric information.  Details on the contents of each column are explained in <a href="./data/README.sdss">README.sdss</a>.
+The galaxy list here has been extracted from the latest version of the <a href="http://sdss.physics.nyu.edu/vagc/">NYU-VAGC</a> - please cite <a href="http://arxiv.org/abs/astro-ph/0410166">Blanton et al.</a> if you use it.
+  <ul style="list-style-type: circle;">
+            <li><a href="./data/sdss_dr72safe0_galdetails1.dat.gz">SDSS DR72 galaxy list</a></li>
+</ul>
+</li>
+<li>The radial selection function representing the expected average comoving density of galaxies as a function of comoving radial distance.  The file format is explained in <a href="./data/README.sdss">README.sdss</a>.  It has been derived from the redshift selection function file czselfunc.all provided by <a href="http://sdss.physics.nyu.edu/vagc/">NYU-VAGC</a> - please cite <a href="http://arxiv.org/abs/astro-ph/0410166">Blanton et al.</a> if you use it.
+        <ul style="list-style-type: circle;">
+            <li><a href="./data/sdss_dr72safe0_nbar.dat">SDSS DR72 radial selection function</a></li>
+	</ul>
+</li>
+<li>The angular selection function representing the completeness of the SDSS spectroscopic survey as a function of position on the sky.  This is provided as a mangle polygon file with the weight of each polygon representing the fraction of galaxies with observed redshifts in that region (weight 0 = no galaxies observed, weight 1 = 100% of galaxies observed).  This file has been assembled using mangle 2.1 from the window and mask polygon files provided by <a href="http://sdss.physics.nyu.edu/vagc/">NYU-VAGC</a> with the <a href="./scripts.html">script</a> mangle_sdss.sh  - please cite <a href="http://arxiv.org/abs/0711.4352">Swanson et al.</a>, <a href="http://arxiv.org/abs/astro-ph/0306324">Hamilton &amp; Tegmark</a>, and <a href="http://arxiv.org/abs/astro-ph/0410166">Blanton et al.</a> if you use it.</li>
+        <ul style="list-style-type: circle;">
+            <li><a href="./data/sdss_dr72safe0_res6d.pol.gz">SDSS DR72 angular selection function</a></li>
+	</ul>
+</li>
+</ul>
+</p>
+<p style="margin-left: 252px;">
+Other useful formats for the SDSS angular selection function:
+</p>
+<p style="margin-left: 193px;"> 
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+    <li>Rasterized angular selection function file in HEALPix format.  This is a FITS file created from the angular selection function polygon file above using the
+        <a href="../manual/rasterize.html"><tt>rasterize</tt></a> utility in mangle with approximate HEALPix polygons.  This file is ready to use in HEALPix.
+Please cite <a href="http://arxiv.org/abs/0711.4352">Swanson et al.</a>, <a href="http://arxiv.org/abs/astro-ph/0410166">Blanton et al.</a>, and <a href="http://arxiv.org/abs/astro-ph/9905275">Gorski et al.</a> if you use it.
+        <ul style="list-style-type: circle;">
+         <li> <a href="./data/rast_sdss_dr72safe0_nside512.fits.gz">SDSS DR72 angular selection function FITS file, <i>N</i><sub>side</sub> = 512</a></li>
+	</ul>
+</li>
+    <li>Original polygon files from <a href="http://sdss.physics.nyu.edu/vagc/">NYU-VAGC</a> - please cite <a href="http://arxiv.org/abs/astro-ph/0410166">Blanton et al.</a> if you use them.</li>
+        <ul style="list-style-type: circle;">
+	    <li><a href="./data/window.dr72safe0.ply.gz">SDSS DR72 window</a></li> 
+	    <li><a href="./data/mask.dr72safe0.ply.gz">SDSS DR72 mask</a</li>
+	</ul>
+</ul>
+</p>
+<p style="margin-left: 252px;">
+Earlier SDSS data releases - file formats and citations are the same as above.
+</p>
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+<li>SDSS DR6fix
+   <ul style="list-style-type: circle;">
+            <li><a href="./data/sdss_dr6fixsafe0_galdetails1.dat.gz">galaxy list</a></li>
+	    <li><a href="./data/sdss_dr6fixsafe0_nbar.dat">radial selection function</a></li>
+              <li><a href="./data/sdss_dr6fixsafe0_res6d.pol.gz">angular selection function</a></li>
+             <li> <a href="./data/rast_sdss_dr6fixsafe0_nside512.fits.gz">angular selection function FITS file, <i>N</i><sub>side</sub> = 512</a></li> 
+	    <li><a href="./data/window.dr6fixsafe0.ply.gz">window</a></li> 
+	    <li><a href="./data/mask.dr6fixsafe0.ply.gz">mask</a</li>
+</ul>
+</li>
+<li>SDSS DR6
+   <ul style="list-style-type: circle;">
+            <li><a href="./data/sdss_dr6safe0_galdetails1.dat.gz">galaxy list</a></li>
+	    <li><a href="./data/sdss_dr6safe0_nbar.dat">radial selection function</a></li>
+              <li><a href="./data/sdss_dr6safe0_res6d.pol.gz">angular selection function</a></li>
+              <li> <a href="./data/rast_sdss_dr6safe0_nside512.fits.gz">angular selection function FITS file, <i>N</i><sub>side</sub> = 512</a></li>
+	    <li><a href="./data/window.dr6safe0.ply.gz">window</a></li> 
+	    <li><a href="./data/mask.dr6safe0.ply.gz">mask</a</li>
+</ul>
+</li>
+<li>SDSS DR4plus
+   <ul style="list-style-type: circle;">
+            <li><a href="./data/sdss_dr4plussafe0_galdetails1.dat.gz">galaxy list</a></li>
+	    <li><a href="./data/sdss_dr4plussafe0_nbar.dat">radial selection function</a></li>
+              <li><a href="./data/sdss_dr4plussafe0_res6d.pol.gz">angular selection function</a></li>
+          <li> <a href="./data/rast_sdss_dr4plussafe0_nside512.fits.gz">angular selection function FITS file, <i>N</i><sub>side</sub> = 512</a></li>
+	    <li><a href="./data/window.dr4plussafe0.ply.gz">window</a></li> 
+	    <li><a href="./data/mask.dr4plussafe0.ply.gz">mask</a</li>
+</ul>
+</li>
+<li>SDSS DR4
+   <ul style="list-style-type: circle;">
+            <li><a href="./data/sdss_dr4safe0_galdetails1.dat.gz">galaxy list</a></li>
+	    <li><a href="./data/sdss_dr4safe0_nbar.dat">radial selection function</a></li>
+              <li><a href="./data/sdss_dr4safe0_res6d.pol.gz">angular selection function</a></li>
+              <li> <a href="./data/rast_sdss_dr4safe0_nside512.fits.gz">angular selection function FITS file, <i>N</i><sub>side</sub> = 512</a></li>
+	    <li><a href="./data/window.dr4safe0.ply.gz">window</a></li> 
+	    <li><a href="./data/mask.dr4safe0.ply.gz">mask</a</li>
+</ul>
+</li>
+</ul>
+
+</li>
+</ul>
+<p style="margin-left: 193px;"> 
+
+</p>
+
+<h3>2dF Galaxy Redshift Survey</h3>
+<p style="margin-left: 252px;">
+Here we provide the basic resources for doing large-scale structure studies with data from the <a href="http://www2.aao.gov.au/2dFGRS/">2dF Galaxy Redshift Survey</a>. 
+The files provided here were prepared by Andrew Hamilton and constitute an improved version of the 2dFGRS official final data 
+release, which accounts for weather-related effects, removes duplicate and poor-quality sources from the catalog, 
+provides a uniform flux limit across the whole survey, and resolves a number of other issues.
+If you use these files, please cite  <a href="http://arxiv.org/abs/astro-ph/0306581">Colless et al.</a>, this website, and Hamilton et al., in prep.
+</p>
+<p style="margin-left: 193px;">
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+<li>A list of galaxies representing a flux-limited sample (to maximum apparent <i>b<sub>j</sub></i> magnitude of 19.1745), containing the angular position of each galaxy on the sky, its redshift, and photometric information.  Details on the contents of each column are explained in <a href="./data/README.2dF">README.2dF</a>.
+  <ul style="list-style-type: circle;">
+            <li><a href="./data/parent.cut.sector_plate_sorted.gz">2dfGRS galaxy list</a></li>
+</ul>
+</li>
+    <li>The angular selection function representing the completeness of the 2dFGRS final data release as a function of position on the sky. This is provided as mangle polygon files with the weight of each polygon representing the fraction of galaxies with observed redshifts in that region (weight 0 = no galaxies observed, weight 1 = 100% of galaxies observed). 
+   <ul style="list-style-type: circle;">
+<li><a href="data/2df_north.sector_plate-hole.scplid.pol">2dFGRS angular selection function for NGP strip</a></li>
+<li><a href="data/2df_south.sector_plate-hole.scplid.pol">2dFGRS angular selection function for SGP strip</a></li>
+<li><a href="data/2df_ran.sector_plate-hole.scplid.pol">2dFGRS angular selection function for random fields</a></li>
+</ul>
+</li>
+
+    <li>Rasterized angular selection function file for full 2dFGRS in HEALPix format.  This is a FITS file created from the angular selection function polygon files above using the
+        <a href="../manual/rasterize.html"><tt>rasterize</tt></a> utility in mangle with approximate HEALPix polygons.  This file is ready to use in HEALPix. Please cite <a href="http://arxiv.org/abs/0711.4352">Swanson et al.</a> and <a href="http://arxiv.org/abs/astro-ph/9905275">Gorski et al.</a> if you use it.
+        <ul style="list-style-type: circle;">
+            <li> <a href="./data/rast_2df_nside512.fits.gz">2dFGRS angular selection function FITS file, <i>N</i><sub>side</sub> = 512</a></li>
+	</ul>
+</li>
+</ul>
+<p style="margin-left: 252px;">
+The mangle software also comes packaged with tools for creating the angular masks for the 2dfGRS official data releases, as detailed in  <a href="http://arxiv.org/abs/astro-ph/0106498">Colless et al. (2001)</a> and <a href="http://arxiv.org/abs/astro-ph/0306581">Colless et al. (2003)</a> as well as at <a href="http://www2.aao.gov.au/2dFGRS/">the 2dFGRS website</a>.  Here we provide formatted versions of the unformatted fortran data files that define the 2dFGRS angular masks. If your system has trouble with the unformatted fortran files provided with mangle, use these instead.
+</p>
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+    	<li>2dF100k - please cite <a href="http://arxiv.org/abs/astro-ph/0106498">Colless et al. (2001)</a>: <a href="./data/2df100k_formatted.tar.gz">2df100k_formatted.tar.gz</a> (unpack in <tt>MANGLEDIR/masks/2df100k</tt> directory)</li>
+	<li>2dF230k - please cite <a href="http://arxiv.org/abs/astro-ph/0306581">Colless et al. (2003)</a>: <a href="./data/2df230k_formatted.tar.gz">2df230k_formatted.tar.gz</a> (unpack in <tt>MANGLEDIR/masks/2df230k</tt> directory)</li>
+</ul>
+</p>
+
+<h3>Approximate HEALPix Polygons</h3>
+<p style="margin-left: 252px;">
+These files provide the approximate HEALPix polygons used by mangle's <a href="../manual/rasterize.html"><tt>rasterize</tt></a> utility to produce files in HEALPix format.
+All polygon files are pixelized to simple resolution 8 and should be unpacked in the <tt>MANGLEDIR/masks/healpix/healpix_polys</tt> directory.  Please cite <a href="http://arxiv.org/abs/astro-ph/9905275">Gorski et al.</a> and <a href="http://arxiv.org/abs/0711.4352">Swanson et al.</a> if you use them.
+<ul style="list-style-type: disc; margin-left: 252px; padding-left: 14px;">
+    <li><a href="./data/nside64_p8s.pol.gz"><i>N</i><sub>side</sub> = 64</a> (12 MB)</li>
+    <li><a href="./data/nside128_p8s.pol.gz"><i>N</i><sub>side</sub> = 128</a> (33 MB)</li>
+    <li><a href="./data/nside256_p8s.pol.gz"><i>N</i><sub>side</sub> = 256</a> (87 MB)</li>
+    <li><a href="./data/nside512_p8s.pol.gz"><i>N</i><sub>side</sub> = 512</a> (286 MB)</li>
+</ul>
+</p>
+
+<p style="margin-left: 252px;">
+Similar files for <i>N</i><sub>side</sub> = 1 through 32 are distributed with the mangle source code.
+Approximate HEALPix polygons at any <i>N</i><sub>side</sub> can be constructed using the healpixpolys.sh <a href="./scripts.html">script</a>.
+</p>
+
+
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

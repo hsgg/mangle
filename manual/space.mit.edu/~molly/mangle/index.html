@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : overview</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="./style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="./">Overview</a></li>
+    <li><a href="./download/">Download</a></li>
+    <li><a href="./quickstart/">QuickStart</a></li>
+    <li><a href="./manual/">Manual</a></li>
+    <li><a href="./references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+
+<div class="clear"; style="width: 100%; border: none; padding: 0; background-color: #ffffff; font-family: arial;">
+<div style="margin: 0px; padding: 0px; width: 201px; border: none; background-color: #ffffff; float: left;">
+<img src="./overview.png" alt="overview">
+<br>
+<br>
+<img src="./mangle_spheres.jpg" alt="mangle_spheres">
+</div>
+
+<div style="margin: 0px; padding-left: 5px; width: 559px; border: none; background-color: #ffffff; float: left;">
+
+
+<div style="width: 100%; border: none; font-family: times; background-color: #f6eecc;">
+<p style="color: #9e3420; margin-left: 10px;">ma&#180;ngle&#185; (-ngg<i>e</i>l) <i>v.t.</i></p>
+<p style="margin-left: 10px;">Hack, cut about, mutilate, by blows;
+cut roughly so as to disfigure;
+spoil (quotation, text, etc.) by gross blunders,
+make (words) unrecognizable by mispronouncing.
+[f. AF. <i>ma(ha)ngler</i>, app. frequent. of <i>mahaigner</i> <font size="-1">MAIN</font>]</p>
+<p style="color: #9e3420; margin-left: 10px;">&ndash;&#160;The Concise Oxford Dictionary.</p>
+</div>
+
+<p style="margin-left: 10px;">
+Do you work with data on a spherical surface?  Regardless of whether you deal with the celestial sphere, the surface of Earth, or some completely different
+sphere, mangle could be for you.  Mangle is a suite of free open-source software designed to deal accurately and efficiently with complex angular masks, such as typically occur
+in galaxy surveys, terrestrial maps, etc.  Mangle performs a wide variety of tasks: converts masks between many handy formats
+(including <a href="http://healpix.jpl.nasa.gov/">HEALPix</a>), rapidly finds the polygons containing a given point on the sphere,
+rapidly decomposes a set of polygons into disjoint parts, expands masks in spherical harmonics, generates random points with weights given by the mask, and implements
+computations for correlation function analysis.
+<br><br>
+To mangle, a mask is an arbitrary union of arbitrarily weighted angular regions bounded by arbitrary numbers of edges. The restrictions on the mask are only (1) that
+each edge must be part of some circle on the sphere (but not necessarily a great circle), and (2) that the weight within each subregion of the mask must be constant.
+Mangle is complementary to and integrated with the <a href="http://healpix.jpl.nasa.gov/">HEALPix</a> package.
+Loosely speaking, they are related like PDF and JPEG: mangle works with vector graphics whereas HEALPix works with pixels.
+<br><br>
+For a brief introduction to mangle, see <a href="./quickstart/">QuickStart</a>.  If you are looking for the latest SDSS angular mask and galaxy data, see <a href="./download/data.html">Data</a>.
+<br>
+<br>
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="./CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="./mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="./mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+
+</div>
+</body>
+</html>

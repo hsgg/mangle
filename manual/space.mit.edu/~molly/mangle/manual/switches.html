@@ -1,0 +1,627 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : commands</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Commands</h5><!--img src="./commands.png" alt="commands" style="margin-left: 182.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>Command Line Switches</h2>
+<p style="margin-left: 193px;">
+Typing a command with no arguments
+will give you a brief summary of its usage.
+Typing a command with the <tt>-d</tt> switch
+will tell you what the defaults are.
+Most commands read and/or write to `polygon files'.
+See the <a href="./polyformat.html">Polygon Formats</a> section
+for information regarding the format of polygon files.
+Command line switches are consistent over all mangle commands,
+although any one command will admit only some subset of switches.
+</p>
+
+<p>
+<table bgcolor="#f6eecc" cellpadding=2 border=0>
+<tr><td>
+<table cellspacing=2 cellpadding=4 border=1>
+
+<caption>
+Summary of command line switches.
+Click on the switch letter for more detail.
+</caption>
+
+<tr><th width=10%>
+Switch
+</th><th width=25%>
+Commands
+</th><th>
+Meaning
+</th></tr>
+
+<tr><td valign=top>
+<tt><a href="./snap.html#snaptable">
+-a</a>&lt;angle&gt;[&lt;unit&gt;]</tt>
+</td><td valign=top>
+<tt>snap</tt>,
+<tt>balkanize</tt>,
+<tt>rasterize</tt>
+</td><td valign=top>
+If the axes of two caps are within
+<tt>&lt;angle&gt;</tt>
+of each other,
+then snap the axis of the second cap to that of the first cap.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./snap.html#snaptable">
+-b</a>&lt;angle&gt;[&lt;unit&gt;]</tt>
+</td><td valign=top>
+<tt>snap</tt>,
+<tt>balkanize</tt>,
+<tt>rasterize</tt>
+</td><td valign=top>
+If the axes of two caps coincide,
+and their latitude boundaries are within
+<tt>&lt;angle&gt;</tt>
+of each other,
+then snap the latitude of the second cap to that of the first cap.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./balkanize.html">
+-B</a>&lt;bmethod&gt;</tt>
+</td><td valign=top>
+<tt>balkanize</tt>
+</td><td valign=top>
+<tt>&lt;bmethod&gt;</tt>
+specifies how balkanize combines the weights of overlapping polyons - may be one of:<br>
+<tt>l</tt> takes later weight read from polygon file (default),<br>
+<tt>a</tt> adds weights together,<br>
+<tt>n</tt> takes minimum weight, or<br>
+<tt>x</tt> takes maximum weight.<br>
+<p>
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./ransack.html">
+-c</a>&lt;seed&gt;</tt>
+</td><td valign=top>
+<tt>ransack</tt>
+
+</td><td valign=top>
+Set the seed for the random number generator.
+</td></tr>
+
+<tr><td valign=top>
+<tt>-d</tt>
+</td><td valign=top>
+all
+</td><td valign=top>
+Advise defaults.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./inputkeywords.html#keywordtable">
+-e</a>&lt;n&gt;</tt>
+
+</td><td valign=top>
+<tt>pixelize</tt>,
+<tt>snap</tt>,
+<tt>balkanize</tt>,
+<tt>unify</tt>,
+<tt>weight</tt>,
+<tt>drangle</tt>,
+<tt>poly2poly</tt>,
+<tt>rasterize</tt>,
+<tt>pixelmap</tt>
+</td><td valign=top>
+Read only the first <tt>&lt;n&gt;</tt> characters of each line
+of data in the input polygon files.
+
+</td></tr>
+
+<tr><td valign=top>
+<tt>-f</tt>
+</td><td valign=top>
+&#160;
+</td><td valign=top>
+Undocumented, but used.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./map.html#maptable">
+-g</a>&lt;lsmooth&gt;</tt>
+</td><td valign=top>
+
+<tt>map</tt>
+</td><td valign=top>
+Gaussian smoothing harmonic number.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./drangle.html">
+-h</a></tt>
+</td><td valign=top>
+<tt>drangle</tt>
+</td><td valign=top>
+Write only a summary of results to the output file,
+rather than the full table of results.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./rasterize.html">
+-H</a></tt>
+</td><td valign=top>
+<tt>rasterize</tt>
+</td><td valign=top>
+Write output file in <tt>healpix_weight</tt> format.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./inputkeywords.html#keywordtable">
+-i</a>&lt;format&gt;[&lt;n&gt;][&lt;unit&gt;]</tt>
+</td><td valign=top>
+<tt>pixelize</tt>,
+<tt>snap</tt>,
+<tt>balkanize</tt>,
+<tt>unify</tt>,
+<tt>weight</tt>,
+<tt>harmonize</tt>,
+<tt>drangle</tt>,
+<tt>ransack</tt>,
+<tt>poly2poly</tt>,
+<tt>rasterize</tt>,
+<tt>pixelmap</tt>,
+<br>
+but <em>not</em> <tt>polyid</tt>
+</td><td valign=top>
+Specify the format of input polygon files.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./poly2poly.html#poly2polytable">
+-j</a>&lt;min&gt;,&lt;max&gt;</tt>
+</td><td valign=top>
+<tt>poly2poly</tt>
+</td><td valign=top>
+Retain only polygons with weights in the interval
+[<tt>&lt;min&gt;,&lt;max&gt;</tt>].
+
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./poly2poly.html#poly2polytable">
+-J</a>&lt;min&gt;,&lt;max&gt;</tt>
+</td><td valign=top>
+<tt>poly2poly</tt>
+</td><td valign=top>
+Retain only polygons with id numbers in the interval
+[<tt>&lt;min&gt;,&lt;max&gt;</tt>].
+
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./poly2poly.html#poly2polytable">
+-k</a>&lt;min&gt;,&lt;max&gt;</tt>
+</td><td valign=top>
+<tt>poly2poly</tt>
+</td><td valign=top>
+Retain only polygons with areas in the interval
+[<tt>&lt;min&gt;,&lt;max&gt;</tt>] steradians.
+
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./poly2poly.html#poly2polytable">
+-K</a>&lt;min&gt;,&lt;max&gt;</tt>
+</td><td valign=top>
+<tt>poly2poly</tt>
+</td><td valign=top>
+Retain only polygons with pixel numbers in the interval
+[<tt>&lt;min&gt;,&lt;max&gt;</tt>].
+
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./map.html#maptable">
+
+-l</a>&lt;lmax&gt;</tt>
+</td><td valign=top>
+<tt>harmonize</tt>,
+<tt>map</tt>
+</td><td valign=top>
+Maximum harmonic number.
+</td></tr>
+
+<tr><td valign=top>
+
+<tt><a href="./multiple.html">
+-m</a>&lt;angle&gt;[&lt;unit&gt;]</tt>
+</td><td valign=top>
+<tt>pixelize</tt>,
+<tt>snap</tt>,
+<tt>balkanize</tt>,
+<tt>unify</tt>,
+<tt>weight</tt>,
+<tt>harmonize</tt>,
+<tt>drangle</tt>,
+<tt>ransack</tt>,
+<tt>poly2poly</tt>,
+<tt>rasterize</tt>,
+<tt>pixelmap</tt>
+</td><td valign=top>
+Treat multiple intersections within
+<tt>&lt;angle&gt;</tt>
+of each other as being coincident.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./poly2poly.html#poly2polytable">
+-n</a></tt>
+</td><td valign=top>
+<tt>poly2poly</tt>
+</td><td valign=top>
+Polygons read from <tt>polygon_infile1</tt> are to be intersected
+with polygons with the same id number from <tt>polygon_infile2</tt>
+and subsequent <tt>polygon_infiles</tt>.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./outputformat.html#outputtable">
+-o</a>&lt;format&gt;[&lt;unit&gt;]</tt>
+</td><td valign=top>
+<tt>pixelize</tt>,
+<tt>snap</tt>,
+<tt>balkanize</tt>,
+<tt>unify</tt>,
+<tt>weight</tt>,
+<tt>poly2poly</tt>,
+<tt>pixelmap</tt>
+</td><td valign=top>
+Specify the format of output polygon files.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./poly2poly.html#poly2polytable#poly2polytable">
+-p</a>[+|-]&lt;n&gt;</tt>
+</td><td valign=top>
+<tt>pixelize</tt>,
+<tt>snap</tt>,
+<tt>balkanize</tt>,
+<tt>unify</tt>,
+<tt>weight</tt>,
+<tt>map</tt>,
+<tt>drangle</tt>,
+<tt>ransack</tt>,
+<tt>poly2poly</tt>,
+<tt>polyid</tt>,
+<tt>rasterize</tt>,
+<tt>pixelmap</tt>
+</td><td valign=top>
+Write angles to the outfile with
+<tt>&lt;n&gt;</tt>
+digits after the decimal point.
+The optional <tt>+</tt> (default)
+sets output azimuths in the interval
+[0, 2 pi);
+the optional <tt>-</tt>
+sets output azimuths in the interval
+(&minus;pi, pi].
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./pixelize.html#pixelizetable">
+-P</a>[&lt;scheme&gt;][&lt;p&gt;][,&lt;r&gt;]</tt>
+</td><td valign=top>
+<tt>pixelize</tt>,
+<tt>polyid</tt>,
+<tt>pixelmap</tt>
+</td><td valign=top>
+<tt>&lt;scheme&gt;</tt>
+specifies which pixelization scheme to use - may be one of:<br>
+<tt>s</tt> simple, or
+<tt>d</tt> sdsspix.<br>
+<p>
+<tt>&lt;p&gt;</tt> is the number of polygons allowed in each pixel.
+To pixelize the entire mask to the maximum resolution, set
+<tt>&lt;p&gt;=0</tt>.
+<p>
+
+<tt>&lt;r&gt;</tt> is the maximum resolution that will be used in the
+pixelization.
+</td></tr>
+
+<tr><td valign=top>
+<tt>-q</tt>
+</td><td valign=top>
+all
+</td><td valign=top>
+Run quietly.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./ransack.html">
+-r</a>&lt;n&gt;</tt>
+
+</td><td valign=top>
+<tt>ransack</tt>
+</td><td valign=top>
+<tt>&lt;n&gt;</tt> is the number of random points to generate.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./inputkeywords.html#keywordtable">
+-s</a>&lt;n&gt;</tt>
+</td><td valign=top>
+<tt>pixelize</tt>,
+<tt>snap</tt>,
+<tt>balkanize</tt>,
+<tt>unify</tt>,
+<tt>weight</tt>,
+<tt>drangle</tt>,
+<tt>poly2poly</tt>,
+<tt>rasterize</tt>,
+<tt>pixelmap</tt>
+</td><td valign=top>
+Skip the first <tt>&lt;n&gt;</tt> characters of each line
+of data in the input polygon files.
+
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./snap.html#snaptable">
+-S</a>
+</td><td valign=top>
+<tt>snap</tt>
+</td><td valign=top>
+Self-snap:
+snap only edges belonging to the same polygon,
+not edges of different polygons.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./snap.html#snaptable">
+-t</a>&lt;angle&gt;[&lt;unit&gt;]</tt>
+
+<p>
+<tt><a href="./snap.html#snaptable">
+-y</a>&lt;ratio&gt;</tt>
+</td><td valign=top>
+<tt>snap</tt>,
+<tt>balkanize</tt>,
+<tt>rasterize</tt>
+</td><td valign=top>
+If the two endpoints and midpoint of an edge
+are closer to a cap boundary than the lesser of
+(1)&#160;<tt>&lt;angle&gt;</tt>,
+and
+(2)&#160;<tt>&lt;ratio&gt;</tt> times the length of the edge,
+and
+if at least one of the two endpoints or midpoint of the edge
+lie inside all other caps of the polygon that owns the cap boundary,
+then snap the edge to the cap boundary.
+
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./map.html">
+-u</a>&lt;inunit&gt;[,&lt;outunit&gt;]</tt>
+</td><td valign=top>
+<tt>map</tt>,
+<tt>drangle</tt>,
+<tt>ransack</tt>,
+
+<tt>polyid</tt>
+</td><td valign=top>
+Units of azimuth, elevation, and polar angular in input and output files
+that are <em>not</em> polygon files.
+Angular units in input and output polygon files are specified
+as part of the
+<tt><a href="./inputkeywords.html#keywordtable">-i</a>&lt;format&gt;[&lt;unit&gt;]</tt>
+and
+<tt><a href="./outputformat.html#outputtable">-o</a>&lt;format&gt;[&lt;unit&gt;]</tt>
+switches,
+or with the <tt>unit</tt> keyword in an input polygon file.
+<p>
+If only one unit
+<tt>-u&lt;unit&gt;</tt>
+is specified,
+then it applies to both input and output files.
+<p>
+The angular units
+<tt>&lt;inunit&gt;</tt>
+and
+<tt>&lt;outunit&gt;</tt>
+
+may be one of:
+<br>
+<tt>r</tt> radians,
+<tt>d</tt> degrees,
+<tt>m</tt> arcmin,
+<tt>s</tt> arcsec,
+or
+<tt>h</tt> hms(RA) & dms(Dec).
+
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./unify.html">
+-U</a></tt>
+</td><td valign=top>
+<tt>unify</tt>
+</td><td valign=top>
+Unify polygons across the whole mask rather than only within each pixel,
+thereby unpixelizing the mask.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./poly2poly.html#poly2polytable#poly2polytable">
+-v</a>o|n|p</tt>
+</td><td valign=top>
+<tt>pixelize</tt>,
+<tt>snap</tt>,
+<tt>balkanize</tt>,
+<tt>weight</tt>,
+<tt>unify</tt>,
+<tt>poly2poly</tt>,
+<tt>pixelmap</tt>
+</td><td valign=top>
+Whether to apply
+<tt>o</tt>ld
+or
+<tt>n</tt>ew
+polygon id numbers to output polygons,
+or to assign the
+<tt>p</tt>ixel
+numbers as the id numbers.
+<p>
+
+The defaults are:
+<br>
+<tt>-vo</tt>
+for
+<tt>pixelize</tt>,
+<tt>snap</tt>,
+<tt>weight</tt>
+and
+<tt>poly2poly</tt>
+<br>
+<tt>-vn</tt>
+for
+<tt>balkanize</tt>
+and
+<tt>unify</tt>
+<br>
+<tt>-vp</tt>
+for
+<tt>pixelmap</tt>
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./map.html">
+-w</a>&lt;Wlmfile&gt;</tt>
+</td><td valign=top>
+<tt>map</tt>
+</td><td valign=top>
+<tt>&lt;Wlmfile&gt;</tt> is the name of the input file of harmonics.
+<p>
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./polyid.html">
+-W</a></tt>
+</td><td valign=top>
+<tt>polyid</tt>
+</td><td valign=top>
+tells <tt>polyid</tt> to write the weights of the polygons each point is in to 
+the output file rather than the id numbers.
+<p>
+</td></tr>
+
+<tr><td valign=top>
+<tt>-x</tt>
+</td><td valign=top>
+&#160;
+</td><td valign=top>
+Undocumented, but used.
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./snap.html">
+-y</a>&lt;ratio&gt;</tt>
+</td><td valign=top>
+
+<tt>snap</tt>,
+<tt>balkanize</tt>
+</td><td valign=top>
+See <tt>-t</tt>.
+<p>
+</td></tr>
+
+<tr><td valign=top>
+<tt><a href="./weight.html">
+-z</a>&lt;survey&gt;</tt>
+</td><td valign=top>
+
+<tt>weight</tt>
+</td><td valign=top>
+<tt>&lt;survey&gt;</tt> is either the name of the input file of weights,
+or a string telling <tt>weight</tt> which user-supplied subroutine to use
+to compute weights.
+<p>
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

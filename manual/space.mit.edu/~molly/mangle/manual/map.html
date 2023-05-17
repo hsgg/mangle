@@ -1,0 +1,322 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : commands</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Commands</h5><!--img src="./commands.png" alt="commands" style="margin-left: 182.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>map</h2>
+<p style="margin-left: 193px;">
+
+<tt>map</tt>
+maps the mask reconstructed from its spherical harmonics.
+<br><br>
+<tt>
+map [-d] [-q] -w&lt;Wlmfile&gt; [-l&lt;lmax&gt;] [-g&lt;lsmooth&gt;] [-u&lt;inunit&gt;[,&lt;outunit&gt;]] [-p[+|-]&lt;n&gt;] azel_infile outfile
+</tt>
+<br><br>
+<tt>map</tt>
+requires the
+<tt>-w&lt;Wlmfile&gt;</tt>
+switch as an argument.
+The command
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	map -w&lt;Wlmfile&gt; azel_infile outfile
+</tt>
+</p>
+<p style="margin-left: 193px;">
+reads harmonics from the <tt>&lt;Wlmfile&gt;</tt> created by
+<tt>harmonize</tt>,
+reads lines of azimuthal and elevation from <tt>azel_infile</tt>,
+and writes lines of azimuthal, elevation, and value to <tt>outfile</tt>.
+<br><br>
+The <tt>azel_infile</tt>
+may contain arbitrary numbers of header lines,
+after which each line should contain two angles,
+an azimuth <tt>az</tt> and an elevation <tt>el</tt>, as in
+</p>
+<p style="margin-left: 233px;">
+<tt>
+Header lines<br>
+...<br>
+az<sub>1</sub>	el<sub>1</sub><br>
+az<sub>2</sub>	el<sub>2</sub><br>
+...
+</tt>
+</p>
+<p style="margin-left: 193px;">
+An example is the file <tt>azel.dat</tt> in the mangle directory.
+<br><br>
+The <tt>outfile</tt>
+contains the azimuth and elevation from <tt>azel_infile</tt>,
+together with the value
+<i>w</i>(<b><i>n</i></b>)
+of the summed weighted harmonics at that position
+(see the formula in the table below).
+<br><br>
+The
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	-u&lt;inunit&gt;[,&lt;outunit&gt;]
+</tt>
+</p>
+<p style="margin-left: 193px;">
+switch specifies the units of the angles <tt>az</tt> and <tt>el</tt>
+in <tt>azel_infile</tt> and <tt>outfile</tt>.
+The
+<tt>-u&lt;unit&gt;</tt>
+switch, with only one unit present,
+specifies the units of the angles in both
+<tt>azel_infile</tt> and <tt>outfile</tt>.
+You can find the default angular units by running
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	map -d
+</tt>
+</p>
+<p style="margin-left: 193px;">
+The <tt>map</tt> command may be run interactively with
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	map -w&lt;Wlmfile&gt; - -
+</tt>
+</p>
+<p style="margin-left: 193px;">
+which instructs <tt>map</tt> to read from stdin, and to write to stdout.
+<br><br>
+<tt>map</tt> offers two optional parameters,
+a maximum harmonic number <tt>lmax</tt>,
+and a Gaussian smoothing harmonic number <tt>lsmooth</tt>
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	map -l&lt;lmax&gt; -g&lt;lsmooth&gt; ...
+</tt>
+</p>
+
+<a name="maptable"></a>
+<table bgcolor="#f6eecc" cellpadding=2 border=0 style="margin-left: 193px;">
+<tr><td>
+<table cellspacing=2 cellpadding=4 border=1>
+
+<tr><td valign=top>
+<tt>
+-l&lt;lmax&gt;
+</tt>
+</td><td valign=top>
+maximum<br>harmonic
+</td><td valign=top>
+
+<tt>&lt;lmax&gt;</tt>
+is the value of <i>l</i><sub>max</sub> in
+<br>
+<Table align=center border=0><tr><td nowrap align=center>
+<i>w</i>(<b><i>n</i></b>)
+=
+</td><td nowrap align=center>
+<font size="-1"><i>l</i><sub>max</sub></font><Br><font size="+3">&#931;</font><br>
+
+<font size="-1"><i>l</i> = 0</font>&nbsp;<br>
+</td><td nowrap align=center>
+<font size="-1"><i>l</i></font><Br><font size="+3">&#931;</font><br>
+<font size="-1"><i>m</i> = &minus;<i>l</i></font>&nbsp;<br>
+</td><td nowrap>
+<i>G</i><sub><i>l</i></sub>
+
+<i>w</i><sub><i>l</i><i>m</i></sub>
+<i>Y</i><sub><i>l</i><i>m</i></sub>(<b><i>n</i></b>)
+&#160;.
+</td></tr></Table>
+Here:
+<br>
+<b><i>n</i></b> denotes a unit direction,
+as specified by an azimuth and elevation read from <tt>azel_infile</tt>;
+
+<br>
+<i>w</i>(<b><i>n</i></b>)
+is the value written to <tt>outfile</tt>;
+<br>
+<i>G</i><sub><i>l</i></sub>
+are the harmonics of an optional Gaussian smoothing window
+(see immediately below);
+<br>
+<i>w</i><sub><i>l</i><i>m</i></sub>
+
+are the harmonics of the mask, read from <tt>Wlmfile</tt>;
+<br>
+<i>Y</i><sub><i>l</i><i>m</i></sub>(<b><i>n</i></b>)
+are the usual orthonormal spherical harmonics.
+<p>
+If <tt>&lt;lmax&gt;</tt> is not specified on the command line,
+then its value is the maximum harmonic read from <tt>Wlmfile</tt>.
+
+<p>
+If <tt>&lt;lmax&gt;</tt> is specified on the command line,
+then its value is the lesser of
+the value specified on the command line
+and the value read from <tt>Wlmfile</tt>.
+</td></tr>
+
+<tr><td valign=top>
+<tt>
+-g&lt;lsmooth&gt;
+</tt>
+</td><td valign=top>
+smoothing<br>harmonic
+
+</td><td valign=top>
+The default is <tt>&lt;lsmooth&gt;</tt>&#160;=&#160;0,
+in which case no smoothing is done, i.e. <i>G</i><sub><i>l</i></sub>&#160;=&#160;1
+for all <i>l</i>.
+<p>
+If
+<tt>&lt;lsmooth&gt;</tt>&#160;>&#160;0,
+then
+<tt>&lt;lsmooth&gt;</tt>
+
+is the value of <i>l</i><sub><i>s</i></sub>
+in the Gaussian smoothing window
+<br>
+<Table align=center border=0>
+<tr><td nowrap align=center>
+<i>G</i><sub><i>l</i></sub>
+=
+exp</td>
+<td align=left>&#8968;<br>&#8970;</td>
+<td nowrap align=center>&minus;</td>
+
+<td nowrap align=center>
+<i>l</i>(<i>l</i>+1)<hr size=1 NOSHADE>
+<i>l</i><sub><i>s</i></sub>(<i>l</i><sub><i>s</i></sub>+1)<Br>
+<td align=left>&#8969;<br>&#8971;</td>
+<td nowrap align=center>
+
+&#160;.
+</td></tr>
+</Table>
+</td></tr>
+
+<tr><td valign=top>
+<tt>
+-g&lt;lsmooth&gt;,&lt;xsmooth&gt;
+</tt>
+</td><td valign=top>
+smoothing<br>harmonic<br>
+and exponent
+</td><td valign=top>
+Similar to Gaussian smoothing, but with an additional parameter
+<tt>&lt;xsmooth&gt;</tt>,
+the value of the exponent <i>x</i> in the smoothing window
+<br>
+<Table align=center border=0>
+<tr><td nowrap align=center>
+<i>G</i><sub><i>l</i></sub>
+=
+exp</td>
+<td align=left>&#8968;<br>&#8970;</td>
+
+<td nowrap align=center>
+&minus;
+</td>
+<td align=left>&#8968;<br>&#8970;</td>
+<td nowrap align=center>
+<i>l</i>(<i>l</i>+1)<hr size=1 NOSHADE>
+<i>l</i><sub><i>s</i></sub>(<i>l</i><sub><i>s</i></sub>+1)<Br></td>
+<td align=left>&#8969;<br>&#8971;</td>
+<td nowrap align=center>
+<font size="-1"><i>x</i>/2</font><Br><br>
+<font size="-1"></font>&nbsp;<br></td>
+<td align=left>&#8969;<br>&#8971;</td>
+<td nowrap align=center>
+&#160;.
+</td></tr>
+</Table>
+<br>
+The default is Gaussian smoothing,
+
+<tt>&lt;xsmooth&gt;</tt>&#160;=&#160;2.
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+
+<p style="margin-left: 193px;">
+Back to <a href="./commands.html">list of commands</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

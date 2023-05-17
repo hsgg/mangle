@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : commands</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Commands</h5><!--img src="./commands.png" alt="commands" style="margin-left: 182.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>pixelmap</h2>
+<p style="margin-left: 193px;">
+
+<tt>pixelmap</tt> makes a discrete approximation to a mask. 
+<br><br>
+<tt>
+pixelmap [-d] [-q] [-m&lt;a&gt;[u]] [-s&lt;n&gt;] [-e&lt;n&gt;] [-vo|-vn|-vp] [-p[+|-][&lt;n&gt;]] [-P[scheme][&lt;p&gt;][,&lt;r&gt;]]
+[-i&lt;f&gt;[&lt;n&gt;][u]] [-o&lt;f&gt;[u]] polygon_infile1 [polygon_infile2 ...] polygon_outfile
+</tt>
+<br><br>
+The <tt>pixelmap</tt> command provides a way to discretize a mask using the pixelization
+scheme used with the <tt><a href=./pixelize.html>pixelize</a></tt> command (either the simple
+scheme or the SDSSPix scheme).  
+<br><br>
+The algorithm for <tt>pixelmap</tt> is quite simple: for each pixel, calculate the weight
+for that pixel by summing the weight*area of each polygon in the pixel, and then divide the 
+result by the total area.  The output polygon file then consists of one polygon corresponding to each
+pixel with non-zero weight.
+The default numbering scheme is to use the pixel numbers as the id numbers for the output 
+polygons since the output polygons are, in fact, the pixels. This can be controlled using the 
+<tt><a href="./poly2poly.html#poly2polytable">-v</a></tt> switch.
+<br><br>
+You can specify the resolution of the pixelmap using  the <tt><a href="./pixelize.html#pixelizetable">-P</a></tt> switch. 
+The other arguments to the <tt><a href="./pixelize.html#pixelizetable">-P</a></tt> switch (pixelization scheme
+and maximum polygons per pixel) will be ignored by <tt>pixelmap</tt> -- the pixelization scheme defined 
+in the input file with the <tt>pixelization</tt> <a href="./inputkeywords.html">keyword</a> 
+(automatically added by <tt><a href=./pixelize.html>pixelize</a></tt>) will override
+any scheme specified on the command line.
+<br><br>
+The resolution of the pixelmap can be equal to or less than the resolution used to pixelize the mask.  Thus
+a mask pixelized to a high resolution can be used to produce a lower resolution pixelmap.  If the mask was
+pixelized using adaptive resolution, <tt>pixelmap</tt> will check to see if all regions of the input mask 
+are pixelized to at least the desired output resolution specified on the command line, and will return
+an error if this is not the case.  If no resolution is specified on the command line, the default behavior
+is to make a pixelmap at the resolution specified with the <tt>pixelization</tt> <a href="./inputkeywords.html">keyword</a>
+ in the input file.
+<br><br>
+<tt>pixelmap</tt> can only be used to make a map with the pixelization schemes used by <tt><a href=./pixelize.html>pixelize</a></tt>.
+To do the same thing with HEALPix pixels or any other user-defined pixelization scheme,
+use <tt><a href=./rasterize.html>rasterize</a></tt> instead.
+<br><br>
+Back to <a href="./commands.html">list of commands</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

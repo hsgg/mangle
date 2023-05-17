@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : commands</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Commands</h5><!--img src="./commands.png" alt="commands" style="margin-left: 182.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>polyid</h2>
+<p style="margin-left: 193px;">
+
+<tt>polyid</tt>
+determines which polygon(s) a point lies inside.
+A point may lie inside zero polygons, or one polygon, or more than one polygon.
+<br><br>
+<tt>
+polyid [-d] [-q] [-u&lt;inunit&gt;[,&lt;outunit&gt;]] [-p[+|-]&lt;n&gt;] [-P[scheme][&lt;p&gt;][,&lt;r&gt;]] [-W] polygon_infile azel_infile outfile
+</tt>
+<br><br>
+The <tt>polygon_infile</tt>
+is a single polygon file, complete with polygon id numbers.
+The polygon file will normally have been created as the output
+of some other mangle command.
+To avoid ambiguity in id numbers,
+the <tt>-i</tt> switch (specifying the format of the <tt>polygon_infile</tt>)
+is <em>not</em> supported by the <tt>polyid</tt> command.
+<br><br>
+The <tt>azel_infile</tt>
+may contain arbitrary numbers of header lines,
+after which each line should contain two angles,
+an azimuth and an elevation, as in
+</p>
+<p style="margin-left: 233px;">
+<tt>
+Header lines<br>
+...<br>
+az<sub>1</sub>	el<sub>1</sub><br>
+az<sub>2</sub>	el<sub>2</sub><br>
+...
+</tt>
+</p>
+<p style="margin-left: 193px;">
+An example is the file <tt>azel.dat</tt> in the mangle directory.
+<br><br>
+The <tt>outfile</tt>
+contains the azimuth and elevation from <tt>azel_infile</tt>,
+together with a list of the id numbers of polygons containing
+that angular position.  If you want to write out the weights of the 
+polygons instead of their id numbers, use the <tt>-W</tt> switch.
+<br><br>
+How does mangle determine polygon id numbers?
+By default, the
+<tt>pixelize</tt>,
+<tt>snap</tt>,
+<tt>balkanize</tt>,
+and
+<tt>unify</tt>
+commands
+produce sequential polygon id numbers in the output polygon file,
+ignoring any polygon id numbers in the input polygon files.
+The
+<tt>weight</tt>,
+<tt>poly2poly</tt>,
+and
+<tt>polyid</tt>
+commands, on the other hand,
+use the polygon id numbers found in the input polygon file(s).
+You can change this default behaviour with the
+<tt><a href="./poly2poly.html#poly2polytable">-v</a>o|n|p</tt>
+switch.
+<br><br>
+The <tt>-u&lt;inunit&gt;[,&lt;outunit&gt;]</tt> switch specifies
+the units of the angles <tt>az</tt> and <tt>el</tt>
+in <tt>azel_infile</tt> and <tt>outfile</tt>.
+The
+<tt>-u&lt;unit&gt;</tt>
+switch, with only one unit present,
+specifies the units of the angles in both
+<tt>azel_infile</tt> and <tt>outfile</tt>.
+You can find the default angular units by running
+</p>
+<p style="margin-left: 233px;">
+<tt>
+	polyid -d
+</tt>
+</p>
+<p style="margin-left: 193px;">
+If you pixelized the mask using the 
+<tt><a href="./pixelize.html#pixelizetable">-P</a></tt> switch with a non-default 
+pixelization scheme, then you can use the 
+<tt><a href="./pixelize.html#pixelizetable">-P</a></tt> switch 
+with the same scheme for the 
+<tt>polyid</tt>
+command.  The other arguments for the 
+<tt><a href="./pixelize.html#pixelizetable">-P</a></tt> switch (maximum resolution 
+and polys per pixel) are ignored when used with 
+<tt>polyid</tt>.  A scheme specified by the 
+<tt><a href="./pixelize.html#pixelizetable">-P</a></tt> switch will be 
+overridden by information included in the polygon file with the <tt>pixelization</tt>
+<a href="./inputkeywords.html">keyword</a> that is automatically included
+by <tt>pixelize</tt>, so the <tt><a href="./pixelize.html#pixelizetable">-P</a></tt> switch is 
+typically unneccessary with <tt>polyid</tt>.
+<br><br>
+For each point, 
+<tt>polyid</tt> 
+determines which pixel the point is in and tests it against the points 
+in that pixel.  Thus, using a pixelized mask can significantly speed up
+<tt>polyid</tt> 
+if there are large numbers of points and large numbers of polygons.
+<br><br>
+Back to <a href="./commands.html">list of commands</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

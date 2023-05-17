@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : commands</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Commands</h5><!--img src="./commands.png" alt="commands" style="margin-left: 182.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>ransack</h2>
+<p style="margin-left: 193px;">
+
+<tt>ransack</tt>
+generates random points inside the mask.
+<br><br>
+<tt>
+ransack [-d] [-q] [-c&lt;n&gt;] [-r&lt;n&gt;] [-m&lt;a&gt;[u]] [-s&lt;n&gt;] [-e&lt;n&gt;] [-u&lt;inunit&gt;[,&lt;outunit&gt;]] [-p[+|-]&lt;n&gt;]
+[-i&lt;f&gt;[&lt;n&gt;][u]] polygon_infile1 [polygon_infile2 ...] azel_outfile
+<br><br>
+</tt>
+The <tt>-c&lt;n&gt;</tt> switch seeds the random number generator with integral seed <tt>&lt;n&gt;</tt>.
+<br><br>
+The <tt>-r&lt;n&gt;</tt> switch commands to generate <tt>&lt;n&gt;</tt> random numbers.
+<br><br>
+<tt>polygon_infile1 [polygon_infile2 ...]</tt> are polygon files specifying the mask.
+<br><br>
+<tt>azel_outfile</tt> is the name of a file to which to write the
+random positions.
+In addition to recording the azimuth and elevation of each position,
+<tt>ransack</tt>
+writes the id number of the polygon inside which the random position falls.
+<br><br>
+The algorithm is as follows.
+<tt>ransack</tt>
+first selects randomly a polygon in the mask,
+with probability proportional to the product of the polygon's weight and area.
+It lassos that polygon with a circle that is intended to be a tight fit,
+but is not necessarily minimal.
+It generates a point randomly within the circle, tests whether the point
+lies inside the polygon, and keeps the point if it does.
+<br><br>
+<tt>ransack</tt> lassos polygons as needed,
+recording a lasso so that a lasso is computed only once for any polygon.
+If the desired number of random points exceeds the number of polygons in the mask,
+then <tt>ransack</tt> starts by lassoing every polygon in the mask.
+<br><br>
+<tt>ransack</tt> is quite fast.
+<br><br>
+Back to <a href="./commands.html">list of commands</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

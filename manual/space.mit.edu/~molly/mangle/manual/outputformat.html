@@ -1,0 +1,371 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : polygon formats</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Polygon Formats</h5><!--img src="./polyformat.png" alt="polygon formats" style="margin-left: 123.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>Output format</h2>
+<p style="margin-left: 193px;">
+Mangle can write files in any of the input formats:</p>
+<ul style="list-style-type: none; margin-left: 193px;">
+<tt>
+	<li>c - <a href="./circle.html">circle</a></li>
+	<li>v -	<a href="./vertices.html">vertices</a></li>
+	<li>e -	<a href="./edges.html">edges</a></li>
+	<li>r -	<a href="./rectangle.html">rectangle</a></li>
+	<li>p -	<a href="./polygon.html">polygon</a></li>
+	<li>s -	<a href="./spolygon.html">spolygon</a></li>
+	<li>R -	<a href="./Region.html">Region</a></li>
+	<li>H - <a href="./healpixweight.html">healpix_weight</a></tt> (rasterize only)</li>
+</ul>
+<p style="margin-left: 193px;">
+Additionally, there are six formats that can be written but not read:</p>
+<ul style="list-style-type: none; margin-left: 193px;">
+<tt>
+	<li>a -	<a href="./area.html">area</a></li>
+	<li>g -	<a href="./graphics.html">graphics</a></li>
+	<li>i -	<a href="./id.html">id</a></li>
+	<li>l -	<a href="./list.html">list</a></li>
+	<li>m -	<a href="./midpoint.html">midpoint</a></li>
+	<li>w -	<a href="./weightfmt.html">weight</a></li>
+</tt>
+</ul>
+<p style="margin-left: 193px;">
+
+The output format of polygon files is compatible
+where possible with the input format.
+Output files created in
+<tt>circle</tt>,
+<tt>edges</tt>,
+<tt>polygon</tt>,
+<tt>rectangle</tt>,
+<tt>Region</tt>,
+<tt>spolygon</tt>,
+<tt>vertices</tt>,
+and
+<tt>healpix_weight</tt>
+formats
+can all be read as input polygon files.
+Output files created in
+<tt>area</tt>,
+<tt>graphics</tt>,
+<tt>id</tt>,
+<tt>midpoint</tt>,
+and
+<tt>weight</tt>
+formats cannot be read as input polygon files,
+because they contain too little information,
+or in the case of
+<tt>graphics</tt>
+and
+<tt>list</tt>
+formats because the interpretation on input would be ambiguous.
+<br><br>
+The default output format is <tt>polygon</tt>.
+The output format can be changed with the <tt>-o</tt> (output) switch.
+<br><br>
+(Note: Outputting <tt>healpix_weight</tt>
+format from <tt>rasterize</tt> uses the the <tt>-H</tt> switch instead.)
+
+<br><br>
+The only formats that retain complete information about polygons
+are the <tt>circle</tt>, <tt>polygon</tt>, and <tt>spolygon</tt> formats.
+The
+<tt>edges</tt>,
+<tt>rectangle</tt>,
+and
+<tt>vertices</tt>
+formats in general lose information about polygons.
+
+<a name="outputtable"></a>
+<br><br>
+<table bgcolor="#f6eecc" cellpadding=2 border=0>
+<tr><td>
+<table cellspacing=2 cellpadding=4 border=1>
+<caption>
+List of output formats.  Click on the output format for more information.
+</caption>
+
+<tr><th>
+command line switch
+</th><th>
+output format
+</th><th>
+remarks
+</th></tr>
+
+<tr><td colspan=3 align=center>
+Formats valid for both input and output
+</td></tr>
+
+<tr><td>
+<tt>-oc</tt>
+
+</td><td>
+<a href="./circle.html">
+<tt>circle</tt>
+</a>
+</td><td>
+&#160;
+</td></tr>
+
+<tr><td>
+<tt>-oe[&lt;m&gt;]</tt>
+</td><td>
+<a href="./edges.html">
+<tt>edges</tt>
+
+</a>
+</td><td>
+&lt;m&gt; is an integer specifying the number of points per edge.
+The default is 2 points per edge,
+consisting of one vertex and one midpoint per edge.
+</td></tr>
+
+<tr><td>
+<tt>[-op]</tt>
+</td><td>
+<a href="./polygon.html">
+<tt>polygon</tt>
+</a>
+</td><td>
+This is the default output format.
+The <tt>-op</tt> switch is permitted, but not required.
+
+</td></tr>
+
+<tr><td>
+<tt>-or</tt>
+</td><td>
+<a href="./rectangle.html">
+<tt>rectangle</tt>
+</a>
+</td><td>
+&#160;
+</td></tr>
+
+<tr><td>
+<tt>-oR</tt>
+
+</td><td>
+<a href="./Region.html">
+<tt>Region</tt>
+</a>
+</td><td>
+&#160;
+</td></tr>
+
+<tr><td>
+<tt>-os</tt>
+</td><td>
+<a href="./spolygon.html">
+<tt>spolygon</tt>
+</a>
+
+</td><td>
+A stripped down version of the <tt>polygon</tt> format.
+</td></tr>
+
+<tr><td>
+<tt>-ov</tt>
+</td><td>
+<a href="./vertices.html">
+<tt>vertices</tt>
+</a>
+</td><td>
+&#160;
+
+</td></tr>
+
+<tr><td>
+<tt>-H</tt>
+</td><td>
+<a href="./healpixweight.html">
+<tt>healpix_weight</tt>
+</a>
+</td><td>
+Only <tt>rasterize</tt> can write files in <tt>healpix_weight</tt>
+format, so it uses a different switch (<tt>-H</tt>) rather than
+the generic <tt>-o</tt> switch.
+</td></tr>
+
+<tr><td colspan=3 align=center>
+Formats valid only for output
+</td></tr>
+
+<tr><td>
+<tt>-oa</tt>
+</td><td>
+<a href="./area.html">
+<tt>area</tt>
+</a>
+</td><td>
+
+&#160;
+</td></tr>
+
+<tr><td>
+<tt>-og[&lt;m&gt;]</tt>
+</td><td>
+<a href="./graphics.html">
+<tt>graphics</tt>
+</a>
+</td><td>
+&lt;m&gt; is an integer specifying the number of points per
+(2&#160;pi) of azimuthal angle around each edge.
+The default is 2 points per (2&#160;pi).
+You will probably want to specify a larger number.
+</td></tr>
+
+<tr><td>
+<tt>-ol[&lt;m&gt;]</tt>
+</td><td>
+<a href="./list.html">
+<tt>list</tt>
+</a>
+</td><td>
+&lt;m&gt; is an integer specifying the number of points per
+(2&#160;pi) of azimuthal angle around each edge.
+The default is 2 points per (2&#160;pi).
+You will probably want to specify a larger number.
+</td></tr>
+
+
+<tr><td>
+<tt>-oi</tt>
+</td><td>
+<a href="./id.html">
+<tt>id</tt>
+</a>
+</td><td>
+&#160;
+</td></tr>
+
+<tr><td>
+<tt>-om</tt>
+
+</td><td>
+<a href="./midpoint.html">
+<tt>midpoint</tt>
+</a>
+</td><td>
+&#160;
+</td></tr>
+
+<tr><td>
+<tt>-ow</tt>
+</td><td>
+<a href="./weightfmt.html">
+<tt>weight</tt>
+</a>
+
+</td><td>
+&#160;
+</td></tr>
+
+<tr><td colspan=3 align=center>
+Output angular unit
+</td></tr>
+
+<tr><td>
+<tt>-o&lt;format&gt;[..]&lt;unit&gt;</tt>
+</td><td>
+
+<tt>circle</tt>,
+<tt>edges</tt>,
+<tt>rectangle</tt>,
+<tt>vertices</tt>,
+<tt>midpoint</tt>
+</td><td>
+The output angular unit <tt>&lt;unit&gt;</tt> may be one of:
+<br>
+<tt>r</tt> radians,
+
+<tt>d</tt> degrees,
+<tt>m</tt> arcmin,
+<tt>s</tt> arcsec,
+<tt>h</tt> hms(RA) & dms(Dec).
+<p>
+The default output angular unit is
+<tt>d</tt> degrees.
+
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+
+<br>
+Back to <a href="./polyformat.html">polygon formats</a>.
+</p>
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>

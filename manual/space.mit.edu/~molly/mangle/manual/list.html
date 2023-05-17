@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+ "http://www.w3.org/TR/REC-html40/loose.dtd">
+
+<html>
+<head>
+  <title>mangle : manual : polygon formats</title>
+  <meta http-equiv="Content-Type" content="text/html">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="description"
+  content="mangle: a code to compute the spherical harmonics of an arbitrary angular mask.">
+  <meta name="keywords"
+  content="mangle, spherical harmonics, Large Scale Structure, Cosmic Microwave Background">
+  <link href="../style/mangle_template.css" rel="stylesheet" type="text/css">
+  
+</head>
+<body>
+
+<div class="main">
+
+<div class="title">
+</div>
+
+<div class="nav clear">
+
+<ul class="menu centered">
+    <li><a href="../">Overview</a></li>
+    <li><a href="../download/">Download</a></li>
+    <li><a href="../quickstart/">QuickStart</a></li>
+    <li><a href="./">Manual</a></li>
+    <li><a href="../references/">References</a></li>
+</ul>
+
+</div>
+
+<br>
+
+<div class="pagetitlebox">
+<div class="pagetitle">
+<img src="./manual.png" alt="manual">
+</div>
+<div class="pagesubtitle">
+<h5>Polygon Formats</h5><!--img src="./polyformat.png" alt="polygon formats" style="margin-left: 123.5px;"-->
+</div>
+</div>
+
+<div class="contentbox">
+<div class="submenu" style="width: 153px;">
+<ul>
+    <li><a href="./">Terms</a></li>
+    <li><a href="./commands.html">Commands</a></li>
+    <li><a href="./polyformat.html">Polygon Formats</a></li>
+    <li class="last"><a href="./troubleshooting.html">Troubleshooting</a></li>
+</ul>
+</div>
+<div class="content">
+<p style="margin-left: 193px;"><br></p>
+<h2>list format</h2>
+<p style="margin-left: 193px;">
+
+The <tt>list</tt> format is an adaptation of the <tt>graphics</tt> format
+designed for use with the <a href="http://www.mathworks.com/access/helpdesk/help/toolbox/map/index.html">MATLAB Mapping Toolbox</a>, and may be more convenient
+to use with other plotting packages as well.
+<br><br>
+As in the <tt>graphics</tt> format,
+there is a specified number of points per (2&#160;pi) of azimuthal angle along each edge.
+The azimuth and elevation for each point is printed on a separate line,
+and the points for each polygon (or rather, each connected part of each polygon)
+are separated by a line containing two <tt>NaN</tt>s.  This produces a list of 
+<tt>NaN</tt>-separated list of azimuth (longitude) and elevation (latitude)
+points, a format used by the MATLAB Mapping Toolbox and other terrestrial mapmaking tools.
+<br><br>
+In the <tt>list</tt> format, the weights of the polygons
+are stored in a supplementary file with one weight on each line 
+for each connected polygon part in the  <tt>NaN</tt>-separated list.
+This file is automatically named as <tt>polygon_outfile.weight</tt>, e.g., the command 
+<br><br>
+<tt>poly2poly -ol30 mypolygons.pol mypolygons.list</tt>
+<br><br>
+produces the file <tt>mypolygons.list</tt>, a <tt>NaN</tt>-separated list of azimuths
+and elevations, and the file <tt>mypolygons.list.weight</tt> containing the corresponding
+weights.
+<br><br>
+The <tt>list</tt> format is implemented only as output, not as input,
+because of ambiguity in the interpretation of the format.
+That is, mangle can write a polygon file in <tt>list</tt> format,
+but it will refuse to read such a file.
+<br><br>
+On output, <tt>list</tt> format
+with <tt>m</tt> points per (2&#160;pi) along each edge
+is specified with
+</p>
+<p style="margin-left: 233px;">
+<tt>
+       -ol&lt;m&gt;
+</tt>
+</p>
+<p style="margin-left: 193px;">
+The default is <tt>m</tt>&#160;=&#160;2,
+giving 2 points per (2&#160;pi) of azimuthal angle,
+which is a pretty miserable resolution.
+In practice you will probably want higher resolution,
+with <tt>m</tt>&#160;=&#160;12 or more.
+<br><br>
+A MATLAB script for plotting polygon files in <tt>list</tt> format is
+provided on the <a href="../download/scripts.html">scripts page</a>.
+<br><br>
+Back to <a href="./polyformat.html">polygon formats</a>.
+</p>
+
+</div>
+</div>
+
+<div class="footer">
+<a href="http://www.colorado.edu"><div class="footerleft">
+<img src="../CU.jpg" alt="CU">
+</div>
+</a>
+<a href="http://space.mit.edu"><div class="footerright2">
+<img src="../mki.jpg" alt="MKI">
+</div>
+</a>
+<a href="http://web.mit.edu"><div class="footerright1">
+<img src="../mit.gif" alt="MIT">
+</div>
+</a>
+</div>
+
+</div>
+</body>
+</html>
